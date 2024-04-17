@@ -1,7 +1,8 @@
-import {Image, Pressable, SafeAreaView, Text, View} from 'react-native';
+import {Image, SafeAreaView, Text, View} from 'react-native';
 import React from 'react';
 
 import {Logo} from 'assets/images';
+import {CustomButton} from 'components/atoms/CustomButton';
 
 export const Welcome = () => {
   return (
@@ -25,16 +26,8 @@ export const Welcome = () => {
 
         <SafeAreaView>
           <View className="flex-row w-full gap-[10px]">
-            <Pressable className="bg-grayDark py-[10px] px-[20px] rounded-lg grow items-end">
-              <Text className="font-robotoMedium text-[16px] text-white">
-                Log in
-              </Text>
-            </Pressable>
-            <Pressable className=" bg-white py-[10px] px-[20px] rounded-lg grow items-end">
-              <Text className="font-robotoMedium text-[16px] text-black">
-                Sign up
-              </Text>
-            </Pressable>
+            <CustomButton label="Log in" style="gray" onPress={() => {}} />
+            <CustomButton label="Sign up" style="white" onPress={() => {}} />
           </View>
         </SafeAreaView>
       </View>
