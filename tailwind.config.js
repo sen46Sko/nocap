@@ -10,6 +10,10 @@ module.exports = {
         robotoMedium: 'Roboto-Medium',
         robotoRegular: 'Roboto-Regular',
       },
+      colors: {
+        grayLight: '#BEBABA',
+        grayDark: '#2A2929',
+      },
     },
   },
   plugins: [],
