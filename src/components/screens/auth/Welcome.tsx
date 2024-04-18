@@ -2,10 +2,11 @@ import {Image, SafeAreaView, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
-import {Logo} from 'assets/images';
 import {CustomButton} from 'components/atoms/CustomButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+
+import {Logo} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.WELCOME>;
 

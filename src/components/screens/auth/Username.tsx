@@ -1,15 +1,15 @@
 import {
-  Keyboard,
+  TouchableWithoutFeedback,
   SafeAreaView,
   StyleSheet,
+  Keyboard,
   Text,
-  TouchableWithoutFeedback,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {CustomInput} from 'components/atoms/CustomInput';
 import {CustomButton} from 'components/atoms/CustomButton';
+import {CustomInput} from 'components/atoms/CustomInput';
 
 export const Username = () => {
   const [username, setUsername] = useState('');
@@ -21,10 +21,12 @@ export const Username = () => {
             <Text className="font-robotoMedium text-[36px] color-white">
               nocap
             </Text>
+
             <View className="w-full gap-[16px]">
               <Text className="font-robotoMedium text-[16px] color-white">
                 Sign up
               </Text>
+
               <View className="gap-[24px]">
                 <CustomInput
                   value={username}
@@ -33,6 +35,7 @@ export const Username = () => {
                 />
               </View>
             </View>
+
             <CustomButton
               label="Create account"
               style="white"
@@ -44,10 +47,12 @@ export const Username = () => {
             <Text className="font-robotoRegular color-grayLight">
               By signing up, you agree to the
             </Text>
+
             <View className="flex-row gap-[2px]">
               <Text className="font-robotoRegular color-grayLight">
                 Nocap's
               </Text>
+
               <Text className="font-robotoMedium color-white">
                 Terms of Use and Privacy Policy
               </Text>

@@ -1,3 +1,4 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -11,8 +12,8 @@ import React, {useState} from 'react';
 
 import {CustomButton} from 'components/atoms/CustomButton';
 import {CustomInput} from 'components/atoms/CustomInput';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PHONE_AUTH>;
 
