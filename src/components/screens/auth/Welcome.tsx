@@ -1,10 +1,15 @@
 import {Image, SafeAreaView, Text, View} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
 import {Logo} from 'assets/images';
 import {CustomButton} from 'components/atoms/CustomButton';
 
-export const Welcome = () => {
+import {RootStackParamList, Screens} from 'utils/types/navigation';
+
+type Props = NativeStackScreenProps<RootStackParamList, Screens.WELCOME>;
+
+export const Welcome: React.FC<Props> = ({navigation}) => {
   return (
     <View className="flex-1">
       <Image
@@ -25,9 +30,17 @@ export const Welcome = () => {
         </Text>
 
         <SafeAreaView>
-          <View className="flex-row w-full gap-[10px]">
-            <CustomButton label="Log in" style="gray" onPress={() => {}} />
-            <CustomButton label="Sign up" style="white" onPress={() => {}} />
+          <View className="w-full gap-[10px]">
+            <CustomButton
+              label="Log in with phone number"
+              style="gray"
+              onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
+            />
+            <CustomButton
+              label="Log in with Google"
+              style="blue"
+              onPress={() => {}}
+            />
           </View>
         </SafeAreaView>
       </View>
