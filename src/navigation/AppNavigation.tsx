@@ -9,6 +9,8 @@ import {Welcome} from 'components/screens/auth/Welcome';
 import {Gender} from 'components/screens/auth/Gender';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {FinishSignup} from 'components/screens/auth/FinishSignup';
+import {Contacts} from 'components/screens/auth/Contacts';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -21,6 +23,8 @@ export const AppNavigation = () => {
         <Stack.Screen name={Screens.USERNAME} component={Username} />
         <Stack.Screen name={Screens.BIRTH_DATE} component={BirthDate} />
         <Stack.Screen name={Screens.GENDER} component={Gender} />
+        <Stack.Screen name={Screens.FINISH_SIGNUP} component={FinishSignup} />
+        <Stack.Screen name={Screens.CONTACTS} component={Contacts} />
       </Stack.Navigator>
     </NavigationContainer>
   );

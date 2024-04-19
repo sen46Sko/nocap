@@ -2,7 +2,7 @@ import {Image, SafeAreaView, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
-import {CustomButton} from 'components/atoms/CustomButton';
+import {BigButton} from 'components/atoms/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
@@ -32,12 +32,12 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
 
         <SafeAreaView>
           <View className="w-full gap-[10px]">
-            <CustomButton
+            <BigButton
               label="Log in with phone number"
               style="gray"
               onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
             />
-            <CustomButton
+            <BigButton
               label="Log in with Google"
               style="blue"
               onPress={() => {}}

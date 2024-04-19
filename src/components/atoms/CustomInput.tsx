@@ -1,4 +1,5 @@
-import {TextInput} from 'react-native';
+import {TextInput, View} from 'react-native';
+import {SvgProps} from 'react-native-svg';
 import React from 'react';
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
   placeholder: string;
   type?: 'text' | 'numeric';
   disabled?: boolean;
+  Icon?: React.FC<SvgProps>;
 };
 
 export const CustomInput: React.FC<Props> = ({
@@ -15,22 +17,23 @@ export const CustomInput: React.FC<Props> = ({
   placeholder,
   type = 'text',
   disabled = false,
+  Icon,
 }) => {
-  const inputStyle = disabled
-    ? 'font-robotoRegular bg-transparent w-full shrink h-[40px] rounded-[8px] border-grayDark border-[1px] color-grayDark py-[10px] px-[20px] text-[16px]'
-    : 'font-robotoRegular bg-transparent w-full shrink h-[40px] rounded-[8px] border-grayDark border-[1px] color-grayLight py-[10px] px-[20px] text-[16px]';
   const placeHolderStyle = disabled
     ? 'font-robotoRegular text-grayDark'
     : 'font-robotoRegular text-grayLight';
   return (
-    <TextInput
-      className={inputStyle}
-      value={value}
-      onChangeText={setValue}
-      placeholder={placeholder}
-      editable={!disabled}
-      inputMode={type}
-      placeholderClassName={placeHolderStyle}
-    />
+    <View className="font-robotoRegular w-full shrink h-[40px] rounded-[8px] border-grayDark border-[1px] py-[10px] px-[16px] flex-row gap-[16px] items-center">
+      {Icon && <Icon />}
+      <TextInput
+        className="color-grayLight text-[16px] w-full h-ful"
+        value={value}
+        onChangeText={setValue}
+        placeholder={placeholder}
+        editable={!disabled}
+        inputMode={type}
+        placeholderClassName={placeHolderStyle}
+      />
+    </View>
   );
 };

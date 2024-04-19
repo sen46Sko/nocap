@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {CustomButton} from 'components/atoms/CustomButton';
+import {BigButton} from 'components/atoms/BigButton';
 import {CustomInput} from 'components/atoms/CustomInput';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
@@ -41,8 +41,8 @@ export const Username: React.FC<Props> = ({navigation}) => {
               </View>
             </View>
 
-            <CustomButton
-              label="Create account"
+            <BigButton
+              label="Continue"
               style="white"
               onPress={() => navigation.navigate(Screens.BIRTH_DATE)}
             />

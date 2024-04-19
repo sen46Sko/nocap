@@ -4,6 +4,8 @@ export enum Screens {
   USERNAME = 'Username',
   BIRTH_DATE = 'BirthDate',
   GENDER = 'Gender',
+  FINISH_SIGNUP = 'FinishSignup',
+  CONTACTS = 'Contacts',
 }
 
 export type RootStackParamList = {
@@ -12,4 +14,6 @@ export type RootStackParamList = {
   [Screens.USERNAME]: undefined;
   [Screens.BIRTH_DATE]: undefined;
   [Screens.GENDER]: undefined;
+  [Screens.FINISH_SIGNUP]: undefined;
+  [Screens.CONTACTS]: undefined;
 };

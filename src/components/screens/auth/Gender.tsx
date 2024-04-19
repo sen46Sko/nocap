@@ -9,15 +9,15 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {CustomSelectItem} from 'components/atoms/CustomSelectItem';
-import {CustomButton} from 'components/atoms/CustomButton';
+import {SelectItem} from 'components/atoms/SelectItem';
+import {BigButton} from 'components/atoms/BigButton';
 import {CustomInput} from 'components/atoms/CustomInput';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.GENDER>;
 
-export const Gender: React.FC<Props> = () => {
+export const Gender: React.FC<Props> = ({navigation}) => {
   const [gender, setGender] = useState('');
   const [customGender, setCustomGender] = useState('');
 
@@ -37,7 +37,7 @@ export const Gender: React.FC<Props> = () => {
               Gender
             </Text>
 
-            <Text className="color-white font-robotoMedium text-[16px]">
+            <Text className="color-white font-robotoMedium text-[16px] h-[16px]">
               {gender !== 'Custom' ? gender : customGender}
             </Text>
 
@@ -48,21 +48,21 @@ export const Gender: React.FC<Props> = () => {
             </Text>
 
             <View className="gap-[24px]">
-              <CustomSelectItem
+              <SelectItem
                 isSelected={gender === 'Female'}
                 onSelect={() => selectItem('Female')}
                 label="Female"
                 type="radio"
               />
 
-              <CustomSelectItem
+              <SelectItem
                 isSelected={gender === 'Male'}
                 onSelect={() => selectItem('Male')}
                 label="Male"
                 type="radio"
               />
 
-              <CustomSelectItem
+              <SelectItem
                 isSelected={gender === 'Custom'}
                 onSelect={() => selectItem('Custom')}
                 label="Custom"
@@ -76,7 +76,7 @@ export const Gender: React.FC<Props> = () => {
                 disabled={gender !== 'Custom'}
               />
 
-              <CustomSelectItem
+              <SelectItem
                 isSelected={gender === 'Prefer not to say'}
                 onSelect={() => selectItem('Prefer not to say')}
                 label="Prefer not to say"
@@ -86,10 +86,10 @@ export const Gender: React.FC<Props> = () => {
           </View>
 
           <View className="items-center gap-[80px]">
-            <CustomButton
+            <BigButton
               label="Create account"
               style="white"
-              onPress={() => {}}
+              onPress={() => navigation.navigate(Screens.FINISH_SIGNUP)}
             />
           </View>
         </View>

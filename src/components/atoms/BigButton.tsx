@@ -9,7 +9,7 @@ type Props = {
   onPress: () => void;
 };
 
-export const CustomButton: React.FC<Props> = ({label, style, onPress}) => {
+export const BigButton: React.FC<Props> = ({label, style, onPress}) => {
   const buttonStyles = {
     white:
       'bg-white px-[20px] h-[40px] w-full rounded-lg shrink items-end justify-center',

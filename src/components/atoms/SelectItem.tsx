@@ -9,11 +9,7 @@ type Props = {
   type: 'radio' | 'check';
 };
 
-export const CustomSelectItem: React.FC<Props> = ({
-  isSelected,
-  onSelect,
-  label,
-}) => {
+export const SelectItem: React.FC<Props> = ({isSelected, onSelect, label}) => {
   const getRadioStyle = () => {
     return isSelected
       ? 'h-[24px] w-[24px] rounded-full border-orange border-[2px] items-center justify-center'

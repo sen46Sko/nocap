@@ -3,7 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
 
-import {CustomButton} from 'components/atoms/CustomButton';
+import {BigButton} from 'components/atoms/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {getAge, getDateString} from 'utils/helpers';
@@ -47,7 +47,7 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
             {`You are ${getAge(date)} years young!`}
           </Text>
 
-          <CustomButton
+          <BigButton
             label="Continue"
             style="white"
             onPress={() => navigation.navigate(Screens.GENDER)}
