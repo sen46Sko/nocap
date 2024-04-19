@@ -14,7 +14,7 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
   return (
     <View className="flex-1">
       <Image
-        className="h-[592px] w-full"
+        className=" h-4/6 w-full"
         source={require('assets/images/auth/IntroPhoto.png')}
       />
       <View className="w-full h-full shrink bg-black px-[10px] py-[6px] justify-between">

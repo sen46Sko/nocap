@@ -1,3 +1,4 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -11,7 +12,11 @@ import React, {useState} from 'react';
 import {CustomButton} from 'components/atoms/CustomButton';
 import {CustomInput} from 'components/atoms/CustomInput';
 
-export const Username = () => {
+import {RootStackParamList, Screens} from 'utils/types/navigation';
+
+type Props = NativeStackScreenProps<RootStackParamList, Screens.USERNAME>;
+
+export const Username: React.FC<Props> = ({navigation}) => {
   const [username, setUsername] = useState('');
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -39,7 +44,7 @@ export const Username = () => {
             <CustomButton
               label="Create account"
               style="white"
-              onPress={() => {}}
+              onPress={() => navigation.navigate(Screens.BIRTH_DATE)}
             />
           </View>
 
