@@ -29,7 +29,7 @@ export const Contacts: React.FC<Props> = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} bounces>
         <View className="flex-1 px-[16px] mt-[40px] mb-[40px] gap-[24px]">
           <View className="flex-row items-center justify-between">
             <Text className="color-orange font-robotoMedium text-[16px]">

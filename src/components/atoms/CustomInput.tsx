@@ -23,10 +23,11 @@ export const CustomInput: React.FC<Props> = ({
     ? 'font-robotoRegular text-grayDark'
     : 'font-robotoRegular text-grayLight';
   return (
-    <View className="font-robotoRegular w-full shrink h-[40px] rounded-[8px] border-grayDark border-[1px] py-[10px] px-[16px] flex-row gap-[16px] items-center">
+    // <View className="font-robotoRegular w-full shrink h-[40px] rounded-[8px] border-grayDark border-[1px] py-[10px] px-[16px] flex-row gap-[16px] items-center">
+    <View className="font-robotoRegular w-full shrink rounded-[8px] border-grayDark border-[1px] px-[16px] h-[40px] flex-row gap-[16px] items-center overflow-hidden">
       {Icon && <Icon />}
       <TextInput
-        className="color-grayLight text-[16px] w-full h-ful"
+        className="color-grayLight text-[16px] w-full h-full"
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}

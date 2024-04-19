@@ -40,7 +40,8 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
             onDateChange={setDate}
             theme="dark"
             mode="date"
-            locale="en_MV"
+            locale="en_CM"
+            dividerColor="#2A2929"
           />
 
           <Text className="color-grayLight font-robotoRegular text-[16px]">
