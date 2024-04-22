@@ -1,7 +1,5 @@
 import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
-// import {GoogleSignin} from '@react-native-google-signin/google-signin';
-// import {Timestamp} from 'firebase/firestore';
-// import {Platform} from 'react-native';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import React, {
   createContext,
   useCallback,
@@ -11,11 +9,11 @@ import React, {
   useState,
 } from 'react';
 
-// import {getRouteName, navigate} from 'utils/helpers';
+import {navigate} from 'utils/helpers';
 import {User} from 'utils/types/User';
-// import {Screens} from 'utils/types/navigation';
+import {Screens} from 'utils/types/navigation';
 
-// import {createUser, getUserIfExists, editUser, removeUser} from 'api/users';
+import {createUser, getUserIfExists} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';
 
 // import {GOOGLE_CLIENT_ID} from '@env';
@@ -26,13 +24,13 @@ interface AuthContextType {
   setLocalUser: React.Dispatch<React.SetStateAction<Partial<User> | null>>;
   //   uploadImage: (imageUrl: string) => Promise<string | undefined>;
   //   refetchUser: () => Promise<void>;
-  verifyPhone: (
+  verifyCode: (
     code: string,
   ) => Promise<FirebaseAuthTypes.UserCredential | null | undefined>;
   //   updateUser: (updatedInfo: Partial<UserDocument>) => Promise<void>;
   //   deleteUser: () => Promise<void>;
   localUser: Partial<User> | null;
-  //   postUser: () => void;
+  postUser: () => Promise<void>;
   signOut: () => Promise<void>;
   user: User | null;
 }
@@ -42,17 +40,17 @@ const AuthContext = createContext<AuthContextType>({
   sendCodeToSMS: async () => {},
   setLocalUser: () => {},
   //   uploadImage: async () => undefined,
-  verifyPhone: async () => undefined,
+  verifyCode: async () => undefined,
   //   refetchUser: async () => undefined,
   //   updateUser: async () => {},
   //   deleteUser: async () => {},
   localUser: null,
-  //   postUser: () => {},
+  postUser: async () => {},
   signOut: async () => {},
   user: null,
 });
 
-export const FirebaseAuthProvider = ({children}: {children: ReactNode}) => {
+export const AuthProvider = ({children}: {children: ReactNode}) => {
   const [user, setUser] = useState<User | null>(null);
   const [localUser, setLocalUser] = useState<Partial<User> | null>(null);
   const [confirm, setConfirm] =
@@ -61,67 +59,53 @@ export const FirebaseAuthProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(async currentUser => {
       console.log('🚀 ~ subscriber ~ currentUser:', currentUser);
-      //   if (currentUser && !currentUser.isAnonymous) {
-      //     const fetchedUser = await getUserIfExists(currentUser.uid);
+      if (currentUser) {
+        const fetchedUser = await getUserIfExists(currentUser.uid);
 
-      //     if (fetchedUser) {
-      //       setUser(fetchedUser);
-      //       setLocalUser(fetchedUser);
+        if (fetchedUser) {
+          setUser(fetchedUser);
+          setLocalUser(fetchedUser);
 
-      //       if (!getRouteName() || getRouteName() !== Screens.SPLASH_SCREEN) {
-      //         navigate(Screens.BOTTOM_TAB, {screen: Screens.HOME});
-      //       }
-      //     } else {
-      //       const {phoneNumber, email} = currentUser;
+          navigate(Screens.HOME);
+        } else {
+          const {phoneNumber, email} = currentUser;
 
-      //       setLocalUser({
-      //         id: currentUser.uid,
-      //         phoneNumber,
-      //         email: email || undefined,
-      //       });
+          setLocalUser({
+            id: currentUser.uid,
+            phoneNumber,
+            email,
+          });
 
-      //       if (email || phoneNumber) {
-      //         navigate(Screens.PERSONAL_INFO, {email});
-      //       }
-      //     }
-      //   } else {
-      //     auth().signInAnonymously();
-      //   }
+          if (email || phoneNumber) {
+            navigate(Screens.USERNAME);
+          }
+        }
+      }
     });
 
     return subscriber;
   }, []);
 
-  //   useEffect(() => {
-  //     GoogleSignin.configure({
-  //       webClientId: GOOGLE_CLIENT_ID,
-  //       offlineAccess: true,
-  //     });
-  //   }, []);
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId: GOOGLE_CLIENT_ID,
+      offlineAccess: true,
+    });
+  }, []);
 
-  //   const postUser = useCallback(() => {
-  //     if (!localUser) {
-  //       return;
-  //     }
-  //     const newUser = {
-  //       ...localUser,
-  //       createdDate: Timestamp.fromDate(new Date()),
-  //       challengesCount: 0,
-  //       rewardCount: 0,
-  //       lastSignInDate: Timestamp.fromDate(new Date()),
-  //       lastSignInPlatform: Platform.OS,
-  //       lastSignInAppVersion: '1.0',
-  //       nearMeNotifications: true,
-  //       friendUpdatesNotifications: true,
-  //       newsNotifications: true,
-  //       reminderNotifications: true,
-  //       trendingNotifications: true,
-  //     } as UserDocument;
+  const postUser = useCallback(async () => {
+    if (!localUser) {
+      return;
+    }
+    const newUser = {
+      ...localUser,
+    } as User;
+    console.log('🚀 ~ postUser ~ newUser:', newUser);
 
-  //     setLocalUser(newUser);
-  //     setUser(newUser);
-  //     createUser(newUser);
-  //   }, [localUser]);
+    setLocalUser(newUser);
+    setUser(newUser);
+    await createUser(newUser);
+  }, [localUser]);
 
   //   const updateUser = useCallback(
   //     async (updatedInfo: Partial<UserDocument>) => {
@@ -148,15 +132,19 @@ export const FirebaseAuthProvider = ({children}: {children: ReactNode}) => {
   //   }, []);
 
   const sendCodeToSMS = useCallback(async (phoneNumber: string) => {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    const confirmation = await auth()
+      .signInWithPhoneNumber(phoneNumber)
+      .catch(error => {
+        throw error;
+      });
 
     setConfirm(confirmation);
   }, []);
 
-  const verifyPhone = useCallback(
+  const verifyCode = useCallback(
     async (code: string) => {
       if (!confirm) {
-        return;
+        throw new Error('Please, enter phone number first');
       }
       return confirm.confirm(code);
     },
@@ -222,12 +210,12 @@ export const FirebaseAuthProvider = ({children}: {children: ReactNode}) => {
         sendCodeToSMS,
         setLocalUser,
         // uploadImage,
-        verifyPhone,
+        verifyCode,
         // refetchUser,
         // updateUser,
         // deleteUser,
         localUser,
-        // postUser,
+        postUser,
         signOut,
         user,
       }}>

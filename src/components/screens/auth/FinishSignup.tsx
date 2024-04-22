@@ -1,15 +1,24 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
 
 import {BigButton} from 'components/atoms/BigButton';
 
+import {useAuth} from 'contexts/AuthContext';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+
 import {Logo} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.FINISH_SIGNUP>;
 
 export const FinishSignup: React.FC<Props> = ({navigation}) => {
+  const auth = useAuth();
+
+  useEffect(() => {
+    auth.postUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View className="flex-1 px-[16px] mt-[40px] mb-[40px] justify-end gap-[24px]">

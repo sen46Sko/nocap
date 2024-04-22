@@ -4,13 +4,18 @@ import React, {useEffect} from 'react';
 import {AppNavigation} from 'navigation/AppNavigation';
 
 import './global.css';
+import {AuthProvider} from 'contexts/AuthContext';
 
 function App(): JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
-  return <AppNavigation />;
+  return (
+    <AuthProvider>
+      <AppNavigation />
+    </AuthProvider>
+  );
 }
 
 export default App;

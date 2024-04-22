@@ -5,13 +5,26 @@ import DatePicker from 'react-native-date-picker';
 
 import {BigButton} from 'components/atoms/BigButton';
 
+import {useAuth} from 'contexts/AuthContext';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {getAge, getDateString} from 'utils/helpers';
+import {Timestamp} from 'firebase/firestore';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.BIRTH_DATE>;
 
 export const BirthDate: React.FC<Props> = ({navigation}) => {
   const [date, setDate] = useState(new Date());
+
+  const auth = useAuth();
+
+  const saveBirthDate = () => {
+    auth.setLocalUser(current => ({
+      ...current,
+      birthDate: Timestamp.fromDate(date),
+    }));
+    navigation.navigate(Screens.GENDER);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,11 +61,7 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
             {`You are ${getAge(date)} years young!`}
           </Text>
 
-          <BigButton
-            label="Continue"
-            style="white"
-            onPress={() => navigation.navigate(Screens.GENDER)}
-          />
+          <BigButton label="Continue" style="white" onPress={saveBirthDate} />
         </View>
       </View>
     </SafeAreaView>

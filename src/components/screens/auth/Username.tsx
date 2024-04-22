@@ -12,12 +12,22 @@ import React, {useState} from 'react';
 import {BigButton} from 'components/atoms/BigButton';
 import {CustomInput} from 'components/atoms/CustomInput';
 
+import {useAuth} from 'contexts/AuthContext';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.USERNAME>;
 
 export const Username: React.FC<Props> = ({navigation}) => {
   const [username, setUsername] = useState('');
+
+  const auth = useAuth();
+
+  const saveUsername = () => {
+    auth.setLocalUser(current => ({...current, username: username}));
+    navigation.navigate(Screens.BIRTH_DATE);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
@@ -41,11 +51,7 @@ export const Username: React.FC<Props> = ({navigation}) => {
               </View>
             </View>
 
-            <BigButton
-              label="Continue"
-              style="white"
-              onPress={() => navigation.navigate(Screens.BIRTH_DATE)}
-            />
+            <BigButton label="Continue" style="white" onPress={saveUsername} />
           </View>
 
           <View>

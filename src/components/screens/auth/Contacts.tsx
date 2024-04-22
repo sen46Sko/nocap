@@ -19,7 +19,7 @@ import {BigButton} from 'components/atoms/BigButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
-export const Contacts: React.FC<Props> = () => {
+export const Contacts: React.FC<Props> = ({navigation}) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -76,7 +76,11 @@ export const Contacts: React.FC<Props> = () => {
         </View>
       </ScrollView>
       <View className="px-[16px] absolute w-full bottom-[76px]">
-        <BigButton label="Jump in!" onPress={() => {}} style="white" />
+        <BigButton
+          label="Jump in!"
+          onPress={() => navigation.navigate(Screens.HOME)}
+          style="white"
+        />
       </View>
     </SafeAreaView>
   );

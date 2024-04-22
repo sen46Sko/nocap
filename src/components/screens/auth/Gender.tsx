@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
+import {CustomInput} from 'components/atoms/CustomInput';
 import {SelectItem} from 'components/atoms/SelectItem';
 import {BigButton} from 'components/atoms/BigButton';
-import {CustomInput} from 'components/atoms/CustomInput';
+
+import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
@@ -20,6 +22,16 @@ type Props = NativeStackScreenProps<RootStackParamList, Screens.GENDER>;
 export const Gender: React.FC<Props> = ({navigation}) => {
   const [gender, setGender] = useState('');
   const [customGender, setCustomGender] = useState('');
+
+  const auth = useAuth();
+
+  const saveGender = () => {
+    auth.setLocalUser(current => ({
+      ...current,
+      gender: customGender || gender,
+    }));
+    navigation.navigate(Screens.FINISH_SIGNUP);
+  };
 
   const selectItem = (item: string) => {
     setCustomGender('');
@@ -89,7 +101,7 @@ export const Gender: React.FC<Props> = ({navigation}) => {
             <BigButton
               label="Create account"
               style="white"
-              onPress={() => navigation.navigate(Screens.FINISH_SIGNUP)}
+              onPress={saveGender}
             />
           </View>
         </View>

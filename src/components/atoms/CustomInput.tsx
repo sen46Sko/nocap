@@ -6,7 +6,7 @@ type Props = {
   value: string;
   setValue: (value: string) => void;
   placeholder: string;
-  type?: 'text' | 'numeric';
+  type?: 'text' | 'tel' | 'numeric';
   disabled?: boolean;
   Icon?: React.FC<SvgProps>;
 };
