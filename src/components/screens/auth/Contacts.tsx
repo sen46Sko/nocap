@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
+  Alert,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -7,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
@@ -16,21 +17,27 @@ import {ContactItem} from 'components/atoms/ContactItem';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {SmallButton} from 'components/atoms/SmallButton';
 import {BigButton} from 'components/atoms/BigButton';
+import {Contact, getAll} from 'react-native-contacts';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
 export const Contacts: React.FC<Props> = ({navigation}) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [contacts, setContacts] = useState<Contact[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const peepListStyle = isExpanded
-    ? 'gap-[16px]'
-    : 'gap-[16px] h-0 overflow-hidden';
+  useEffect(() => {
+    getAll()
+      .then(setContacts)
+      .catch(error => Alert.alert(error.mesage));
+  }, []);
+
+  const peepListStyle = isExpanded ? 'gap-[16px]' : 'gap-[16px]';
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} bounces>
-        <View className="flex-1 px-[16px] mt-[40px] mb-[40px] gap-[24px]">
+        <View className="flex-1 px-[16px] mt-[40px] mb-[40px] gap-[16px]">
           <View className="flex-row items-center justify-between">
             <Text className="color-orange font-robotoMedium text-[16px]">
               Contacts
@@ -44,9 +51,9 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           <View className="w-full h-[1px] bg-grayDark" />
 
           <View className={peepListStyle}>
-            <ContactItem name="Van heusen" isPeep={true} />
-            <ContactItem name="Rahul K" isPeep={true} />
-            <ContactItem name="Varun" isPeep={true} />
+            <ContactItem name="Van heusen" isPeep={true} photoUri="" />
+            <ContactItem name="Rahul K" isPeep={true} photoUri="" />
+            <ContactItem name="Varun" isPeep={true} photoUri="" />
           </View>
 
           <View className="w-full h-[1px] bg-grayDark" />
@@ -63,15 +70,14 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           </View>
 
           <View className="gap-[16px]">
-            <ContactItem name="Andrews" isPeep={false} />
-            <ContactItem name="Salman Van" isPeep={false} />
-            <ContactItem name="Goyal M" isPeep={false} />
-            <ContactItem name="Deepak" isPeep={false} />
-            <ContactItem name="Iron Man" isPeep={false} />
-            <ContactItem name="Sundaram" isPeep={false} />
-            <ContactItem name="San Frisco" isPeep={false} />
-            <ContactItem name="DanielRodClief" isPeep={false} />
-            <ContactItem name="Voxwogan" isPeep={false} />
+            {contacts.map(contact => (
+              <ContactItem
+                key={contact.givenName}
+                name={`${contact.givenName} ${contact.familyName || ''}`}
+                isPeep={false}
+                photoUri={contact.thumbnailPath || ''}
+              />
+            ))}
           </View>
         </View>
       </ScrollView>

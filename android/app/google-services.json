@@ -12,7 +12,20 @@
           "package_name": "com.nocap"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "944995172940-kpaht22hbs5i3cfjshtkn868o2trqii8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nocap",
+            "certificate_hash": "fbe7756b12798aa49811ac421ac0dafad4c2bd72"
+          }
+        },
+        {
+          "client_id": "944995172940-i0rlhtbjqdpgkpmq58ej28f2frqa27rk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDr3-jZt4PQXWqojMqdPV5Ad4581vtJJTQ"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "944995172940-i0rlhtbjqdpgkpmq58ej28f2frqa27rk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "944995172940-ap061cucb109ibl8a80e8jp3amnsmijj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nocap"
+              }
+            }
+          ]
         }
       }
     }

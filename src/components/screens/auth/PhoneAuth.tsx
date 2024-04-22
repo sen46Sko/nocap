@@ -106,7 +106,7 @@ export const PhoneAuth: React.FC<Props> = () => {
           <BigButton
             label="Log in with Google"
             style="blue"
-            onPress={() => {}}
+            onPress={() => auth.signInWithGoogle()}
           />
         </View>
 

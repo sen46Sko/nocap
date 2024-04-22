@@ -16,10 +16,10 @@ import {Screens} from 'utils/types/navigation';
 import {createUser, getUserIfExists} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';
 
-// import {GOOGLE_CLIENT_ID} from '@env';
+import {GOOGLE_CLIENT_ID} from '@env';
 
 interface AuthContextType {
-  //   signInWithGoogle: () => Promise<FirebaseAuthTypes.UserCredential | undefined>;
+  signInWithGoogle: () => Promise<FirebaseAuthTypes.UserCredential | undefined>;
   sendCodeToSMS: (phoneNumber: string) => Promise<void>;
   setLocalUser: React.Dispatch<React.SetStateAction<Partial<User> | null>>;
   //   uploadImage: (imageUrl: string) => Promise<string | undefined>;
@@ -36,7 +36,7 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType>({
-  //   signInWithGoogle: async () => undefined,
+  signInWithGoogle: async () => undefined,
   sendCodeToSMS: async () => {},
   setLocalUser: () => {},
   //   uploadImage: async () => undefined,
@@ -89,7 +89,6 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   useEffect(() => {
     GoogleSignin.configure({
       webClientId: GOOGLE_CLIENT_ID,
-      offlineAccess: true,
     });
   }, []);
 
@@ -100,7 +99,6 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     const newUser = {
       ...localUser,
     } as User;
-    console.log('🚀 ~ postUser ~ newUser:', newUser);
 
     setLocalUser(newUser);
     setUser(newUser);
@@ -122,14 +120,14 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   //     [user],
   //   );
 
-  //   const signInWithGoogle = useCallback(async () => {
-  //     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
+  const signInWithGoogle = useCallback(async () => {
+    await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
 
-  //     const {idToken} = await GoogleSignin.signIn();
-  //     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    const {idToken} = await GoogleSignin.signIn();
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
-  //     return auth().signInWithCredential(googleCredential);
-  //   }, []);
+    return auth().signInWithCredential(googleCredential);
+  }, []);
 
   const sendCodeToSMS = useCallback(async (phoneNumber: string) => {
     const confirmation = await auth()
@@ -206,7 +204,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   return (
     <AuthContext.Provider
       value={{
-        // signInWithGoogle,
+        signInWithGoogle,
         sendCodeToSMS,
         setLocalUser,
         // uploadImage,

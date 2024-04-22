@@ -946,6 +946,12 @@ PODS:
     - abseil/meta/type_traits
     - abseil/xcprivacy
   - abseil/xcprivacy (1.20240116.2)
+  - AppAuth (1.7.4):
+    - AppAuth/Core (= 1.7.4)
+    - AppAuth/ExternalUserAgent (= 1.7.4)
+  - AppAuth/Core (1.7.4)
+  - AppAuth/ExternalUserAgent (1.7.4):
+    - AppAuth/Core
   - boost (1.76.0)
   - BoringSSL-GRPC (0.0.32):
     - BoringSSL-GRPC/Implementation (= 0.0.32)
@@ -1009,6 +1015,10 @@ PODS:
   - FirebaseSharedSwift (10.24.0)
   - fmt (6.2.1)
   - glog (0.3.5)
+  - GoogleSignIn (7.0.0):
+    - AppAuth (~> 1.5)
+    - GTMAppAuth (< 3.0, >= 1.3)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.13.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -1109,6 +1119,9 @@ PODS:
     - gRPC-Core/Privacy (= 1.62.5)
   - gRPC-Core/Interface (1.62.5)
   - gRPC-Core/Privacy (1.62.5)
+  - GTMAppAuth (2.0.0):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
   - GTMSessionFetcher/Core (3.4.1)
   - hermes-engine (0.72.9):
     - hermes-engine/Pre-built (= 0.72.9)
@@ -1421,6 +1434,8 @@ PODS:
   - React-jsinspector (0.72.9)
   - React-logger (0.72.9):
     - glog
+  - react-native-contacts (7.0.8):
+    - React-Core
   - react-native-date-picker (5.0.1):
     - React-Core
   - react-native-safe-area-context (4.9.0):
@@ -1550,6 +1565,9 @@ PODS:
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
     - RNFBApp
+  - RNGoogleSignin (11.0.1):
+    - GoogleSignIn (~> 7.0.0)
+    - React-Core
   - RNReanimated (3.6.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -1586,6 +1604,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
+  - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
@@ -1609,6 +1628,7 @@ DEPENDENCIES:
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
+  - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -1617,6 +1637,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - abseil
+    - AppAuth
     - BoringSSL-GRPC
     - Firebase
     - FirebaseAppCheckInterop
@@ -1628,9 +1649,11 @@ SPEC REPOS:
     - FirebaseFirestoreInternal
     - FirebaseSharedSwift
     - fmt
+    - GoogleSignIn
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
+    - GTMAppAuth
     - GTMSessionFetcher
     - leveldb-library
     - libevent
@@ -1682,6 +1705,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
+  react-native-contacts:
+    :path: "../node_modules/react-native-contacts"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
   react-native-safe-area-context:
@@ -1728,6 +1753,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFBFirestore:
     :path: "../node_modules/@react-native-firebase/firestore"
+  RNGoogleSignin:
+    :path: "../node_modules/@react-native-google-signin/google-signin"
   RNReanimated:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
@@ -1739,6 +1766,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: d121da9ef7e2ff4cab7666e76c5a3e0915ae08c3
+  AppAuth: 182c5b88630569df5acb672720534756c29b3358
   boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -1755,9 +1783,11 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: 76e1529c32101d80e4f1ca2fba7c39d59f0a390a
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 04b94705f318337d7ead9e6d17c019bd9b1f6b1b
+  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   "gRPC-C++": e725ef63c4475d7cdb7e2cf16eb0fde84bd9ee51
   gRPC-Core: eee4be35df218649fe66d721a05a7f27a28f069b
+  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   hermes-engine: 9b9bb14184a11b8ceb4131b09abf634880f0f46d
   leveldb-library: e8eadf9008a61f9e1dde3978c086d2b6d9b9dc28
@@ -1779,6 +1809,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 5a169b1dd1abad06bed40ab7e1aca883c657d865
   React-jsinspector: 54205b269da20c51417e0fc02c4cde9f29a4bf1a
   React-logger: f42d2f2bc4cbb5d19d7c0ce84b8741b1e54e88c8
+  react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-date-picker: 4f0b6ae21e2b8783ada44a13f489555a980fb8a9
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
@@ -1803,6 +1834,7 @@ SPEC CHECKSUMS:
   RNFBApp: 91311b27bc9a33e23b76a62825afd1635501018a
   RNFBAuth: 92172d8976baaa829825017174106e2b2c550319
   RNFBFirestore: 58f9f2f1d61eadcf16bf6d75737d92ad651bb264
+  RNGoogleSignin: 24d3b3261f78b0fae0aa013f8ab6f8d25e369b0c
   RNReanimated: 8a6a83984cb4d61ebf1065b6137150b6b31ce609
   RNScreens: f3591fdf4b0da62d23be5bbe76791f39c54a1893
   RNSVG: 50cf2c7018e57cf5d3522d98d0a3a4dd6bf9d093
