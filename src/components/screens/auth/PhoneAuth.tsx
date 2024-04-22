@@ -38,6 +38,7 @@ export const PhoneAuth: React.FC<Props> = ({navigation}) => {
                 setValue={setPhone}
                 placeholder="Phone number"
               />
+
               <CustomInput
                 value={otp}
                 setValue={setOtp}
@@ -55,6 +56,16 @@ export const PhoneAuth: React.FC<Props> = ({navigation}) => {
             label="Log in"
             style="white"
             onPress={() => navigation.navigate(Screens.USERNAME)}
+          />
+
+          <Text className="self-center color-grayLight font-robotoRegular text-[16px]">
+            OR
+          </Text>
+
+          <BigButton
+            label="Log in with Google"
+            style="blue"
+            onPress={() => {}}
           />
         </View>
       </SafeAreaView>

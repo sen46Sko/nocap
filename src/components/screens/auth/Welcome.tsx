@@ -31,16 +31,16 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
         </Text>
 
         <SafeAreaView>
-          <View className="w-full gap-[10px]">
+          <View className="w-full gap-[10px] flex-row">
             <BigButton
-              label="Log in with phone number"
+              label="Log in"
               style="gray"
               onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
             />
             <BigButton
-              label="Log in with Google"
-              style="blue"
-              onPress={() => {}}
+              label="Sign up"
+              style="white"
+              onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
             />
           </View>
         </SafeAreaView>
