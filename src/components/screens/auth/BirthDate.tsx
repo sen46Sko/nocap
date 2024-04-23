@@ -22,7 +22,7 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
     const isValid = isBirthDateValid(date);
 
     if (!isValid) {
-      Alert.alert('You shuld be older');
+      Alert.alert('You should be older');
       return;
     }
 
