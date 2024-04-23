@@ -16,6 +16,21 @@ export async function getUserIfExists(userId: string) {
     });
 }
 
+export async function getAllUsers() {
+  return await firestore()
+    .collection('Profiles')
+    .get()
+    .then(querySnapshot => {
+      const data: any[] = [];
+      querySnapshot.forEach(doc => {
+        console.log(doc.id, ' => ', doc.data());
+        data.push(doc.data());
+      });
+
+      return data;
+    });
+}
+
 export async function createUser(user: User) {
   return firestore().collection('Profiles').doc(user.id).set(user);
 }

@@ -23,12 +23,16 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand, Search} from 'assets/images';
 import SendIntentAndroid from 'react-native-send-intent';
+import {sortContacts} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
 export const Contacts: React.FC<Props> = ({navigation}) => {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [registeredContacts, setRegisteredContacts] = useState<Contact[]>([]);
+  const [unregisteredContacts, setUnregisteredContacts] = useState<Contact[]>(
+    [],
+  );
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
@@ -40,20 +44,28 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
       }).then(value => {
         if (value === 'granted') {
           getAll()
-            .then(setContacts)
+            .then(res => sortContacts(res))
+            .then(res => {
+              setRegisteredContacts(res.registered);
+              setUnregisteredContacts(res.unregistered);
+            })
             .catch(error => Alert.alert(error.mesage));
         }
       });
     } else {
       getAll()
-        .then(setContacts)
+        .then(sortContacts)
+        .then(res => {
+          setRegisteredContacts(res.registered);
+          setUnregisteredContacts(res.unregistered);
+        })
         .catch(error => Alert.alert(error.mesage));
     }
   }, []);
 
   const peepListStyle = isExpanded ? 'gap-[16px]' : 'gap-[16px]';
 
-  const filteredContacts = contacts.filter(
+  const filteredContacts = unregisteredContacts.filter(
     contact =>
       contact.givenName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       contact.familyName.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -94,24 +106,15 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           <View className="w-full h-[1px] bg-grayDark" />
 
           <View className={peepListStyle}>
-            <ContactItem
-              name="Van heusen"
-              isPeep={true}
-              photoUri=""
-              onPress={() => {}}
-            />
-            <ContactItem
-              name="Rahul K"
-              isPeep={true}
-              photoUri=""
-              onPress={() => {}}
-            />
-            <ContactItem
-              name="Varun"
-              isPeep={true}
-              photoUri=""
-              onPress={() => {}}
-            />
+            {registeredContacts.slice(0, isExpanded ? -1 : 3).map(contact => (
+              <ContactItem
+                key={contact.givenName + contact.familyName}
+                name={`${contact.givenName} ${contact.familyName || ''}`}
+                isPeep={true}
+                photoUri={contact.thumbnailPath || ''}
+                onPress={() => {}}
+              />
+            ))}
           </View>
 
           <View className="w-full h-[1px] bg-grayDark" />
