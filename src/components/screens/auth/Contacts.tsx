@@ -49,17 +49,23 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
               setRegisteredContacts(res.registered);
               setUnregisteredContacts(res.unregistered);
             })
-            .catch(error => Alert.alert(error.mesage));
+            .catch(error => {
+              console.log(error);
+              Alert.alert(error.mesage);
+            });
         }
       });
     } else {
       getAll()
-        .then(sortContacts)
+        .then(res => sortContacts(res))
         .then(res => {
           setRegisteredContacts(res.registered);
           setUnregisteredContacts(res.unregistered);
         })
-        .catch(error => Alert.alert(error.mesage));
+        .catch(error => {
+          console.log(error);
+          Alert.alert(error.mesage);
+        });
     }
   }, []);
 

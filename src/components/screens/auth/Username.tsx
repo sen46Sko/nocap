@@ -6,6 +6,7 @@ import {
   Keyboard,
   Text,
   View,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -15,17 +16,39 @@ import {CustomInput} from 'components/atoms/CustomInput';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {isUsernameTaken, isUsernameValid} from 'utils/helpers';
+import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
+import {If} from 'components/atoms/If';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.USERNAME>;
 
 export const Username: React.FC<Props> = ({navigation}) => {
   const [username, setUsername] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const auth = useAuth();
 
-  const saveUsername = () => {
+  const saveUsername = async () => {
+    setIsLoading(true);
+    const isValid = isUsernameValid(username);
+
+    if (!isValid) {
+      Alert.alert('The username is invalid');
+      setIsLoading(false);
+      return;
+    }
+
+    const isTaken = await isUsernameTaken(username);
+
+    if (isTaken) {
+      Alert.alert('The username is taken');
+      setIsLoading(false);
+      return;
+    }
+
     auth.setLocalUser(current => ({...current, username: username}));
     navigation.navigate(Screens.BIRTH_DATE);
+    setIsLoading(false);
   };
 
   return (
@@ -51,7 +74,12 @@ export const Username: React.FC<Props> = ({navigation}) => {
               </View>
             </View>
 
-            <BigButton label="Continue" style="white" onPress={saveUsername} />
+            <BigButton
+              label="Continue"
+              style="white"
+              onPress={saveUsername}
+              disabled={!username}
+            />
           </View>
 
           <View>
@@ -70,6 +98,10 @@ export const Username: React.FC<Props> = ({navigation}) => {
             </View>
           </View>
         </View>
+
+        <If condition={isLoading}>
+          <LoaderSpinner />
+        </If>
       </SafeAreaView>
     </TouchableWithoutFeedback>
   );

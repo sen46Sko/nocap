@@ -58,6 +58,12 @@ export const PhoneAuth: React.FC<Props> = () => {
       await auth.sendCodeToSMS(phone);
     } catch (error: any) {
       console.log(error);
+
+      if (error.code === 'auth/invalid-phone-number') {
+        Alert.alert('Invalid phone number');
+        return;
+      }
+
       Alert.alert(error.message);
     } finally {
       setIsLoading(false);

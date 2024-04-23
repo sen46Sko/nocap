@@ -13,7 +13,7 @@ import {navigate} from 'utils/helpers';
 import {User} from 'utils/types/User';
 import {Screens} from 'utils/types/navigation';
 
-import {createUser, getUserIfExists} from 'api/users';
+import {createUser, getUserIfExists, removeUser} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';
 
 import {GOOGLE_CLIENT_ID} from '@env';
@@ -28,7 +28,7 @@ interface AuthContextType {
     code: string,
   ) => Promise<FirebaseAuthTypes.UserCredential | null | undefined>;
   //   updateUser: (updatedInfo: Partial<UserDocument>) => Promise<void>;
-  //   deleteUser: () => Promise<void>;
+  deleteUser: () => Promise<void>;
   localUser: Partial<User> | null;
   postUser: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -43,7 +43,7 @@ const AuthContext = createContext<AuthContextType>({
   verifyCode: async () => undefined,
   //   refetchUser: async () => undefined,
   //   updateUser: async () => {},
-  //   deleteUser: async () => {},
+  deleteUser: async () => {},
   localUser: null,
   postUser: async () => {},
   signOut: async () => {},
@@ -58,7 +58,6 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
 
   useEffect(() => {
     const subscriber = auth().onAuthStateChanged(async currentUser => {
-      console.log('🚀 ~ subscriber ~ currentUser:', currentUser);
       if (currentUser) {
         const fetchedUser = await getUserIfExists(currentUser.uid);
 
@@ -159,19 +158,19 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     }
   }, []);
 
-  //   const deleteUser = useCallback(async () => {
-  //     try {
-  //       if (user) {
-  //         await removeUser(user);
-  //       }
-  //       if (user?.imageLink) {
-  //         await deleteImage(user.imageLink);
-  //       }
-  //       await signOut();
-  //     } catch (error) {
-  //       console.error('Sign out error:', error);
-  //     }
-  //   }, [signOut, user]);
+  const deleteUser = useCallback(async () => {
+    try {
+      if (user) {
+        await removeUser(user);
+      }
+      // if (user?.imageLink) {
+      //   await deleteImage(user.imageLink);
+      // }
+      await signOut();
+    } catch (error) {
+      console.error('Sign out error:', error);
+    }
+  }, [signOut, user]);
 
   //   const uploadImage = useCallback(
   //     async (imageUrl: string) => {
@@ -211,7 +210,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         verifyCode,
         // refetchUser,
         // updateUser,
-        // deleteUser,
+        deleteUser,
         localUser,
         postUser,
         signOut,

@@ -37,8 +37,13 @@ export const sortContacts = async (contacts: Contact[]) => {
   const unregistered: Contact[] = [];
 
   for (const contact of contacts) {
+    if (!contact.phoneNumbers[0].number) {
+      unregistered.push(contact);
+      continue;
+    }
+
     const isRegistered = fetchedUsers.some(user =>
-      user.phoneNumber.includes(
+      user.phoneNumber?.includes(
         contact.phoneNumbers[0].number.replaceAll(/\D/g, ''),
       ),
     );
@@ -51,4 +56,37 @@ export const sortContacts = async (contacts: Contact[]) => {
   }
 
   return {registered, unregistered};
+};
+
+export const isUsernameValid = (username: string) => {
+  const regex = /^[a-zA-Z1-9.\-_]+$/g;
+  const isValid = regex.test(username);
+
+  if (!isValid) {
+    return false;
+  }
+
+  return true;
+};
+
+export const isUsernameTaken = async (username: string) => {
+  const fetchedUsers = await getAllUsers();
+
+  const isNameTaken = fetchedUsers.some(user => user.username === username);
+
+  if (isNameTaken) {
+    return true;
+  }
+
+  return false;
+};
+
+export const isBirthDateValid = (date: Date) => {
+  const dateAtMidnight = new Date(date);
+  const today = new Date();
+
+  today.setHours(0, 0, 0, 0);
+  dateAtMidnight.setHours(0, 0, 0, 0);
+
+  return dateAtMidnight < today;
 };

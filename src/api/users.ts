@@ -23,7 +23,6 @@ export async function getAllUsers() {
     .then(querySnapshot => {
       const data: any[] = [];
       querySnapshot.forEach(doc => {
-        console.log(doc.id, ' => ', doc.data());
         data.push(doc.data());
       });
 

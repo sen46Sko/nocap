@@ -102,6 +102,7 @@ export const Gender: React.FC<Props> = ({navigation}) => {
               label="Create account"
               style="white"
               onPress={saveGender}
+              disabled={!gender || (gender === 'Custom' && !customGender)}
             />
           </View>
         </View>

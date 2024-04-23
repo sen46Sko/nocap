@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Alert, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
 import DatePicker from 'react-native-date-picker';
@@ -8,7 +8,7 @@ import {BigButton} from 'components/atoms/BigButton';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {getAge, getDateString} from 'utils/helpers';
+import {getAge, getDateString, isBirthDateValid} from 'utils/helpers';
 import {Timestamp} from 'firebase/firestore';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.BIRTH_DATE>;
@@ -19,6 +19,13 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
   const auth = useAuth();
 
   const saveBirthDate = () => {
+    const isValid = isBirthDateValid(date);
+
+    if (!isValid) {
+      Alert.alert('You shuld be older');
+      return;
+    }
+
     auth.setLocalUser(current => ({
       ...current,
       birthDate: Timestamp.fromDate(date),
@@ -55,6 +62,7 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
             mode="date"
             locale="en_CM"
             dividerColor="#2A2929"
+            maximumDate={new Date()}
           />
 
           <Text className="color-grayLight font-robotoRegular text-[16px]">
