@@ -1,6 +1,7 @@
-import React from 'react';
 import {Pressable, Text, View} from 'react-native';
-import {If} from './If';
+import React from 'react';
+
+import {If} from 'components/atoms/If';
 
 type Props = {
   label: string;

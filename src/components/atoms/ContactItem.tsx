@@ -1,19 +1,29 @@
-import React from 'react';
 import {Image, Text, View} from 'react-native';
-import {SmallButton} from './SmallButton';
+import React from 'react';
+
+import {SmallButton} from 'components/atoms/SmallButton';
 
 type Props = {
   name: string;
   isPeep: boolean;
   photoUri: string;
+  onPress: () => void;
 };
 
-export const ContactItem: React.FC<Props> = ({name, isPeep, photoUri}) => {
+export const ContactItem: React.FC<Props> = ({
+  name,
+  isPeep,
+  photoUri,
+  onPress,
+}) => {
   return (
     <View className="flex-row items-center justify-between">
       <View className="flex-row items-center gap-[16px]">
         {photoUri ? (
-          <Image source={{uri: photoUri}} />
+          <Image
+            className="w-[40px] h-[40px] rounded-full"
+            source={{uri: photoUri}}
+          />
         ) : (
           <View className="w-[40px] h-[40px] rounded-full bg-grayLight" />
         )}
@@ -22,7 +32,7 @@ export const ContactItem: React.FC<Props> = ({name, isPeep, photoUri}) => {
         </Text>
       </View>
 
-      <SmallButton label={isPeep ? 'Peep' : 'Invite'} />
+      <SmallButton label={isPeep ? 'Peep' : 'Invite'} onPress={onPress} />
     </View>
   );
 };

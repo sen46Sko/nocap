@@ -1,23 +1,28 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
-  Alert,
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
+  Pressable,
+  Linking,
+  Alert,
   Text,
   View,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {Contact, getAll} from 'react-native-contacts';
 
-import {RootStackParamList, Screens} from 'utils/types/navigation';
-
-import {Expand, Search} from 'assets/images';
 import {ContactItem} from 'components/atoms/ContactItem';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {SmallButton} from 'components/atoms/SmallButton';
 import {BigButton} from 'components/atoms/BigButton';
-import {Contact, getAll} from 'react-native-contacts';
+
+import {RootStackParamList, Screens} from 'utils/types/navigation';
+
+import {Expand, Search} from 'assets/images';
+import SendIntentAndroid from 'react-native-send-intent';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
@@ -27,17 +32,55 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    getAll()
-      .then(setContacts)
-      .catch(error => Alert.alert(error.mesage));
+    if (Platform.OS === 'android') {
+      PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_CONTACTS, {
+        title: 'Contacts',
+        message: 'ContactsList app would like to access your contacts.',
+        buttonPositive: 'Accept',
+      }).then(value => {
+        if (value === 'granted') {
+          getAll()
+            .then(setContacts)
+            .catch(error => Alert.alert(error.mesage));
+        }
+      });
+    } else {
+      getAll()
+        .then(setContacts)
+        .catch(error => Alert.alert(error.mesage));
+    }
   }, []);
 
   const peepListStyle = isExpanded ? 'gap-[16px]' : 'gap-[16px]';
 
+  const filteredContacts = contacts.filter(
+    contact =>
+      contact.givenName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      contact.familyName.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  const sendMessage = (phoneNumber: string) => {
+    const message =
+      "Hello, I've found a cool app to share your photos. Check it by the link: https://www.google.com";
+
+    if (Platform.OS === 'ios') {
+      const url = `sms:${phoneNumber}?body=${message}`;
+      Linking.canOpenURL(url).then(supported => {
+        if (!supported) {
+          console.log('Unsupported url: ' + url);
+        } else {
+          return Linking.openURL(url);
+        }
+      });
+    } else {
+      SendIntentAndroid.sendSms(phoneNumber, message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} bounces>
-        <View className="flex-1 px-[16px] mt-[40px] mb-[40px] gap-[16px]">
+        <View className="flex-1 px-[16px] mt-[40px] mb-[100px] gap-[16px]">
           <View className="flex-row items-center justify-between">
             <Text className="color-orange font-robotoMedium text-[16px]">
               Contacts
@@ -51,9 +94,24 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           <View className="w-full h-[1px] bg-grayDark" />
 
           <View className={peepListStyle}>
-            <ContactItem name="Van heusen" isPeep={true} photoUri="" />
-            <ContactItem name="Rahul K" isPeep={true} photoUri="" />
-            <ContactItem name="Varun" isPeep={true} photoUri="" />
+            <ContactItem
+              name="Van heusen"
+              isPeep={true}
+              photoUri=""
+              onPress={() => {}}
+            />
+            <ContactItem
+              name="Rahul K"
+              isPeep={true}
+              photoUri=""
+              onPress={() => {}}
+            />
+            <ContactItem
+              name="Varun"
+              isPeep={true}
+              photoUri=""
+              onPress={() => {}}
+            />
           </View>
 
           <View className="w-full h-[1px] bg-grayDark" />
@@ -66,22 +124,23 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           />
 
           <View className="flex-row justify-end">
-            <SmallButton label="Invite all" />
+            <SmallButton label="Invite all" onPress={() => {}} />
           </View>
 
           <View className="gap-[16px]">
-            {contacts.map(contact => (
+            {filteredContacts.map(contact => (
               <ContactItem
-                key={contact.givenName}
+                key={contact.givenName + contact.familyName}
                 name={`${contact.givenName} ${contact.familyName || ''}`}
                 isPeep={false}
                 photoUri={contact.thumbnailPath || ''}
+                onPress={() => sendMessage(contact.phoneNumbers[0].number)}
               />
             ))}
           </View>
         </View>
       </ScrollView>
-      <View className="px-[16px] absolute w-full bottom-[76px]">
+      <View className="px-[16px] absolute w-full bottom-[40px]">
         <BigButton
           label="Jump in!"
           onPress={() => navigation.navigate(Screens.HOME)}
