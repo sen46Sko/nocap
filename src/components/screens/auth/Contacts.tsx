@@ -1,18 +1,19 @@
+import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Contact, getAll} from 'react-native-contacts';
+import SendIntentAndroid from 'react-native-send-intent';
 import {
+  PermissionsAndroid,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Pressable,
+  Platform,
   Linking,
   Alert,
   Text,
   View,
-  Platform,
-  PermissionsAndroid,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Contact, getAll} from 'react-native-contacts';
 
 import {ContactItem} from 'components/atoms/ContactItem';
 import {CustomInput} from 'components/atoms/CustomInput';
@@ -20,10 +21,9 @@ import {SmallButton} from 'components/atoms/SmallButton';
 import {BigButton} from 'components/atoms/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {sortContacts} from 'utils/helpers';
 
 import {Expand, Search} from 'assets/images';
-import SendIntentAndroid from 'react-native-send-intent';
-import {sortContacts} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
@@ -149,6 +149,7 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
           </View>
         </View>
       </ScrollView>
+
       <View className="px-[16px] absolute w-full bottom-[40px]">
         <BigButton
           label="Jump in!"

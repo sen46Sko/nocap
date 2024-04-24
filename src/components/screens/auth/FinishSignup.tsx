@@ -26,6 +26,7 @@ export const FinishSignup: React.FC<Props> = ({navigation}) => {
           <Text className="color-white font-robotoRegular text-[20px]">
             Welcome to
           </Text>
+
           <View className="flex-row gap-[2px] items-center">
             <Text className="color-white font-robotoMedium text-[36px]">
               nocap
@@ -33,9 +34,11 @@ export const FinishSignup: React.FC<Props> = ({navigation}) => {
             <Logo />
           </View>
         </View>
+
         <Text className="font-robotoRegular text-[20px] color-white">
           Let's peep your friends who are already using nocap
         </Text>
+
         <BigButton
           label="Sync contacts"
           style="white"

@@ -1,9 +1,10 @@
 import {createNavigationContainerRef} from '@react-navigation/native';
-import {getAllUsers} from 'api/users';
 import {Dimensions} from 'react-native';
 import {Contact} from 'react-native-contacts';
 
 import {RootStackParamList} from 'utils/types/navigation';
+
+import {getAllUsers} from 'api/users';
 
 export const screenWidth = Dimensions.get('window').width;
 

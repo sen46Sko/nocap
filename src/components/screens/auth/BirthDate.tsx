@@ -1,15 +1,15 @@
 import {Alert, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useState} from 'react';
+import {Timestamp} from 'firebase/firestore';
 import DatePicker from 'react-native-date-picker';
 
 import {BigButton} from 'components/atoms/BigButton';
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {getAge, getDateString, isBirthDateValid} from 'utils/helpers';
-import {Timestamp} from 'firebase/firestore';
+import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.BIRTH_DATE>;
 

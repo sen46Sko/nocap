@@ -17,6 +17,7 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
         className=" h-4/6 w-full"
         source={require('assets/images/auth/IntroPhoto.png')}
       />
+
       <View className="w-full h-full shrink bg-black px-[10px] py-[6px] justify-between">
         <View className="flex-row items-center gap-2">
           <Text className=" font-robotoMedium text-white text-[36px]">
@@ -35,12 +36,17 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
             <BigButton
               label="Log in"
               style="gray"
-              onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
+              onPress={() =>
+                navigation.navigate(Screens.PHONE_AUTH, {type: 'login'})
+              }
             />
+
             <BigButton
               label="Sign up"
               style="white"
-              onPress={() => navigation.navigate(Screens.PHONE_AUTH)}
+              onPress={() =>
+                navigation.navigate(Screens.PHONE_AUTH, {type: 'signup'})
+              }
             />
           </View>
         </SafeAreaView>

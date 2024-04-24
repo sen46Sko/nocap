@@ -10,8 +10,8 @@ import React, {
 } from 'react';
 
 import {navigate} from 'utils/helpers';
-import {User} from 'utils/types/User';
 import {Screens} from 'utils/types/navigation';
+import {User} from 'utils/types/User';
 
 import {createUser, getUserIfExists, removeUser} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';

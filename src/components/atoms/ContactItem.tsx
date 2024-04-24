@@ -27,6 +27,7 @@ export const ContactItem: React.FC<Props> = ({
         ) : (
           <View className="w-[40px] h-[40px] rounded-full bg-grayLight" />
         )}
+
         <Text className="color-white font-robotoMedium text-[16px]">
           {name}
         </Text>

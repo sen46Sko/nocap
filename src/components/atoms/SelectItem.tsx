@@ -23,6 +23,7 @@ export const SelectItem: React.FC<Props> = ({isSelected, onSelect, label}) => {
       <Text className="color-white text-[16px] font-robotoRegular">
         {label}
       </Text>
+
       <View className={getRadioStyle()}>
         <If condition={isSelected}>
           <View className="w-[14px] h-[14px] bg-orange rounded-full" />

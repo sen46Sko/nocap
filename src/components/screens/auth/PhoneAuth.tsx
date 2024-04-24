@@ -11,18 +11,21 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {BigButton} from 'components/atoms/BigButton';
+import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
+import {BigButton} from 'components/atoms/BigButton';
+import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {If} from 'components/atoms/If';
-import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
+
+import {Logo} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PHONE_AUTH>;
 
-export const PhoneAuth: React.FC<Props> = () => {
+export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
+  const {type: screenType} = route.params;
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -74,12 +77,16 @@ export const PhoneAuth: React.FC<Props> = () => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <View className="flex-1 items-center px-[16px] gap-[24px] mt-[83px]">
-          <Text className="font-robotoMedium text-[36px] color-white">
-            nocap
-          </Text>
+          <View className="flex-row items-center gap-[2px]">
+            <Text className="font-robotoMedium text-[36px] color-white">
+              nocap
+            </Text>
+            <Logo />
+          </View>
+
           <View className="w-full gap-[16px]">
             <Text className="font-robotoMedium text-[16px] color-white">
-              Log in
+              {screenType === 'login' ? 'Log in' : 'Sign up'}
             </Text>
 
             <View className="gap-[24px]">
@@ -98,23 +105,72 @@ export const PhoneAuth: React.FC<Props> = () => {
               />
             </View>
           </View>
+
           <View className="w-full items-end">
             <Pressable onPress={sendOtp}>
               <Text className="font-robotoRegular color-white">send OTP</Text>
             </Pressable>
           </View>
-          <BigButton label="Log in" style="white" onPress={validateOtp} />
+
+          <BigButton
+            label={screenType === 'login' ? 'Log in' : 'Sign up'}
+            style="white"
+            onPress={validateOtp}
+          />
 
           <Text className="self-center color-grayLight font-robotoRegular text-[16px]">
             OR
           </Text>
 
           <BigButton
-            label="Log in with Google"
+            label={
+              screenType === 'login'
+                ? 'Log in with Google'
+                : 'Sign up with Google'
+            }
             style="blue"
             onPress={() => auth.signInWithGoogle()}
           />
+
+          <View className="flex-row gap-[4px] w-full mt-[80px]">
+            <Text className="text-grayLight font-robotoRegular text-[16px]">
+              {screenType === 'login'
+                ? "Don't have account yet?"
+                : 'Already have account yet?'}
+            </Text>
+
+            <Pressable
+              onPress={() =>
+                navigation.navigate(Screens.PHONE_AUTH, {
+                  type: screenType === 'login' ? 'signup' : 'login',
+                })
+              }>
+              <Text className="text-white font-robotoMedium text-[16px]">
+                {screenType === 'login' ? 'Sign up' : 'Log in'}
+              </Text>
+            </Pressable>
+          </View>
         </View>
+
+        <If condition={screenType === 'signup'}>
+          <View className="absolote bottom-30 left-6">
+            <Text className="text-grayLight font-robotoRegular">
+              By signing up, you agree to the
+            </Text>
+
+            <View className="flex-row gap-[4px]">
+              <Text className="text-grayLight font-robotoRegular">Nocap's</Text>
+              <Text className="text-white font-robotoRegular">
+                Terms of Use
+              </Text>
+
+              <Text className="text-grayLight font-robotoRegular">and</Text>
+              <Text className="text-white font-robotoRegular">
+                Privacy Policy
+              </Text>
+            </View>
+          </View>
+        </If>
 
         <If condition={isLoading}>
           <LoaderSpinner />

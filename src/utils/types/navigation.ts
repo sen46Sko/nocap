@@ -11,7 +11,7 @@ export enum Screens {
 
 export type RootStackParamList = {
   [Screens.WELCOME]: undefined;
-  [Screens.PHONE_AUTH]: undefined;
+  [Screens.PHONE_AUTH]: {type: 'login' | 'signup'};
   [Screens.USERNAME]: undefined;
   [Screens.BIRTH_DATE]: undefined;
   [Screens.GENDER]: undefined;

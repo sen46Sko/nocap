@@ -10,15 +10,15 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {BigButton} from 'components/atoms/BigButton';
+import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
+import {BigButton} from 'components/atoms/BigButton';
+import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {isUsernameTaken, isUsernameValid} from 'utils/helpers';
-import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
-import {If} from 'components/atoms/If';
+import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.USERNAME>;
 
@@ -82,7 +82,7 @@ export const Username: React.FC<Props> = ({navigation}) => {
             />
           </View>
 
-          <View>
+          <View className="absolote bottom-30 left-10">
             <Text className="font-robotoRegular color-grayLight">
               By signing up, you agree to the
             </Text>
