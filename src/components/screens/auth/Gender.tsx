@@ -10,7 +10,7 @@ import {
 import React, {useState} from 'react';
 
 import {CustomInput} from 'components/atoms/CustomInput';
-import {SelectItem} from 'components/atoms/SelectItem';
+import {SelectItem} from 'components/molecules/SelectItem';
 import {BigButton} from 'components/atoms/BigButton';
 
 import {useAuth} from 'contexts/AuthContext';

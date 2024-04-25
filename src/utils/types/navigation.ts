@@ -7,6 +7,7 @@ export enum Screens {
   FINISH_SIGNUP = 'FinishSignup',
   CONTACTS = 'Contacts',
   HOME = 'Home',
+  FEED_CARD_DETAILS = 'FeedCardDetails',
 }
 
 export type RootStackParamList = {
@@ -18,4 +19,5 @@ export type RootStackParamList = {
   [Screens.FINISH_SIGNUP]: undefined;
   [Screens.CONTACTS]: undefined;
   [Screens.HOME]: undefined;
+  [Screens.FEED_CARD_DETAILS]: undefined;
 };

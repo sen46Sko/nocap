@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
+import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {PhoneAuth} from 'components/screens/auth/PhoneAuth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
@@ -29,6 +30,10 @@ export const AppNavigation = () => {
         <Stack.Screen name={Screens.CONTACTS} component={Contacts} />
 
         <Stack.Screen name={Screens.HOME} component={Home} />
+        <Stack.Screen
+          name={Screens.FEED_CARD_DETAILS}
+          component={FeedCardDetails}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

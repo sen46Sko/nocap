@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {Contact, getAll} from 'react-native-contacts';
-import SendIntentAndroid from 'react-native-send-intent';
 import {
   PermissionsAndroid,
   SafeAreaView,
@@ -15,7 +14,7 @@ import {
   View,
 } from 'react-native';
 
-import {ContactItem} from 'components/atoms/ContactItem';
+import {ContactItem} from 'components/molecules/ContactItem';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {SmallButton} from 'components/atoms/SmallButton';
 import {BigButton} from 'components/atoms/BigButton';
@@ -23,7 +22,7 @@ import {BigButton} from 'components/atoms/BigButton';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {sortContacts} from 'utils/helpers';
 
-import {Expand, Search} from 'assets/images';
+import {Expand, SearchGray} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 
@@ -91,13 +90,20 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
         }
       });
     } else {
-      SendIntentAndroid.sendSms(phoneNumber, message);
+      const url = `sms://${phoneNumber}?body=${message}`;
+      Linking.canOpenURL(url).then(supported => {
+        if (!supported) {
+          console.log('Unsupported url: ' + url);
+        } else {
+          return Linking.openURL(url);
+        }
+      });
     }
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false} bounces>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View className="flex-1 px-[16px] mt-[40px] mb-[100px] gap-[16px]">
           <View className="flex-row items-center justify-between">
             <Text className="color-orange font-robotoMedium text-[16px]">
@@ -129,7 +135,7 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
             value={searchQuery}
             setValue={setSearchQuery}
             placeholder="Search"
-            Icon={Search}
+            Icon={SearchGray}
           />
 
           <View className="flex-row justify-end">

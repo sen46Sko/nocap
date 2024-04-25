@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {LoaderSpinner} from 'components/atoms/LoaderSpinner';
+import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {BigButton} from 'components/atoms/BigButton';
 import {If} from 'components/atoms/If';

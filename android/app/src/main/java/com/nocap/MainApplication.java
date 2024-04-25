@@ -11,7 +11,6 @@ import com.facebook.soloader.SoLoader;
 import java.util.List;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
-import com.burnweb.rnsendintent.RNSendIntentPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
