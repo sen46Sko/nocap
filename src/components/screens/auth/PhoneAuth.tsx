@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
+import {PhoneNumberInput} from 'components/molecules/PhoneNumberInput';
 import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {BigButton} from 'components/atoms/BigButton';
@@ -89,12 +90,7 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
             </Text>
 
             <View className="gap-[24px]">
-              <CustomInput
-                value={phone}
-                setValue={setPhone}
-                placeholder="Phone number"
-                type="tel"
-              />
+              <PhoneNumberInput value={phone} onChange={setPhone} />
 
               <CustomInput
                 value={otp}

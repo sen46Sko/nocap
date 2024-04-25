@@ -1553,6 +1553,8 @@ PODS:
     - React-logger (= 0.72.9)
     - React-perflogger (= 0.72.9)
   - RecaptchaInterop (100.0.0)
+  - RNDeviceInfo (10.13.2):
+    - React-Core
   - RNFBApp (19.2.2):
     - Firebase/CoreOnly (= 10.24.0)
     - React-Core
@@ -1625,6 +1627,7 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
@@ -1747,6 +1750,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNDeviceInfo:
+    :path: "../node_modules/react-native-device-info"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
@@ -1831,6 +1836,7 @@ SPEC CHECKSUMS:
   React-utils: ca41af4592cb4ed7eb660d33b7d63818561ee118
   ReactCommon: 7f1c2a847773d16c6ba5fb8224552f4d510a51ba
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
+  RNDeviceInfo: 42aadf1282ffa0a88dc38a504a7be145eb010dfa
   RNFBApp: 91311b27bc9a33e23b76a62825afd1635501018a
   RNFBAuth: 92172d8976baaa829825017174106e2b2c550319
   RNFBFirestore: 58f9f2f1d61eadcf16bf6d75737d92ad651bb264
