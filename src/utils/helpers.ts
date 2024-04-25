@@ -1,5 +1,5 @@
 import {createNavigationContainerRef} from '@react-navigation/native';
-import {Dimensions} from 'react-native';
+import {Dimensions, Platform} from 'react-native';
 import {Contact} from 'react-native-contacts';
 
 import {RootStackParamList} from 'utils/types/navigation';
@@ -38,7 +38,7 @@ export const sortContacts = async (contacts: Contact[]) => {
   const unregistered: Contact[] = [];
 
   for (const contact of contacts) {
-    if (!contact.phoneNumbers.length || !contact.displayName) {
+    if (!contact.phoneNumbers.length) {
       continue;
     }
 
@@ -56,7 +56,9 @@ export const sortContacts = async (contacts: Contact[]) => {
   }
 
   const sortingFunc = (a: Contact, b: Contact) =>
-    a.displayName.localeCompare(b.displayName);
+    Platform.OS === 'ios'
+      ? a.givenName.localeCompare(b.givenName)
+      : a.displayName.localeCompare(b.displayName);
 
   return {
     registered: [...registered].sort(sortingFunc),

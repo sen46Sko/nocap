@@ -71,7 +71,10 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
   const peepListStyle = isExpanded ? 'gap-[16px]' : 'gap-[16px]';
 
   const filteredContacts = unregisteredContacts.filter(contact =>
-    contact.displayName.toLowerCase().includes(searchQuery.toLowerCase()),
+    Platform.OS === 'ios'
+      ? contact.givenName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        contact.familyName.toLowerCase().includes(searchQuery.toLowerCase())
+      : contact.displayName.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const sendMessage = (phoneNumber: string) => {

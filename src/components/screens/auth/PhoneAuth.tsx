@@ -9,7 +9,7 @@ import {
   View,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {PhoneNumberInput} from 'components/molecules/PhoneNumberInput';
 import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
@@ -21,7 +21,7 @@ import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
-import {Logo} from 'assets/images';
+import {Google, Logo} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PHONE_AUTH>;
 
@@ -30,6 +30,8 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
   const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isOtpSent, setIsOtpSent] = useState(false);
+  const [secondsToActivate, setSecondsToActivate] = useState(0);
 
   const auth = useAuth();
 
@@ -56,10 +58,9 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
   const sendOtp = async () => {
     try {
       setIsLoading(true);
-      if (!phone) {
-        throw new Error('Please, enter phone number');
-      }
       await auth.sendCodeToSMS(phone);
+      setIsOtpSent(true);
+      setSecondsToActivate(59);
     } catch (error: any) {
       console.log(error);
 
@@ -73,6 +74,15 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      secondsToActivate >= 1 && setSecondsToActivate(secondsToActivate - 1);
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [secondsToActivate]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -101,9 +111,19 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
             </View>
           </View>
 
-          <View className="w-full items-end">
-            <Pressable onPress={sendOtp}>
-              <Text className="font-robotoRegular color-white">send OTP</Text>
+          <View className="w-full flex-row justify-between">
+            <Text className="color-orange font-robotoRegular">
+              <If condition={!!secondsToActivate}>
+                {`resending OTP in 0:${('0' + secondsToActivate).slice(-2)} s`}
+              </If>
+            </Text>
+
+            <Pressable
+              onPress={sendOtp}
+              disabled={!phone || secondsToActivate > 0}>
+              <Text className="font-robotoRegular color-white">
+                {isOtpSent ? 'resent OTP' : 'sent OTP'}
+              </Text>
             </Pressable>
           </View>
 
@@ -123,8 +143,9 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
                 ? 'Log in with Google'
                 : 'Sign up with Google'
             }
-            style="blue"
+            style="gray"
             onPress={() => auth.signInWithGoogle()}
+            Icon={Google}
           />
 
           <View className="flex-row gap-[4px] w-full mt-[80px]">
