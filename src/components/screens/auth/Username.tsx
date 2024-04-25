@@ -54,7 +54,7 @@ export const Username: React.FC<Props> = ({navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
-        <View className="flex-1 px-[16px] mt-[83px] justify-between">
+        <View className="flex-1 px-[16px] mt-[83px] mb-[40px] justify-between">
           <View className="gap-[24px] w-full items-center">
             <Text className="font-robotoMedium text-[36px] color-white">
               nocap
@@ -82,7 +82,7 @@ export const Username: React.FC<Props> = ({navigation}) => {
             />
           </View>
 
-          <View className="absolote bottom-30 left-10">
+          <View className="absolote bottom-30">
             <Text className="font-robotoRegular color-grayLight">
               By signing up, you agree to the
             </Text>

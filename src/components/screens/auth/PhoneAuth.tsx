@@ -76,14 +76,13 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
-        <View className="flex-1 items-center px-[16px] gap-[24px] mt-[83px]">
+        <View className="flex-1 items-center px-[16px] mt-[83px] gap-[16px]">
           <View className="flex-row items-center gap-[2px]">
             <Text className="font-robotoMedium text-[36px] color-white">
               nocap
             </Text>
             <Logo />
           </View>
-
           <View className="w-full gap-[16px]">
             <Text className="font-robotoMedium text-[16px] color-white">
               {screenType === 'login' ? 'Log in' : 'Sign up'}
@@ -118,7 +117,7 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
             onPress={validateOtp}
           />
 
-          <Text className="self-center color-grayLight font-robotoRegular text-[16px]">
+          <Text className="color-grayLight font-robotoRegular text-[16px]">
             OR
           </Text>
 
@@ -150,27 +149,29 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
               </Text>
             </Pressable>
           </View>
-        </View>
 
-        <If condition={screenType === 'signup'}>
-          <View className="absolote bottom-30 left-6">
-            <Text className="text-grayLight font-robotoRegular">
-              By signing up, you agree to the
-            </Text>
-
-            <View className="flex-row gap-[4px]">
-              <Text className="text-grayLight font-robotoRegular">Nocap's</Text>
-              <Text className="text-white font-robotoRegular">
-                Terms of Use
+          <If condition={screenType === 'signup'}>
+            <View className="w-full absolute bottom-[40px]">
+              <Text className="text-grayLight font-robotoRegular">
+                By signing up, you agree to the
               </Text>
 
-              <Text className="text-grayLight font-robotoRegular">and</Text>
-              <Text className="text-white font-robotoRegular">
-                Privacy Policy
-              </Text>
+              <View className="flex-row gap-[4px]">
+                <Text className="text-grayLight font-robotoRegular">
+                  Nocap's
+                </Text>
+                <Text className="text-white font-robotoRegular">
+                  Terms of Use
+                </Text>
+
+                <Text className="text-grayLight font-robotoRegular">and</Text>
+                <Text className="text-white font-robotoRegular">
+                  Privacy Policy
+                </Text>
+              </View>
             </View>
-          </View>
-        </If>
+          </If>
+        </View>
 
         <If condition={isLoading}>
           <LoaderSpinner />

@@ -49,7 +49,7 @@ export const Gender: React.FC<Props> = ({navigation}) => {
               Gender
             </Text>
 
-            <Text className="color-white font-robotoMedium text-[16px] h-[20px]">
+            <Text className="color-white font-robotoMedium text-[16px] h-[22px]">
               {gender !== 'Custom' ? gender : customGender}
             </Text>
 

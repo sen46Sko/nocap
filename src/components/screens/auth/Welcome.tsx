@@ -32,7 +32,7 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
         </Text>
 
         <SafeAreaView>
-          <View className="w-full gap-[10px] flex-row">
+          <View className="w-full gap-[10px] flex-row mb-[40px] ">
             <BigButton
               label="Log in"
               style="gray"

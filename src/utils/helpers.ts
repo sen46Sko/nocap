@@ -38,8 +38,7 @@ export const sortContacts = async (contacts: Contact[]) => {
   const unregistered: Contact[] = [];
 
   for (const contact of contacts) {
-    if (!contact.phoneNumbers[0].number) {
-      unregistered.push(contact);
+    if (!contact.phoneNumbers.length || !contact.displayName) {
       continue;
     }
 
@@ -56,7 +55,13 @@ export const sortContacts = async (contacts: Contact[]) => {
     }
   }
 
-  return {registered, unregistered};
+  const sortingFunc = (a: Contact, b: Contact) =>
+    a.displayName.localeCompare(b.displayName);
+
+  return {
+    registered: [...registered].sort(sortingFunc),
+    unregistered: [...unregistered].sort(sortingFunc),
+  };
 };
 
 export const isUsernameValid = (username: string) => {
