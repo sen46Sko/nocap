@@ -1,11 +1,12 @@
+import React, {ReactNode, useCallback} from 'react';
 import BottomSheet, {
-  BottomSheetBackdrop,
   BottomSheetBackdropProps,
+  BottomSheetBackdrop,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import {Handle} from 'assets/images';
-import React, {ReactNode, useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
+
+import {Handle} from 'assets/images';
 
 type Props = {
   children: ReactNode;

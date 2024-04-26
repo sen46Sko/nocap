@@ -4,9 +4,9 @@ import {
   SafeAreaView,
   StyleSheet,
   Keyboard,
+  Alert,
   Text,
   View,
-  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 

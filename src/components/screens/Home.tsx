@@ -1,5 +1,12 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 import React from 'react';
 
 import {BigButton} from 'components/atoms/buttons/BigButton';
@@ -26,7 +33,9 @@ export const Home: React.FC<Props> = ({navigation}) => {
             </Text>
 
             <View className="flex-row items-center gap-[24px]">
-              <SearchWhite />
+              <Pressable onPress={() => navigation.navigate(Screens.SEARCH)}>
+                <SearchWhite />
+              </Pressable>
               <Plus />
               <View className="h-[24px] w-[24px] rounded-full bg-white" />
             </View>

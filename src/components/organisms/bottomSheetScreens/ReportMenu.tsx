@@ -1,5 +1,6 @@
 import {Pressable, Text, View} from 'react-native';
 import React, {useState} from 'react';
+
 import {CustomInput} from 'components/atoms/CustomInput';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 

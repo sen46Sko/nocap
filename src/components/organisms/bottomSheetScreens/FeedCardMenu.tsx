@@ -1,5 +1,6 @@
 import {View} from 'react-native';
 import React from 'react';
+
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
 type Props = {

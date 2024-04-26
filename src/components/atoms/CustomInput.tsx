@@ -1,7 +1,7 @@
 import {Platform, TextInput, View} from 'react-native';
 import {SvgProps} from 'react-native-svg';
-import React from 'react';
 import classNames from 'classnames';
+import React from 'react';
 
 type Props = {
   value: string;
@@ -22,10 +22,6 @@ export const CustomInput: React.FC<Props> = ({
   multiline = false,
   Icon,
 }) => {
-  const placeHolderStyle = disabled
-    ? 'font-robotoRegular text-grayDark'
-    : 'font-robotoRegular text-grayLight';
-
   return (
     <View
       className={classNames(
@@ -37,13 +33,16 @@ export const CustomInput: React.FC<Props> = ({
       )}>
       {Icon && <Icon />}
       <TextInput
-        className="color-grayLight text-[16px] w-full"
+        className="color-white text-[16px] w-full"
         value={value}
         onChangeText={setValue}
         placeholder={placeholder}
         editable={!disabled}
         inputMode={type}
-        placeholderClassName={placeHolderStyle}
+        placeholderClassName={classNames('font-robotoRegular', {
+          'text-grayDark': disabled,
+          'text-grayLight': !disabled,
+        })}
         multiline={multiline}
       />
     </View>

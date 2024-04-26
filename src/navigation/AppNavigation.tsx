@@ -10,6 +10,7 @@ import {Username} from 'components/screens/auth/Username';
 import {Contacts} from 'components/screens/auth/Contacts';
 import {Welcome} from 'components/screens/auth/Welcome';
 import {Gender} from 'components/screens/auth/Gender';
+import {Search} from 'components/screens/Search';
 import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
@@ -33,6 +34,15 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.FEED_CARD_DETAILS}
           component={FeedCardDetails}
+        />
+
+        <Stack.Screen
+          name={Screens.SEARCH}
+          component={Search}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

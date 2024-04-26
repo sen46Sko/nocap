@@ -1,6 +1,6 @@
-import React from 'react';
 import {StyleSheet} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
+import React from 'react';
 
 type Props = {
   value: string;
