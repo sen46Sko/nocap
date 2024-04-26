@@ -9,7 +9,7 @@ import {
   View,
   Alert,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import {PhoneNumberInput} from 'components/molecules/PhoneNumberInput';
 import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
@@ -18,6 +18,8 @@ import {BigButton} from 'components/atoms/BigButton';
 import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
+
+import {useTimer} from 'hooks/useTimer';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
@@ -31,9 +33,9 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
   const [otp, setOtp] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isOtpSent, setIsOtpSent] = useState(false);
-  const [secondsToActivate, setSecondsToActivate] = useState(0);
 
   const auth = useAuth();
+  const timer = useTimer();
 
   const validateOtp = async () => {
     try {
@@ -42,6 +44,7 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
         throw new Error('Please, enter OTP code');
       }
       await auth.verifyCode(otp);
+      timer.clearTimer();
     } catch (error: any) {
       console.log(error);
 
@@ -60,7 +63,7 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
       setIsLoading(true);
       await auth.sendCodeToSMS(phone);
       setIsOtpSent(true);
-      setSecondsToActivate(59);
+      timer.setTimer(59);
     } catch (error: any) {
       console.log(error);
 
@@ -71,18 +74,10 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
 
       Alert.alert(error.message);
     } finally {
+      Alert.alert(`OTP was sent to ${phone}`);
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      secondsToActivate >= 1 && setSecondsToActivate(secondsToActivate - 1);
-    }, 1000);
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [secondsToActivate]);
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -113,14 +108,12 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
 
           <View className="w-full flex-row justify-between">
             <Text className="color-orange font-robotoRegular">
-              <If condition={!!secondsToActivate}>
-                {`resending OTP in 0:${('0' + secondsToActivate).slice(-2)} s`}
+              <If condition={!!timer.current}>
+                {`resending OTP in 0:${('0' + timer.current).slice(-2)} s`}
               </If>
             </Text>
 
-            <Pressable
-              onPress={sendOtp}
-              disabled={!phone || secondsToActivate > 0}>
+            <Pressable onPress={sendOtp} disabled={!phone || timer.current > 0}>
               <Text className="font-robotoRegular color-white">
                 {isOtpSent ? 'resent OTP' : 'sent OTP'}
               </Text>
