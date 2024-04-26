@@ -1,7 +1,7 @@
 import {Image, Text, View} from 'react-native';
 import React from 'react';
 
-import {SmallButton} from 'components/atoms/SmallButton';
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 type Props = {
   name: string;

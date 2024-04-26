@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import {Timestamp} from 'firebase/firestore';
 import DatePicker from 'react-native-date-picker';
 
-import {BigButton} from 'components/atoms/BigButton';
+import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {useAuth} from 'contexts/AuthContext';
 

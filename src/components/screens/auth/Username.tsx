@@ -12,7 +12,7 @@ import React, {useState} from 'react';
 
 import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
-import {BigButton} from 'components/atoms/BigButton';
+import {BigButton} from 'components/atoms/buttons/BigButton';
 import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';

@@ -2,7 +2,7 @@ import {Image, SafeAreaView, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
-import {BigButton} from 'components/atoms/BigButton';
+import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 

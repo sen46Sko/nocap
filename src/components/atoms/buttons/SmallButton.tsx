@@ -24,6 +24,7 @@ export const SmallButton: React.FC<Props> = ({label, onPress}) => {
       useNativeDriver: true,
     }).start();
   };
+
   return (
     <Pressable
       onPressIn={fadeIn}

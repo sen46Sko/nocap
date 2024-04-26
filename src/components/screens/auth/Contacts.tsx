@@ -16,8 +16,8 @@ import {
 
 import {ContactItem} from 'components/molecules/ContactItem';
 import {CustomInput} from 'components/atoms/CustomInput';
-import {SmallButton} from 'components/atoms/SmallButton';
-import {BigButton} from 'components/atoms/BigButton';
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
+import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {sortContacts} from 'utils/helpers';
