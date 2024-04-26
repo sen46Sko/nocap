@@ -10,6 +10,7 @@ type Props = {
   type?: 'text' | 'tel' | 'numeric';
   disabled?: boolean;
   Icon?: React.FC<SvgProps>;
+  multiline?: boolean;
 };
 
 export const CustomInput: React.FC<Props> = ({
@@ -18,6 +19,7 @@ export const CustomInput: React.FC<Props> = ({
   placeholder,
   type = 'text',
   disabled = false,
+  multiline = false,
   Icon,
 }) => {
   const placeHolderStyle = disabled
@@ -27,9 +29,10 @@ export const CustomInput: React.FC<Props> = ({
   return (
     <View
       className={classNames(
-        'font-robotoRegular w-full shrink rounded-[8px] border-grayDark border-[1px] px-[16px] flex-row items-center gap-[16px]',
+        'font-robotoRegular w-full shrink rounded-[8px] border-grayDark border-[1px] px-[16px] flex-row gap-[16px]',
         {
           'py-[10px]': Platform.OS === 'ios',
+          'h-full': multiline,
         },
       )}>
       {Icon && <Icon />}
@@ -41,6 +44,7 @@ export const CustomInput: React.FC<Props> = ({
         editable={!disabled}
         inputMode={type}
         placeholderClassName={placeHolderStyle}
+        multiline={multiline}
       />
     </View>
   );

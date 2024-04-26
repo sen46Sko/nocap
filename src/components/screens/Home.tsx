@@ -3,7 +3,7 @@ import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 
 import {BigButton} from 'components/atoms/buttons/BigButton';
-import {FeedCard} from 'components/molecules/FeedCard';
+import {FeedCard} from 'components/organisms/FeedCard';
 
 import {useAuth} from 'contexts/AuthContext';
 

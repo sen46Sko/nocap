@@ -3,7 +3,13 @@ import React, {useRef} from 'react';
 import {SvgProps} from 'react-native-svg';
 import classNames from 'classnames';
 
-type ButtonStyles = 'white' | 'gray' | 'blue';
+type ButtonStyles =
+  | 'white'
+  | 'gray'
+  | 'blue'
+  | 'transparent'
+  | 'transparentRed'
+  | 'transparentGreen';
 
 type Props = {
   label: string;
@@ -52,13 +58,20 @@ export const BigButton: React.FC<Props> = ({
             'bg-white': style === 'white',
             'bg-grayDark': style === 'gray',
             'bg-blue': style === 'blue',
+            'bg-transparent':
+              style === 'transparent' ||
+              style === 'transparentRed' ||
+              style === 'transparentGreen',
           },
         )}>
         {Icon && <Icon />}
         <Text
           className={classNames('font-robotoMedium text-[16px]', {
-            'text-white': style === 'gray' || style === 'blue',
+            'text-white':
+              style === 'gray' || style === 'blue' || style === 'transparent',
             'text-black': style === 'white',
+            'text-red': style === 'transparentRed',
+            'text-green': style === 'transparentGreen',
           })}>
           {label}
         </Text>

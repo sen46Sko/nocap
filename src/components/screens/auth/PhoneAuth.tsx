@@ -12,7 +12,7 @@ import {
 import React, {useState} from 'react';
 
 import {PhoneNumberInput} from 'components/molecules/PhoneNumberInput';
-import {LoaderSpinner} from 'components/molecules/LoaderSpinner';
+import {LoaderSpinner} from 'components/organisms/LoaderSpinner';
 import {CustomInput} from 'components/atoms/CustomInput';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 import {If} from 'components/atoms/If';

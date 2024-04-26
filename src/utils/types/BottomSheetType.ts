@@ -1,0 +1,6 @@
+export enum BottomSheetType {
+  FEED_CARD_MENU,
+  REPORT_MENU,
+  REPORT_SMTH_ELSE,
+  SUBMITTED_REPORT,
+}
