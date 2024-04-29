@@ -20,7 +20,7 @@ import {If} from 'components/atoms/If';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
-import {Calendar, Eye, Locaiton, Menu, Phone, Share} from 'assets/images';
+import {Calendar, Eye, Locaiton, MenuGray, Phone, Share} from 'assets/images';
 import {FadeScaleAnim} from 'components/atoms/FadeScaleAnim';
 
 type Props = NativeStackScreenProps<
@@ -28,7 +28,7 @@ type Props = NativeStackScreenProps<
   Screens.FEED_CARD_DETAILS
 >;
 
-export const FeedCardDetails: React.FC<Props> = () => {
+export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
@@ -59,14 +59,17 @@ export const FeedCardDetails: React.FC<Props> = () => {
             </View>
 
             <View className="px-[10px] flex-row items-center justify-between">
-              <Text className=" font-robotoBold color-white text-[16px]">
-                Name
-              </Text>
+              <Pressable onPress={() => navigation.navigate(Screens.PROFILE)}>
+                <Text className=" font-robotoBold color-white text-[16px]">
+                  Name
+                </Text>
+              </Pressable>
+
               <Pressable
                 onPress={() =>
                   setBottomSheetType(BottomSheetType.FEED_CARD_MENU)
                 }>
-                <Menu />
+                <MenuGray />
               </Pressable>
             </View>
 

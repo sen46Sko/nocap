@@ -7,20 +7,23 @@ import {LikeButton} from 'components/atoms/buttons/LikeButton';
 import {Share} from 'assets/images';
 
 type Props = {
-  onPress: () => void;
+  openImage: () => void;
+  openProfile: () => void;
 };
 
-export const FeedCard: React.FC<Props> = ({onPress}) => {
+export const FeedCard: React.FC<Props> = ({openImage, openProfile}) => {
   const [isPeeping, setIsPeeping] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
   return (
-    <Pressable className="gap-[8px]" onPress={onPress}>
+    <Pressable className="gap-[8px]" onPress={openImage}>
       <View className="px-[10px] flex-row items-center justify-between">
-        <View className="flex-row items-center gap-[8px]">
+        <Pressable
+          className="flex-row items-center gap-[8px]"
+          onPress={openProfile}>
           <View className="bg-white h-[24px] w-[24px] rounded-full" />
           <Text className="font-robotoBold color-white text-[16px]">Name</Text>
-        </View>
+        </Pressable>
 
         <SmallButton
           label={isPeeping ? 'Peeping' : 'Peep'}

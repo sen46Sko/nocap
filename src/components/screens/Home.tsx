@@ -36,22 +36,30 @@ export const Home: React.FC<Props> = ({navigation}) => {
               <Pressable onPress={() => navigation.navigate(Screens.SEARCH)}>
                 <SearchWhite />
               </Pressable>
+
               <Plus />
-              <View className="h-[24px] w-[24px] rounded-full bg-white" />
+
+              <Pressable>
+                <View className="h-[24px] w-[24px] rounded-full bg-white" />
+              </Pressable>
             </View>
           </View>
 
           <View className="gap-[24px]">
             <FeedCard
-              onPress={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openProfile={() => navigation.navigate(Screens.PROFILE)}
             />
             <FeedCard
-              onPress={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openProfile={() => navigation.navigate(Screens.PROFILE)}
             />
             <FeedCard
-              onPress={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+              openProfile={() => navigation.navigate(Screens.PROFILE)}
             />
           </View>
+
           <BigButton
             label="Log out"
             style="white"
@@ -60,6 +68,7 @@ export const Home: React.FC<Props> = ({navigation}) => {
               navigation.navigate(Screens.WELCOME);
             }}
           />
+
           <BigButton
             label="Delete profile"
             style="white"

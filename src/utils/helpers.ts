@@ -7,6 +7,7 @@ import {RootStackParamList} from 'utils/types/navigation';
 import {getAllUsers} from 'api/users';
 
 export const screenWidth = Dimensions.get('window').width;
+export const screenHeight = Dimensions.get('window').height;
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 

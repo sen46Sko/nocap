@@ -11,6 +11,8 @@ export enum Screens {
   FEED_CARD_DETAILS = 'FeedCardDetails',
 
   SEARCH = 'Search',
+
+  PROFILE = 'Profile',
 }
 
 export type RootStackParamList = {
@@ -26,4 +28,6 @@ export type RootStackParamList = {
   [Screens.FEED_CARD_DETAILS]: undefined;
 
   [Screens.SEARCH]: undefined;
+
+  [Screens.PROFILE]: undefined;
 };

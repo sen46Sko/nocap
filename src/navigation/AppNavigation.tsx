@@ -9,6 +9,7 @@ import {BirthDate} from 'components/screens/auth/BirthDate';
 import {Username} from 'components/screens/auth/Username';
 import {Contacts} from 'components/screens/auth/Contacts';
 import {Welcome} from 'components/screens/auth/Welcome';
+import {Profile} from 'components/screens/Profile';
 import {Gender} from 'components/screens/auth/Gender';
 import {Search} from 'components/screens/Search';
 import {Home} from 'components/screens/Home';
@@ -42,6 +43,15 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.SEARCH}
           component={Search}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+
+        <Stack.Screen
+          name={Screens.PROFILE}
+          component={Profile}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',
