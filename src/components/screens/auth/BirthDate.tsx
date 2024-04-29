@@ -54,7 +54,7 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
           <View className="h-[1px] w-full bg-grayDark" />
         </View>
 
-        <View className="items-center gap-[80px]">
+        <View className="items-center justify-center flex-1 ">
           <DatePicker
             date={date}
             onDateChange={setDate}
@@ -64,12 +64,13 @@ export const BirthDate: React.FC<Props> = ({navigation}) => {
             dividerColor="#2A2929"
             maximumDate={new Date()}
           />
-
-          <Text className="color-grayLight font-robotoRegular text-[16px]">
-            {`You are ${getAge(date)} years young!`}
-          </Text>
-
-          <BigButton label="Continue" style="white" onPress={saveBirthDate} />
+          <View className="absolute w-full bottom-0">
+            <BigButton
+              label={`Yes I'm ${getAge(date)} years old`}
+              style="white"
+              onPress={saveBirthDate}
+            />
+          </View>
         </View>
       </View>
     </SafeAreaView>

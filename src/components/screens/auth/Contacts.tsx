@@ -157,7 +157,7 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
         </View>
       </ScrollView>
 
-      <View className="px-[16px] absolute w-full bottom-[40px]">
+      <View className="px-[16px] absolute w-full bottom-[74px]">
         <BigButton
           label="Jump in!"
           onPress={() => navigation.navigate(Screens.HOME)}
