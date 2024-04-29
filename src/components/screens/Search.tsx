@@ -16,6 +16,7 @@ import {UserCard} from 'components/organisms/UserCard';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand, SearchLightGray, SeeMore} from 'assets/images';
+import {If} from 'components/atoms/If';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
 
@@ -39,13 +40,24 @@ export const Search: React.FC<Props> = ({navigation}) => {
             Icon={SearchLightGray}
           />
 
-          <View className="gap-[24px]">
-            <View className="gap-[8px]">
-              <View className="flex-row items-center justify-between">
+          <If condition={!!searchQuery}>
+            <View className="gap-[16px]">
+              <View className="flex-row justify-between">
                 <Text className="font-robotoMedium text-[16px] color-white">
+                  For you
+                </Text>
+                <Text className="font-robotoMedium text-[16px] color-grayMedium">
                   Trending
                 </Text>
-                <Text className="font-robotoMedium color-orange">See more</Text>
+                <Text className="font-robotoMedium text-[16px] color-grayMedium">
+                  Account
+                </Text>
+                <Text className="font-robotoMedium text-[16px] color-grayMedium">
+                  Places
+                </Text>
+                <Text className="font-robotoMedium text-[16px] color-grayMedium">
+                  Others
+                </Text>
               </View>
 
               <View className="flex-row gap-[5px] flex-wrap justify-center">
@@ -86,122 +98,184 @@ export const Search: React.FC<Props> = ({navigation}) => {
                   className="w-[121px] h-[129px] rounded-[4px]"
                 />
               </View>
-            </View>
 
-            <View className="gap-[8px]">
-              <Text className="font-robotoMedium text-[16px] color-white">
-                Suggested for you
+              <Text className="font-robotoRegular text-[16px] color-orange self-center mt-[24px]">
+                See more
               </Text>
+            </View>
+          </If>
 
-              <View className="flex-row gap-[10px] items-center">
-                <UserCard />
-                <UserCard />
-
-                <View className="gap-[8px] w-[33px] ml-[16px]">
-                  <SeeMore />
-                  <Text className="font-robotoMedium color-white">
+          <If condition={!searchQuery}>
+            <View className="gap-[24px]">
+              <View className="gap-[8px]">
+                <View className="flex-row items-center justify-between">
+                  <Text className="font-robotoMedium text-[16px] color-white">
+                    Trending
+                  </Text>
+                  <Text className="font-robotoMedium color-orange">
                     See more
                   </Text>
                 </View>
-              </View>
-            </View>
 
-            <View className="gap-[8px]">
-              <View className="flex-row items-center justify-between">
+                <View className="flex-row gap-[5px] flex-wrap justify-center">
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                </View>
+              </View>
+
+              <View className="gap-[8px]">
                 <Text className="font-robotoMedium text-[16px] color-white">
-                  Posts nearby
+                  Suggested for you
                 </Text>
-                <Text className="font-robotoMedium color-orange">See more</Text>
+
+                <View className="flex-row gap-[10px] items-center">
+                  <UserCard />
+                  <UserCard />
+
+                  <View className="gap-[8px] w-[33px] ml-[16px]">
+                    <SeeMore />
+                    <Text className="font-robotoMedium color-white">
+                      See more
+                    </Text>
+                  </View>
+                </View>
               </View>
 
-              <View className="flex-row gap-[5px] flex-wrap justify-center">
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
+              <View className="gap-[8px]">
+                <View className="flex-row items-center justify-between">
+                  <Text className="font-robotoMedium text-[16px] color-white">
+                    Posts nearby
+                  </Text>
+                  <Text className="font-robotoMedium color-orange">
+                    See more
+                  </Text>
+                </View>
+
+                <View className="flex-row gap-[5px] flex-wrap justify-center">
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                </View>
+              </View>
+
+              <View className="gap-[8px]">
+                <View className="flex-row items-center justify-between">
+                  <Text className="font-robotoMedium text-[16px] color-white">
+                    Posts inspired by you
+                  </Text>
+                  <Text className="font-robotoMedium color-orange">
+                    See more
+                  </Text>
+                </View>
+
+                <View className="flex-row gap-[5px] flex-wrap justify-center">
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[121px] h-[129px] rounded-[4px]"
+                  />
+                </View>
               </View>
             </View>
-
-            <View className="gap-[8px]">
-              <View className="flex-row items-center justify-between">
-                <Text className="font-robotoMedium text-[16px] color-white">
-                  Posts inspired by you
-                </Text>
-                <Text className="font-robotoMedium color-orange">See more</Text>
-              </View>
-
-              <View className="flex-row gap-[5px] flex-wrap justify-center">
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[121px] h-[129px] rounded-[4px]"
-                />
-              </View>
-            </View>
-          </View>
+          </If>
         </View>
       </ScrollView>
     </SafeAreaView>

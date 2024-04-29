@@ -34,6 +34,9 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.FEED_CARD_DETAILS}
           component={FeedCardDetails}
+          options={{
+            animation: 'none',
+          }}
         />
 
         <Stack.Screen

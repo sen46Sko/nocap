@@ -21,6 +21,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Calendar, Eye, Locaiton, Menu, Phone, Share} from 'assets/images';
+import {FadeScaleAnim} from 'components/atoms/FadeScaleAnim';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -48,80 +49,86 @@ export const FeedCardDetails: React.FC<Props> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="gap-[16px]">
-          <View className="px-[10px] py-[16px]">
-            <Text className=" font-robotoMedium color-grayMedium text-[24px]">
-              nocap
-            </Text>
-          </View>
-
-          <View className="px-[10px] flex-row items-center justify-between">
-            <Text className=" font-robotoBold color-white text-[16px]">
-              Name
-            </Text>
-            <Pressable
-              onPress={() =>
-                setBottomSheetType(BottomSheetType.FEED_CARD_MENU)
-              }>
-              <Menu />
-            </Pressable>
-          </View>
-
-          <Image
-            source={{
-              uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
-            }}
-            className="w-full h-[516px]"
-          />
-
-          <View className="px-[6px] flex-row items-center justify-between">
-            <View className="flex-row items-center gap-[8px]">
-              <LikeButton
-                isLiked={isLiked}
-                onPress={() => setIsLiked(current => !current)}
-              />
-              <Text className="font-robotoMedium color-white">1,310 Loves</Text>
+        <FadeScaleAnim>
+          <View className="gap-[16px]">
+            <View className="px-[10px] py-[16px]">
+              <Text className=" font-robotoMedium color-grayMedium text-[24px]">
+                nocap
+              </Text>
             </View>
 
-            <View className="flex-row gap-[24px] items-center">
-              <View className="flex-row gap-[4px]">
-                <Eye />
-                <Text className="font-robotoMedium color-white">6K+</Text>
+            <View className="px-[10px] flex-row items-center justify-between">
+              <Text className=" font-robotoBold color-white text-[16px]">
+                Name
+              </Text>
+              <Pressable
+                onPress={() =>
+                  setBottomSheetType(BottomSheetType.FEED_CARD_MENU)
+                }>
+                <Menu />
+              </Pressable>
+            </View>
+
+            <Image
+              source={{
+                uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
+              }}
+              className="w-full h-[516px]"
+            />
+
+            <View className="px-[6px] flex-row items-center justify-between">
+              <View className="flex-row items-center gap-[8px]">
+                <LikeButton
+                  isLiked={isLiked}
+                  onPress={() => setIsLiked(current => !current)}
+                />
+                <Text className="font-robotoMedium color-white">
+                  1,310 Loves
+                </Text>
               </View>
-              <Share />
+
+              <View className="flex-row gap-[24px] items-center">
+                <View className="flex-row gap-[4px]">
+                  <Eye />
+                  <Text className="font-robotoMedium color-white">6K+</Text>
+                </View>
+                <Share />
+              </View>
             </View>
-          </View>
 
-          <View className="flex-row px-[6px]">
-            <Text className="font-robotoRegular color-white">
-              Girls pose at Maintown
-            </Text>
-            <Text className="font-robotoRegular color-grayMedium">...more</Text>
-          </View>
-
-          <View className="px-[6px] gap-[10px] mt-[8px]">
-            <View className="flex-row items-center">
-              <Locaiton />
-              <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                Singapore
+            <View className="flex-row px-[6px]">
+              <Text className="font-robotoRegular color-white">
+                Girls pose at Maintown
+              </Text>
+              <Text className="font-robotoRegular color-grayMedium">
+                ...more
               </Text>
             </View>
 
-            <View className="flex-row items-center">
-              <Calendar />
-              <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                12 February 2024, 12:04 pm
-              </Text>
-            </View>
+            <View className="px-[6px] gap-[10px] mt-[8px]">
+              <View className="flex-row items-center">
+                <Locaiton />
+                <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                  Singapore
+                </Text>
+              </View>
 
-            <View className="flex-row items-center">
-              <Phone />
-              <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                Phone 15 Pro Max
-              </Text>
+              <View className="flex-row items-center">
+                <Calendar />
+                <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                  12 February 2024, 12:04 pm
+                </Text>
+              </View>
+
+              <View className="flex-row items-center">
+                <Phone />
+                <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                  Phone 15 Pro Max
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        </FadeScaleAnim>
       </ScrollView>
 
       <If condition={bottomSheetType !== null}>
