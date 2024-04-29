@@ -32,6 +32,7 @@ export const FeedCardDetails: React.FC<Props> = () => {
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+  const [isPhotoLoaded, setIsPhotoLoaded] = useState(false);
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
@@ -49,7 +50,7 @@ export const FeedCardDetails: React.FC<Props> = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <FadeScaleAnim>
+        <FadeScaleAnim isStarted={isPhotoLoaded}>
           <View className="gap-[16px]">
             <View className="px-[10px] py-[16px]">
               <Text className=" font-robotoMedium color-grayMedium text-[24px]">
@@ -74,6 +75,7 @@ export const FeedCardDetails: React.FC<Props> = () => {
                 uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
               }}
               className="w-full h-[516px]"
+              onLoad={() => setIsPhotoLoaded(true)}
             />
 
             <View className="px-[6px] flex-row items-center justify-between">
