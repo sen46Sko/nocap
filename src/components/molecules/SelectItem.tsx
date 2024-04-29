@@ -3,6 +3,7 @@ import React from 'react';
 
 import {If} from 'components/atoms/If';
 import classNames from 'classnames';
+import {Check} from 'assets/images';
 
 type Props = {
   label: string;
@@ -17,6 +18,7 @@ export const SelectItem: React.FC<Props> = ({
   onSelect,
   label,
   style = 'white',
+  type,
 }) => {
   return (
     <Pressable
@@ -32,15 +34,20 @@ export const SelectItem: React.FC<Props> = ({
 
       <View
         className={classNames(
-          'h-[24px] w-[24px] rounded-full border-[2px] items-center justify-center',
+          'h-[24px] w-[24px] rounded-full items-center justify-center',
           {
-            'border-orange': isSelected,
+            'border-[2px]': type === 'radio' || !isSelected,
+            'border-orange': isSelected && type === 'radio',
             'border-white': !isSelected && style === 'white',
             'border-green': !isSelected && style === 'green',
           },
         )}>
         <If condition={isSelected}>
-          <View className="w-[14px] h-[14px] bg-orange rounded-full" />
+          {type === 'radio' ? (
+            <View className="w-[14px] h-[14px] bg-orange rounded-full" />
+          ) : (
+            <Check width={28} height={28} />
+          )}
         </If>
       </View>
     </Pressable>

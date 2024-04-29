@@ -21,14 +21,12 @@ import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
-import {screenHeight} from 'utils/helpers';
 import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
 export const Profile: React.FC<Props> = ({navigation}) => {
   const [isPeeping, setIsPeeping] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
 
@@ -52,27 +50,17 @@ export const Profile: React.FC<Props> = ({navigation}) => {
           <Pressable onPress={() => navigation.goBack()}>
             <Expand />
           </Pressable>
-          <If condition={isScrolled}>
-            <Pressable
-              className="absolute right-[8px]"
-              onPress={() =>
-                setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
-              }>
-              <Notifications />
-            </Pressable>
-          </If>
+          <Pressable
+            className="absolute right-[8px]"
+            onPress={() =>
+              setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
+            }>
+            <Notifications />
+          </Pressable>
         </View>
 
         <ScrollView
           showsVerticalScrollIndicator={false}
-          scrollEventThrottle={16}
-          onScroll={event => {
-            if (event.nativeEvent.contentOffset.y > screenHeight - 60) {
-              setIsScrolled(true);
-            } else {
-              setIsScrolled(false);
-            }
-          }}
           // pagingEnabled
           // snapToOffsets={[screenHeight + 4]}
           // decelerationRate="fast"
