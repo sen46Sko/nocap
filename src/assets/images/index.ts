@@ -13,7 +13,6 @@ export {default as Handle} from './Handle.svg';
 export {default as Share} from './Share.svg';
 export {default as Phone} from './Phone.svg';
 export {default as Cross} from './Cross.svg';
-export {default as Swipe} from './Swipe.svg';
 export {default as Logo} from './Logo.svg';
 export {default as Plus} from './Plus.svg';
 export {default as Eye} from './Eye.svg';

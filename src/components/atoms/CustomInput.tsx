@@ -25,7 +25,7 @@ export const CustomInput: React.FC<Props> = ({
   return (
     <View
       className={classNames(
-        'font-robotoRegular w-full shrink rounded-[8px] border-grayDark border-[1px] px-[16px] flex-row gap-[16px]',
+        'font-robotoRegular w-full shrink rounded-[8px] border-grayDark border-[1px] px-[16px] items-center flex-row gap-[16px]',
         {
           'py-[10px]': Platform.OS === 'ios',
           'h-full': multiline,

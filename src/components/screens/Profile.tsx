@@ -14,7 +14,7 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
-import {Expand, MenuOrange, Notifications, Swipe} from 'assets/images';
+import {Expand, MenuOrange, Notifications} from 'assets/images';
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
 import {If} from 'components/atoms/If';
 import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
@@ -140,18 +140,9 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                 </View>
               </View>
 
-              <View className="flex-row items-center justify-between mt-[18px]">
-                <Text className="font-robotoRegular color-grayMedium">
-                  Member since 2024
-                </Text>
-
-                <View className="items-center gap-[10px]">
-                  <Swipe />
-                  <Text className="font-robotoMedium color-white text-[16px]">
-                    profile
-                  </Text>
-                </View>
-              </View>
+              <Text className="font-robotoRegular color-grayMedium mt-[18px]">
+                Member since 2024
+              </Text>
 
               <View className="flex-row justify-between items-start mt-[16px]">
                 <View className="flex-row gap-[16px] items-center">
