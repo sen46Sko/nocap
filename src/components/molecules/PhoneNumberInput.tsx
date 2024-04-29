@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import React from 'react';
 
@@ -35,7 +35,7 @@ export const PhoneNumberInput: React.FC<Props> = ({value, onChange}) => {
 const styles = StyleSheet.create({
   textInputStyle: {
     color: '#BEBABA',
-    height: 40,
+    height: Platform.OS === 'android' ? 60 : 40,
   },
   containerStyle: {
     backgroundColor: 'black',
@@ -43,17 +43,16 @@ const styles = StyleSheet.create({
     borderColor: '#2A2929',
     borderRadius: 8,
     width: '100%',
-    height: 40,
+    height: Platform.OS === 'android' ? 60 : 40,
   },
   textContainerStyle: {
     backgroundColor: 'black',
     borderRadius: 8,
     paddingLeft: 0,
-    height: 38,
   },
   codeTextStyle: {
     color: '#BEBABA',
-    height: 20,
+    height: Platform.OS === 'android' ? 24 : 20,
   },
   flagButtonStyle: {
     width: 60,
