@@ -39,7 +39,10 @@ export const Home: React.FC<Props> = ({navigation}) => {
 
               <Plus />
 
-              <Pressable>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate(Screens.PROFILE, {type: 'my'})
+                }>
                 <View className="h-[24px] w-[24px] rounded-full bg-white" />
               </Pressable>
             </View>
@@ -48,15 +51,21 @@ export const Home: React.FC<Props> = ({navigation}) => {
           <View className="gap-[24px]">
             <FeedCard
               openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() => navigation.navigate(Screens.PROFILE)}
+              openProfile={() =>
+                navigation.navigate(Screens.PROFILE, {type: 'not my'})
+              }
             />
             <FeedCard
               openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() => navigation.navigate(Screens.PROFILE)}
+              openProfile={() =>
+                navigation.navigate(Screens.PROFILE, {type: 'not my'})
+              }
             />
             <FeedCard
               openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() => navigation.navigate(Screens.PROFILE)}
+              openProfile={() =>
+                navigation.navigate(Screens.PROFILE, {type: 'not my'})
+              }
             />
           </View>
 

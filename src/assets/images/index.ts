@@ -10,6 +10,7 @@ export {default as SeeMore} from './SeeMore.svg';
 export {default as Expand} from './Expand.svg';
 export {default as Google} from './Google.svg';
 export {default as Handle} from './Handle.svg';
+export {default as Pencil} from './Pencil.svg';
 export {default as Share} from './Share.svg';
 export {default as Phone} from './Phone.svg';
 export {default as Cross} from './Cross.svg';

@@ -1,12 +1,14 @@
 import {Animated, Pressable, Text} from 'react-native';
 import React, {useRef} from 'react';
+import {SvgProps} from 'react-native-svg';
 
 type Props = {
-  label: string;
+  label?: string;
   onPress: () => void;
+  Icon?: React.FC<SvgProps>;
 };
 
-export const SmallButton: React.FC<Props> = ({label, onPress}) => {
+export const SmallButton: React.FC<Props> = ({label = '', onPress, Icon}) => {
   const animated = useRef(new Animated.Value(1)).current;
 
   const fadeIn = () => {
@@ -31,7 +33,8 @@ export const SmallButton: React.FC<Props> = ({label, onPress}) => {
       onPressOut={fadeOut}
       onPress={onPress}
       className="py-[5px] px-[14px] bg-grayDark rounded-[16px]">
-      <Animated.View style={{opacity: animated}}>
+      <Animated.View style={{opacity: animated}} className="flex-row gap-[4px]">
+        {Icon && <Icon />}
         <Text className="color-white font-robotoMedium text-[16px]">
           {label}
         </Text>

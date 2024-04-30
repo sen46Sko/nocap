@@ -56,11 +56,7 @@ export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View className="px-[10px] flex-row items-center justify-between">
-        <Pressable onPress={() => navigation.navigate(Screens.PROFILE)}>
-          <Text className=" font-robotoMedium text-[16px] color-white">
-            Name
-          </Text>
-        </Pressable>
+        <Text className=" font-robotoMedium text-[16px] color-white">Name</Text>
 
         <Pressable onPress={() => navigation.goBack()}>
           <Expand />

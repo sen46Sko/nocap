@@ -23,10 +23,13 @@ import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
 import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
 import Swiper from 'react-native-swiper';
+import {MyProfileMenu} from 'components/organisms/bottomSheetScreens/MyProfileMenu';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
-export const Profile: React.FC<Props> = ({navigation}) => {
+export const Profile: React.FC<Props> = ({navigation, route}) => {
+  const {type: screenType} = route.params;
+
   const [isPeeping, setIsPeeping] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
@@ -78,10 +81,12 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                   </Text>
 
                   <View className="flex-row items-center gap-[8px]">
-                    <SmallButton
-                      label={isPeeping ? 'Peeping' : 'Peep'}
-                      onPress={() => setIsPeeping(current => !current)}
-                    />
+                    <If condition={screenType === 'not my'}>
+                      <SmallButton
+                        label={isPeeping ? 'Peeping' : 'Peep'}
+                        onPress={() => setIsPeeping(current => !current)}
+                      />
+                    </If>
 
                     <Pressable
                       onPress={() =>
@@ -96,35 +101,41 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                   Street style wears
                 </Text>
 
-                {/* <Text className="font-robotoMedium color-white mt-[46px]">
-                  Albums
-                </Text>
+                <If condition={screenType === 'my'}>
+                  <Text className="font-robotoMedium color-white mt-[46px]">
+                    Albums
+                  </Text>
 
-                <View className="flex-row gap-[10px] mt-[16px]">
-                  <View className="border border-grayDark rounded-[24px] p-[10px]">
-                    <Text className="font-robotoMedium color-white">Sky</Text>
-                  </View>
+                  <View className="flex-row gap-[10px] mt-[16px]">
+                    <View className="border border-grayDark rounded-[24px] p-[10px]">
+                      <Text className="font-robotoMedium color-white">Sky</Text>
+                    </View>
 
-                  <View className="border border-grayDark rounded-[24px] p-[10px]">
-                    <Text className="font-robotoMedium color-white">Dogs</Text>
-                  </View>
+                    <View className="border border-grayDark rounded-[24px] p-[10px]">
+                      <Text className="font-robotoMedium color-white">
+                        Dogs
+                      </Text>
+                    </View>
 
-                  <View className="border border-grayDark rounded-[24px] p-[10px]">
-                    <Text className="font-robotoMedium color-white">
-                      Sneakers
-                    </Text>
-                  </View>
+                    <View className="border border-grayDark rounded-[24px] p-[10px]">
+                      <Text className="font-robotoMedium color-white">
+                        Sneakers
+                      </Text>
+                    </View>
 
-                  <View className="border border-grayDark rounded-[24px] p-[10px]">
-                    <Text className="font-robotoMedium color-white">Food</Text>
-                  </View>
+                    <View className="border border-grayDark rounded-[24px] p-[10px]">
+                      <Text className="font-robotoMedium color-white">
+                        Food
+                      </Text>
+                    </View>
 
-                  <View className="border border-grayDark rounded-[24px] p-[10px]">
-                    <Text className="font-robotoMedium color-white">
-                      Portraits
-                    </Text>
+                    <View className="border border-grayDark rounded-[24px] p-[10px]">
+                      <Text className="font-robotoMedium color-white">
+                        Portraits
+                      </Text>
+                    </View>
                   </View>
-                </View> */}
+                </If>
 
                 <Text className="font-robotoRegular color-grayMedium mt-[18px]">
                   Member since 2024
@@ -151,10 +162,16 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                   </View>
                 </View>
 
-                <SmallButton
-                  label={isPeeping ? 'Peeping' : 'Peep'}
-                  onPress={() => setIsPeeping(current => !current)}
-                />
+                <If condition={screenType === 'not my'}>
+                  <SmallButton
+                    label={isPeeping ? 'Peeping' : 'Peep'}
+                    onPress={() => setIsPeeping(current => !current)}
+                  />
+                </If>
+
+                <If condition={screenType === 'my'}>
+                  <MenuOrange />
+                </If>
               </View>
 
               <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
@@ -272,9 +289,15 @@ export const Profile: React.FC<Props> = ({navigation}) => {
             snapPoints={getSnapPoints()}
             onClose={() => setBottomSheetType(null)}>
             <If condition={bottomSheetType === BottomSheetType.PROFILE_MENU}>
-              <ProfileMenu
-                onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
-              />
+              {screenType === 'my' ? (
+                <MyProfileMenu />
+              ) : (
+                <ProfileMenu
+                  onReport={() =>
+                    setBottomSheetType(BottomSheetType.REPORT_MENU)
+                  }
+                />
+              )}
             </If>
 
             <If

@@ -59,7 +59,10 @@ export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
             </View>
 
             <View className="px-[10px] flex-row items-center justify-between">
-              <Pressable onPress={() => navigation.navigate(Screens.PROFILE)}>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate(Screens.PROFILE, {type: 'not my'})
+                }>
                 <Text className=" font-robotoBold color-white text-[16px]">
                   Name
                 </Text>
