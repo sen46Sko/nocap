@@ -20,6 +20,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {
+  Albums,
   Calendar,
   Expand,
   Locaiton,
@@ -29,22 +30,23 @@ import {
 } from 'assets/images';
 import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
 import Swiper from 'react-native-swiper';
+import {MyPhotoMenu} from 'components/organisms/bottomSheetScreens/MyPhotoMenu';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
   Screens.PROFILE_SLIDE_VIEW
 >;
 
-export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
+export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
+  const {type: screenType} = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+  console.log('🚀 ~ bottomSheetType:', bottomSheetType);
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
       default:
-      case BottomSheetType.FEED_CARD_MENU:
-      case BottomSheetType.REPORT_SMTH_ELSE:
         return ['50%'];
       case BottomSheetType.REPORT_MENU:
         return ['90%'];
@@ -58,9 +60,14 @@ export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
       <View className="px-[10px] flex-row items-center justify-between">
         <Text className=" font-robotoMedium text-[16px] color-white">Name</Text>
 
-        <Pressable onPress={() => navigation.goBack()}>
-          <Expand />
-        </Pressable>
+        <View className="flex-row items-center gap-[24px]">
+          <If condition={screenType === 'my'}>
+            <Albums />
+          </If>
+          <Pressable onPress={() => navigation.goBack()}>
+            <Expand />
+          </Pressable>
+        </View>
       </View>
 
       <Swiper loop={false} showsPagination={false}>
@@ -87,7 +94,11 @@ export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
 
                 <Pressable
                   onPress={() =>
-                    setBottomSheetType(BottomSheetType.PROFILE_MENU)
+                    setBottomSheetType(
+                      screenType === 'my'
+                        ? BottomSheetType.MY_PHOTO_MENU
+                        : BottomSheetType.PROFILE_MENU,
+                    )
                   }>
                   <MenuGray />
                 </Pressable>
@@ -151,7 +162,11 @@ export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
 
                 <Pressable
                   onPress={() =>
-                    setBottomSheetType(BottomSheetType.PROFILE_MENU)
+                    setBottomSheetType(
+                      screenType === 'my'
+                        ? BottomSheetType.MY_PHOTO_MENU
+                        : BottomSheetType.PROFILE_MENU,
+                    )
                   }>
                   <MenuGray />
                 </Pressable>
@@ -202,6 +217,10 @@ export const ProfileSlideView: React.FC<Props> = ({navigation}) => {
               <ProfileMenu
                 onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
               />
+            </If>
+
+            <If condition={bottomSheetType === BottomSheetType.MY_PHOTO_MENU}>
+              <MyPhotoMenu />
             </If>
 
             <If

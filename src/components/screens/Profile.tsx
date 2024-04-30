@@ -177,7 +177,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
                 <Pressable
                   onPress={() =>
-                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW)
+                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
+                      type: screenType,
+                    })
                   }>
                   <Image
                     source={{
@@ -189,7 +191,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
 
                 <Pressable
                   onPress={() =>
-                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW)
+                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
+                      type: screenType,
+                    })
                   }>
                   <Image
                     source={{

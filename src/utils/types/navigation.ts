@@ -31,5 +31,5 @@ export type RootStackParamList = {
   [Screens.SEARCH]: undefined;
 
   [Screens.PROFILE]: {type: 'my' | 'not my'};
-  [Screens.PROFILE_SLIDE_VIEW]: undefined;
+  [Screens.PROFILE_SLIDE_VIEW]: {type: 'my' | 'not my'};
 };
