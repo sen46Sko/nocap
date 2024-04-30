@@ -22,6 +22,7 @@ import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
 import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
+import Swiper from 'react-native-swiper';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -50,6 +51,7 @@ export const Profile: React.FC<Props> = ({navigation}) => {
           <Pressable onPress={() => navigation.goBack()}>
             <Expand />
           </Pressable>
+
           <Pressable
             className="absolute right-[8px]"
             onPress={() =>
@@ -59,21 +61,16 @@ export const Profile: React.FC<Props> = ({navigation}) => {
           </Pressable>
         </View>
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          // pagingEnabled
-          // snapToOffsets={[screenHeight + 4]}
-          // decelerationRate="fast"
-        >
-          <View>
-            <Image
-              source={{
-                uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
-              }}
-              className="w-full h-[516px]"
-            />
+        <Swiper horizontal={false} loop={false} showsPagination={false}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View>
+              <Image
+                source={{
+                  uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
+                }}
+                className="w-full h-[516px]"
+              />
 
-            <View className="px-[16px]">
               <View className="flex-row justify-between mt-[16px]">
                 <Text className="font-robotoMedium text-[24px] color-white">
                   Streetdog
@@ -131,7 +128,11 @@ export const Profile: React.FC<Props> = ({navigation}) => {
               <Text className="font-robotoRegular color-grayMedium mt-[18px]">
                 Member since 2024
               </Text>
+            </View>
+          </ScrollView>
 
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View className="px-[16px]">
               <View className="flex-row justify-between items-start mt-[16px]">
                 <View className="flex-row gap-[16px] items-center">
                   <View className="h-[100px] w-[100px] rounded-full bg-grayMedium" />
@@ -227,10 +228,28 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                   }}
                   className="w-[116px] h-[116px] rounded-[4px]"
                 />
+                <Image
+                  source={{
+                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                  }}
+                  className="w-[116px] h-[116px] rounded-[4px]"
+                />
+                <Image
+                  source={{
+                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                  }}
+                  className="w-[116px] h-[116px] rounded-[4px]"
+                />
+                <Image
+                  source={{
+                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                  }}
+                  className="w-[116px] h-[116px] rounded-[4px]"
+                />
               </View>
             </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        </Swiper>
       </View>
 
       <If condition={bottomSheetType !== null}>

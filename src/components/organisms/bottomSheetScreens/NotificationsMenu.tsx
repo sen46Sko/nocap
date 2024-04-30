@@ -48,9 +48,9 @@ export const NotificaitonsMenu = () => {
         type="check"
       />
       <SelectItem
-        label="Hyperloops"
-        isSelected={selected.some(item => item === 'hyperloops')}
-        onSelect={() => selectItem('hyperloops')}
+        label="Onspots"
+        isSelected={selected.some(item => item === 'onspots')}
+        onSelect={() => selectItem('onspots')}
         type="check"
       />
     </View>
