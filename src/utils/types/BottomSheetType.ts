@@ -6,4 +6,5 @@ export enum BottomSheetType {
   REPORT_SMTH_ELSE,
   SUBMITTED_REPORT,
   NOTIFICTIONS_MENU,
+  ALBUMS_MENU,
 }

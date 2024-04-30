@@ -33,11 +33,13 @@ export const SmallButton: React.FC<Props> = ({label = '', onPress, Icon}) => {
       onPressOut={fadeOut}
       onPress={onPress}
       className="py-[5px] px-[14px] bg-grayDark rounded-[16px]">
-      <Animated.View style={{opacity: animated}} className="flex-row gap-[4px]">
-        {Icon && <Icon />}
+      <Animated.View
+        style={{opacity: animated}}
+        className="flex-row gap-[8px] items-center">
         <Text className="color-white font-robotoMedium text-[16px]">
           {label}
         </Text>
+        {Icon && <Icon width={18} height={18} />}
       </Animated.View>
     </Pressable>
   );

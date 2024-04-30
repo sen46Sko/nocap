@@ -6,7 +6,7 @@ import React from 'react';
 type Props = {
   value: string;
   setValue: (value: string) => void;
-  placeholder: string;
+  placeholder?: string;
   type?: 'text' | 'tel' | 'numeric';
   disabled?: boolean;
   Icon?: React.FC<SvgProps>;
@@ -16,7 +16,7 @@ type Props = {
 export const CustomInput: React.FC<Props> = ({
   value,
   setValue,
-  placeholder,
+  placeholder = '',
   type = 'text',
   disabled = false,
   multiline = false,

@@ -31,6 +31,7 @@ import {
 import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
 import Swiper from 'react-native-swiper';
 import {MyPhotoMenu} from 'components/organisms/bottomSheetScreens/MyPhotoMenu';
+import {AlbumsMenu} from 'components/organisms/bottomSheetScreens/AlbumsMenu';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -62,7 +63,10 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
 
         <View className="flex-row items-center gap-[24px]">
           <If condition={screenType === 'my'}>
-            <Albums />
+            <Pressable
+              onPress={() => setBottomSheetType(BottomSheetType.ALBUMS_MENU)}>
+              <Albums />
+            </Pressable>
           </If>
           <Pressable onPress={() => navigation.goBack()}>
             <Expand />
@@ -221,6 +225,10 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
 
             <If condition={bottomSheetType === BottomSheetType.MY_PHOTO_MENU}>
               <MyPhotoMenu />
+            </If>
+
+            <If condition={bottomSheetType === BottomSheetType.ALBUMS_MENU}>
+              <AlbumsMenu />
             </If>
 
             <If
