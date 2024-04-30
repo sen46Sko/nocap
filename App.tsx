@@ -1,16 +1,18 @@
-import SplashScreen from 'react-native-splash-screen';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Appearance, StyleSheet} from 'react-native';
 import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 
 import {AppNavigation} from 'navigation/AppNavigation';
 
-import './global.css';
 import {AuthProvider} from 'contexts/AuthContext';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import {StyleSheet} from 'react-native';
+
+import './global.css';
 
 function App(): JSX.Element {
   useEffect(() => {
     SplashScreen.hide();
+    Appearance.setColorScheme('dark');
   }, []);
 
   return (

@@ -2,6 +2,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
+import {ProfileSlideView} from 'components/screens/ProfileSlideView';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {PhoneAuth} from 'components/screens/auth/PhoneAuth';
@@ -52,6 +53,14 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.PROFILE}
           component={Profile}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name={Screens.PROFILE_SLIDE_VIEW}
+          component={ProfileSlideView}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',

@@ -13,6 +13,7 @@ export enum Screens {
   SEARCH = 'Search',
 
   PROFILE = 'Profile',
+  PROFILE_SLIDE_VIEW = 'ProfileSlideView',
 }
 
 export type RootStackParamList = {
@@ -30,4 +31,5 @@ export type RootStackParamList = {
   [Screens.SEARCH]: undefined;
 
   [Screens.PROFILE]: undefined;
+  [Screens.PROFILE_SLIDE_VIEW]: undefined;
 };

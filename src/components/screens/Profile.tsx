@@ -68,66 +68,68 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                 source={{
                   uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
                 }}
-                className="w-full h-[516px]"
+                className="w-full h-[464px]"
               />
 
-              <View className="flex-row justify-between mt-[16px]">
-                <Text className="font-robotoMedium text-[24px] color-white">
-                  Streetdog
+              <View className="px-[16px]">
+                <View className="flex-row justify-between mt-[16px]">
+                  <Text className="font-robotoMedium text-[24px] color-white">
+                    Streetdog
+                  </Text>
+
+                  <View className="flex-row items-center gap-[8px]">
+                    <SmallButton
+                      label={isPeeping ? 'Peeping' : 'Peep'}
+                      onPress={() => setIsPeeping(current => !current)}
+                    />
+
+                    <Pressable
+                      onPress={() =>
+                        setBottomSheetType(BottomSheetType.PROFILE_MENU)
+                      }>
+                      <MenuOrange />
+                    </Pressable>
+                  </View>
+                </View>
+
+                <Text className="font-robotoRegular text-[16px] color-grayLight mt-[8px]">
+                  Street style wears
                 </Text>
 
-                <View className="flex-row items-center gap-[8px]">
-                  <SmallButton
-                    label={isPeeping ? 'Peeping' : 'Peep'}
-                    onPress={() => setIsPeeping(current => !current)}
-                  />
+                {/* <Text className="font-robotoMedium color-white mt-[46px]">
+                  Albums
+                </Text>
 
-                  <Pressable
-                    onPress={() =>
-                      setBottomSheetType(BottomSheetType.PROFILE_MENU)
-                    }>
-                    <MenuOrange />
-                  </Pressable>
-                </View>
+                <View className="flex-row gap-[10px] mt-[16px]">
+                  <View className="border border-grayDark rounded-[24px] p-[10px]">
+                    <Text className="font-robotoMedium color-white">Sky</Text>
+                  </View>
+
+                  <View className="border border-grayDark rounded-[24px] p-[10px]">
+                    <Text className="font-robotoMedium color-white">Dogs</Text>
+                  </View>
+
+                  <View className="border border-grayDark rounded-[24px] p-[10px]">
+                    <Text className="font-robotoMedium color-white">
+                      Sneakers
+                    </Text>
+                  </View>
+
+                  <View className="border border-grayDark rounded-[24px] p-[10px]">
+                    <Text className="font-robotoMedium color-white">Food</Text>
+                  </View>
+
+                  <View className="border border-grayDark rounded-[24px] p-[10px]">
+                    <Text className="font-robotoMedium color-white">
+                      Portraits
+                    </Text>
+                  </View>
+                </View> */}
+
+                <Text className="font-robotoRegular color-grayMedium mt-[18px]">
+                  Member since 2024
+                </Text>
               </View>
-
-              <Text className="font-robotoRegular text-[16px] color-grayLight mt-[8px]">
-                Street style wears
-              </Text>
-
-              <Text className="font-robotoMedium color-white mt-[46px]">
-                Albums
-              </Text>
-
-              <View className="flex-row gap-[10px] mt-[16px]">
-                <View className="border border-grayDark rounded-[24px] p-[10px]">
-                  <Text className="font-robotoMedium color-white">Sky</Text>
-                </View>
-
-                <View className="border border-grayDark rounded-[24px] p-[10px]">
-                  <Text className="font-robotoMedium color-white">Dogs</Text>
-                </View>
-
-                <View className="border border-grayDark rounded-[24px] p-[10px]">
-                  <Text className="font-robotoMedium color-white">
-                    Sneakers
-                  </Text>
-                </View>
-
-                <View className="border border-grayDark rounded-[24px] p-[10px]">
-                  <Text className="font-robotoMedium color-white">Food</Text>
-                </View>
-
-                <View className="border border-grayDark rounded-[24px] p-[10px]">
-                  <Text className="font-robotoMedium color-white">
-                    Portraits
-                  </Text>
-                </View>
-              </View>
-
-              <Text className="font-robotoRegular color-grayMedium mt-[18px]">
-                Member since 2024
-              </Text>
             </View>
           </ScrollView>
 
@@ -155,19 +157,31 @@ export const Profile: React.FC<Props> = ({navigation}) => {
                 />
               </View>
 
-              <View className="flex-row gap-[4px] flex-wrap justify-center mt-[40px] pb-[60px]">
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
+              <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW)
+                  }>
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[116px] h-[116px] rounded-[4px]"
+                  />
+                </Pressable>
+
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW)
+                  }>
+                  <Image
+                    source={{
+                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
+                    }}
+                    className="w-[116px] h-[116px] rounded-[4px]"
+                  />
+                </Pressable>
+
                 <Image
                   source={{
                     uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
