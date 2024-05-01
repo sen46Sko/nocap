@@ -123,7 +123,7 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
               <ContactItem
                 key={contact.givenName + contact.familyName}
                 name={`${contact.givenName} ${contact.familyName || ''}`}
-                isPeep={true}
+                buttonLabel="Peep"
                 photoUri={contact.thumbnailPath || ''}
                 onPress={() => {}}
               />
@@ -148,7 +148,7 @@ export const Contacts: React.FC<Props> = ({navigation}) => {
               <ContactItem
                 key={contact.givenName + contact.familyName}
                 name={`${contact.givenName} ${contact.familyName || ''}`}
-                isPeep={false}
+                buttonLabel="Invite"
                 photoUri={contact.thumbnailPath || ''}
                 onPress={() => sendMessage(contact.phoneNumbers[0].number)}
               />

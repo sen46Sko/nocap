@@ -12,6 +12,7 @@ import {
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
 import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
+import {FadeScaleAnim} from 'components/atoms/FadeScaleAnim';
 import {FeedCardMenu} from 'components/organisms/bottomSheetScreens/FeedCardMenu';
 import {LikeButton} from 'components/atoms/buttons/LikeButton';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
@@ -21,7 +22,6 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Calendar, Eye, Locaiton, MenuGray, Phone, Share} from 'assets/images';
-import {FadeScaleAnim} from 'components/atoms/FadeScaleAnim';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

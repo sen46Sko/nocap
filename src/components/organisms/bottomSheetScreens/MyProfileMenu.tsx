@@ -1,10 +1,11 @@
 import {Alert, Pressable, Share, Text, View} from 'react-native';
 import React, {useState} from 'react';
 
-import {BigButton} from 'components/atoms/buttons/BigButton';
-import {SmallButton} from 'components/atoms/buttons/SmallButton';
-import {Pencil} from 'assets/images';
 import {CustomInput} from 'components/atoms/CustomInput';
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
+import {BigButton} from 'components/atoms/buttons/BigButton';
+
+import {Pencil} from 'assets/images';
 
 type Props = {};
 

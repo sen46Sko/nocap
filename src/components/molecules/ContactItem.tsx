@@ -5,14 +5,14 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 type Props = {
   name: string;
-  isPeep: boolean;
+  buttonLabel: string;
   photoUri: string;
   onPress: () => void;
 };
 
 export const ContactItem: React.FC<Props> = ({
   name,
-  isPeep,
+  buttonLabel,
   photoUri,
   onPress,
 }) => {
@@ -33,7 +33,7 @@ export const ContactItem: React.FC<Props> = ({
         </Text>
       </View>
 
-      <SmallButton label={isPeep ? 'Peep' : 'Invite'} onPress={onPress} />
+      <SmallButton label={buttonLabel} onPress={onPress} />
     </View>
   );
 };

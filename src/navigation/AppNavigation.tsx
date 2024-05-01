@@ -4,6 +4,7 @@ import React from 'react';
 
 import {ProfileSlideView} from 'components/screens/ProfileSlideView';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
+import {Notifications} from 'components/screens/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {PhoneAuth} from 'components/screens/auth/PhoneAuth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
@@ -17,7 +18,7 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
-import {Notifications} from 'components/screens/Notifications';
+import {Peepers} from 'components/screens/Peepers';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -70,6 +71,14 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.NOTIFICATIONS}
           component={Notifications}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name={Screens.PEEPERS}
+          component={Peepers}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',

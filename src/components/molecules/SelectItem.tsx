@@ -1,8 +1,9 @@
 import {Pressable, Text, View} from 'react-native';
+import classNames from 'classnames';
 import React from 'react';
 
 import {If} from 'components/atoms/If';
-import classNames from 'classnames';
+
 import {Check} from 'assets/images';
 
 type Props = {

@@ -3,10 +3,10 @@ import React, {useState} from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {CustomInput} from 'components/atoms/CustomInput';
+import {SelectItem} from 'components/molecules/SelectItem';
 import {If} from 'components/atoms/If';
 
 import {Pencil, Plus} from 'assets/images';
-import {SelectItem} from 'components/molecules/SelectItem';
 
 type Props = {};
 

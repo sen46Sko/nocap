@@ -9,21 +9,21 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
+import Swiper from 'react-native-swiper';
 
+import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
+import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
+import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
+import {MyProfileMenu} from 'components/organisms/bottomSheetScreens/MyProfileMenu';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
+import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
+import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
+import {If} from 'components/atoms/If';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
-import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
-import {If} from 'components/atoms/If';
-import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
-import {BottomSheetType} from 'utils/types/BottomSheetType';
-import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
-import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
-import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
-import Swiper from 'react-native-swiper';
-import {MyProfileMenu} from 'components/organisms/bottomSheetScreens/MyProfileMenu';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -155,9 +155,12 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                     <Text className="font-robotoMedium text-[20px] color-white">
                       Street Dog
                     </Text>
-                    <Text className="font-robotoBold text-[16px] color-orange">
-                      25 Peepers
-                    </Text>
+                    <Pressable
+                      onPress={() => navigation.navigate(Screens.PEEPERS)}>
+                      <Text className="font-robotoBold text-[16px] color-orange">
+                        25 Peepers
+                      </Text>
+                    </Pressable>
                     <Text className="font-robotoRegular color-grayLight">
                       Clothing
                     </Text>
@@ -172,7 +175,12 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                 </If>
 
                 <If condition={screenType === 'my'}>
-                  <MenuOrange />
+                  <Pressable
+                    onPress={() =>
+                      setBottomSheetType(BottomSheetType.PROFILE_MENU)
+                    }>
+                    <MenuOrange />
+                  </Pressable>
                 </If>
               </View>
 

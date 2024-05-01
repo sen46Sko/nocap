@@ -12,11 +12,11 @@ import React, {useState} from 'react';
 
 import {CustomInput} from 'components/atoms/CustomInput';
 import {UserCard} from 'components/organisms/UserCard';
+import {If} from 'components/atoms/If';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand, SearchLightGray, SeeMore} from 'assets/images';
-import {If} from 'components/atoms/If';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
 

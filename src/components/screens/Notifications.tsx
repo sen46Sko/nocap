@@ -2,10 +2,11 @@ import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
-import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.NOTIFICATIONS>;
 

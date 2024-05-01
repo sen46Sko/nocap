@@ -9,7 +9,7 @@ export const NotificaitonsMenu = () => {
   const selectItem = (item: string) => {
     if (item === 'all') {
       if (selected.length !== 3) {
-        setSelected(['images', 'videos', 'hyperloops']);
+        setSelected(['images', 'videos', 'onspots']);
       } else {
         setSelected([]);
       }
