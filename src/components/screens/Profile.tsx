@@ -58,7 +58,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
           <Pressable
             className="absolute right-[8px]"
             onPress={() =>
-              setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
+              screenType === 'my'
+                ? navigation.navigate(Screens.NOTIFICATIONS)
+                : setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
             }>
             <Notifications />
           </Pressable>

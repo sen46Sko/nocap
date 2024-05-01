@@ -14,6 +14,7 @@ export enum Screens {
 
   PROFILE = 'Profile',
   PROFILE_SLIDE_VIEW = 'ProfileSlideView',
+  NOTIFICATIONS = 'Notifications',
 }
 
 export type RootStackParamList = {
@@ -32,4 +33,5 @@ export type RootStackParamList = {
 
   [Screens.PROFILE]: {type: 'my' | 'not my'};
   [Screens.PROFILE_SLIDE_VIEW]: {type: 'my' | 'not my'};
+  [Screens.NOTIFICATIONS]: undefined;
 };

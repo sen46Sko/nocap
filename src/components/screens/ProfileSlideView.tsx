@@ -43,7 +43,6 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
-  console.log('🚀 ~ bottomSheetType:', bottomSheetType);
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
@@ -58,7 +57,7 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View className="px-[10px] flex-row items-center justify-between">
+      <View className="px-[10px] py-[12px] flex-row items-center justify-between border-b border-grayDark">
         <Text className=" font-robotoMedium text-[16px] color-white">Name</Text>
 
         <View className="flex-row items-center gap-[24px]">

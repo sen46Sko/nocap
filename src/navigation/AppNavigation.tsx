@@ -17,6 +17,7 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
+import {Notifications} from 'components/screens/Notifications';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -61,6 +62,14 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.PROFILE_SLIDE_VIEW}
           component={ProfileSlideView}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name={Screens.NOTIFICATIONS}
+          component={Notifications}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',
