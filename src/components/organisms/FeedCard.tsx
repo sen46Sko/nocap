@@ -5,7 +5,7 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {LikeButton} from 'components/atoms/buttons/LikeButton';
 
 import {Share} from 'assets/images';
-import {getUserIfExists} from 'api/users';
+import {getUserIfExists, setUserPeeping} from 'api/users';
 import {User} from 'utils/types/User';
 import {useAuth} from 'contexts/AuthContext';
 import {If} from 'components/atoms/If';
@@ -36,16 +36,36 @@ export const FeedCard: React.FC<Props> = ({
   }, [userId]);
 
   useEffect(() => {
-    if (!user || !user.peepers) {
-      return;
-    }
-
-    if (user?.peepers.some(id => id === auth.user?.id)) {
+    if (auth.user?.peeps.some(id => id === userId)) {
       setIsPeeping(true);
     } else {
       setIsPeeping(false);
     }
-  }, [user, auth.user]);
+  }, [auth.user?.peeps, userId]);
+
+  const peepUser = () => {
+    if (isPeeping) {
+      setUserPeeping('unpeep', userId);
+      auth.updateUser(
+        {
+          peeps: auth.user?.peeps
+            ? auth.user.peeps.filter(id => id !== userId)
+            : [],
+        },
+        {post: false},
+      );
+      setIsPeeping(false);
+    } else {
+      setUserPeeping('peep', userId);
+      auth.updateUser(
+        {
+          peeps: auth.user?.peeps ? [...auth.user.peeps, userId] : [userId],
+        },
+        {post: false},
+      );
+      setIsPeeping(true);
+    }
+  };
 
   return (
     <Pressable className="gap-[8px]" onPress={openImage}>
@@ -59,10 +79,10 @@ export const FeedCard: React.FC<Props> = ({
           </Text>
         </Pressable>
 
-        <If condition={user?.id !== auth.user?.id}>
+        <If condition={userId !== auth.user?.id}>
           <SmallButton
             label={isPeeping ? 'Peeping' : 'Peep'}
-            onPress={() => setIsPeeping(current => !current)}
+            onPress={peepUser}
           />
         </If>
       </View>

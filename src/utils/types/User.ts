@@ -7,5 +7,5 @@ export type User = {
   email: string | null;
   birthDate: Timestamp;
   gender: string;
-  peepers: string[];
+  peeps: string[];
 };

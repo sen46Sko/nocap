@@ -13,7 +13,7 @@ import {navigate} from 'utils/helpers';
 import {Screens} from 'utils/types/navigation';
 import {User} from 'utils/types/User';
 
-import {createUser, getUserIfExists, removeUser} from 'api/users';
+import {createUser, editUser, getUserIfExists, removeUser} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';
 
 import {GOOGLE_CLIENT_ID} from '@env';
@@ -27,7 +27,10 @@ interface AuthContextType {
   verifyCode: (
     code: string,
   ) => Promise<FirebaseAuthTypes.UserCredential | null | undefined>;
-  //   updateUser: (updatedInfo: Partial<UserDocument>) => Promise<void>;
+  updateUser: (
+    updatedInfo: Partial<User>,
+    {post}?: Partial<{post: boolean}>,
+  ) => Promise<void>;
   deleteUser: () => Promise<void>;
   localUser: Partial<User> | null;
   postUser: () => Promise<void>;
@@ -42,7 +45,7 @@ const AuthContext = createContext<AuthContextType>({
   //   uploadImage: async () => undefined,
   verifyCode: async () => undefined,
   //   refetchUser: async () => undefined,
-  //   updateUser: async () => {},
+  updateUser: async () => {},
   deleteUser: async () => {},
   localUser: null,
   postUser: async () => {},
@@ -104,20 +107,28 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     await createUser(newUser);
   }, [localUser]);
 
-  //   const updateUser = useCallback(
-  //     async (updatedInfo: Partial<UserDocument>) => {
-  //       if (user) {
-  //         const newUser = {
-  //           ...user,
-  //           ...updatedInfo,
-  //         } as UserDocument;
-  //         setUser(newUser);
+  const updateUser = useCallback(
+    async (
+      updatedInfo: Partial<User>,
+      {post = true}: Partial<{post: boolean}> = {post: true},
+    ) => {
+      console.log('🚀 ~ AuthProvider ~ post:', post);
+      if (user) {
+        const newUser = {
+          ...user,
+          ...updatedInfo,
+        } as User;
+        setUser(newUser);
 
-  //         return editUser(newUser);
-  //       }
-  //     },
-  //     [user],
-  //   );
+        if (post) {
+          await editUser(newUser);
+        }
+
+        return;
+      }
+    },
+    [user],
+  );
 
   const signInWithGoogle = useCallback(async () => {
     await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
@@ -209,7 +220,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         // uploadImage,
         verifyCode,
         // refetchUser,
-        // updateUser,
+        updateUser,
         deleteUser,
         localUser,
         postUser,

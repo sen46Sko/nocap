@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 
 import {User} from 'utils/types/User';
 
@@ -28,6 +29,13 @@ export async function getAllUsers() {
 
       return data;
     });
+}
+
+export async function setUserPeeping(
+  status: 'peep' | 'unpeep',
+  userId: string,
+) {
+  return functions().httpsCallable('setUserPeeping')({status, userId});
 }
 
 export async function createUser(user: User) {

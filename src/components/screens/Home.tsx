@@ -24,7 +24,6 @@ type Props = NativeStackScreenProps<RootStackParamList, Screens.HOME>;
 
 export const Home: React.FC<Props> = ({navigation}) => {
   const [posts, setPosts] = useState<Post[]>([]);
-  console.log('🚀 ~ posts:', posts);
 
   const auth = useAuth();
 
