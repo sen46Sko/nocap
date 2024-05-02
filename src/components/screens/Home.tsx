@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {BigButton} from 'components/atoms/buttons/BigButton';
 import {FeedCard} from 'components/organisms/FeedCard';
@@ -15,13 +15,22 @@ import {FeedCard} from 'components/organisms/FeedCard';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {Post} from 'utils/types/Post';
 
 import {Plus, SearchWhite} from 'assets/images';
+import {getPosts} from 'api/posts';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.HOME>;
 
 export const Home: React.FC<Props> = ({navigation}) => {
+  const [posts, setPosts] = useState<Post[]>([]);
+  console.log('🚀 ~ posts:', posts);
+
   const auth = useAuth();
+
+  useEffect(() => {
+    getPosts().then(setPosts);
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,24 +58,18 @@ export const Home: React.FC<Props> = ({navigation}) => {
           </View>
 
           <View className="gap-[24px]">
-            <FeedCard
-              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() =>
-                navigation.navigate(Screens.PROFILE, {type: 'not my'})
-              }
-            />
-            <FeedCard
-              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() =>
-                navigation.navigate(Screens.PROFILE, {type: 'not my'})
-              }
-            />
-            <FeedCard
-              openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
-              openProfile={() =>
-                navigation.navigate(Screens.PROFILE, {type: 'not my'})
-              }
-            />
+            {posts.map(post => (
+              <FeedCard
+                key={post.id}
+                userId={post.userId}
+                imageLink={post.imageLink}
+                title={post.title}
+                openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+                openProfile={() =>
+                  navigation.navigate(Screens.PROFILE, {type: 'not my'})
+                }
+              />
+            ))}
           </View>
 
           <BigButton
