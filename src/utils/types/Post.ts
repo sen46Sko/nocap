@@ -3,4 +3,5 @@ export type Post = {
   userId: string;
   imageLink: string;
   title: string;
+  loves: string[];
 };

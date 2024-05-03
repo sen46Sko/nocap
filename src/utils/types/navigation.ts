@@ -1,3 +1,5 @@
+import {Post} from './Post';
+
 export enum Screens {
   WELCOME = 'Welcome',
   PHONE_AUTH = 'PhoneAuth',
@@ -28,11 +30,11 @@ export type RootStackParamList = {
   [Screens.CONTACTS]: undefined;
 
   [Screens.HOME]: undefined;
-  [Screens.FEED_CARD_DETAILS]: undefined;
+  [Screens.FEED_CARD_DETAILS]: {post: Post};
 
   [Screens.SEARCH]: undefined;
 
-  [Screens.PROFILE]: {type: 'my' | 'not my'};
+  [Screens.PROFILE]: {userId: string};
   [Screens.PROFILE_SLIDE_VIEW]: {type: 'my' | 'not my'};
   [Screens.NOTIFICATIONS]: undefined;
   [Screens.PEEPERS]: undefined;

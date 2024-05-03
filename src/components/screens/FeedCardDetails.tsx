@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -22,17 +22,24 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Calendar, Eye, Locaiton, MenuGray, Phone, Share} from 'assets/images';
+import {getUserIfExists} from 'api/users';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
   Screens.FEED_CARD_DETAILS
 >;
 
-export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
+export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
+  const {post} = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
   const [isPhotoLoaded, setIsPhotoLoaded] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    getUserIfExists(post.userId).then(res => setUserName(res?.username || ''));
+  }, [post.userId]);
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
@@ -61,10 +68,10 @@ export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
             <View className="px-[10px] flex-row items-center justify-between">
               <Pressable
                 onPress={() =>
-                  navigation.navigate(Screens.PROFILE, {type: 'not my'})
+                  navigation.navigate(Screens.PROFILE, {userId: post.userId})
                 }>
                 <Text className=" font-robotoBold color-white text-[16px]">
-                  Name
+                  {userName}
                 </Text>
               </Pressable>
 
@@ -78,7 +85,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
 
             <Image
               source={{
-                uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
+                uri: post.imageLink,
               }}
               className="w-full h-[516px]"
               onLoad={() => setIsPhotoLoaded(true)}
@@ -91,7 +98,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
                   onPress={() => setIsLiked(current => !current)}
                 />
                 <Text className="font-robotoMedium color-white">
-                  1,310 Loves
+                  {`${post.loves.length} Loves`}
                 </Text>
               </View>
 
@@ -106,10 +113,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation}) => {
 
             <View className="flex-row px-[6px]">
               <Text className="font-robotoRegular color-white">
-                Girls pose at Maintown
-              </Text>
-              <Text className="font-robotoRegular color-grayMedium">
-                ...more
+                {post.title}
               </Text>
             </View>
 

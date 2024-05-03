@@ -1,4 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -8,7 +9,6 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import Swiper from 'react-native-swiper';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
@@ -20,19 +20,56 @@ import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {If} from 'components/atoms/If';
 
+import {useAuth} from 'contexts/AuthContext';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
+import {setUserPeeping} from 'api/users';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
 export const Profile: React.FC<Props> = ({navigation, route}) => {
-  const {type: screenType} = route.params;
+  const {userId} = route.params;
 
   const [isPeeping, setIsPeeping] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.user?.peeps.some(id => id === userId)) {
+      setIsPeeping(true);
+    } else {
+      setIsPeeping(false);
+    }
+  }, [auth.user?.peeps, userId]);
+
+  const peepUser = () => {
+    if (isPeeping) {
+      setUserPeeping('unpeep', userId);
+      auth.updateUser(
+        {
+          peeps: auth.user?.peeps
+            ? auth.user.peeps.filter(id => id !== userId)
+            : [],
+        },
+        {post: false},
+      );
+      setIsPeeping(false);
+    } else {
+      setUserPeeping('peep', userId);
+      auth.updateUser(
+        {
+          peeps: auth.user?.peeps ? [...auth.user.peeps, userId] : [userId],
+        },
+        {post: false},
+      );
+      setIsPeeping(true);
+    }
+  };
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
@@ -58,7 +95,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
           <Pressable
             className="absolute right-[8px]"
             onPress={() =>
-              screenType === 'my'
+              userId === auth.user?.id
                 ? navigation.navigate(Screens.NOTIFICATIONS)
                 : setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
             }>
@@ -83,10 +120,10 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   </Text>
 
                   <View className="flex-row items-center gap-[8px]">
-                    <If condition={screenType === 'not my'}>
+                    <If condition={userId !== auth.user?.id}>
                       <SmallButton
                         label={isPeeping ? 'Peeping' : 'Peep'}
-                        onPress={() => setIsPeeping(current => !current)}
+                        onPress={peepUser}
                       />
                     </If>
 
@@ -103,7 +140,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   Street style wears
                 </Text>
 
-                <If condition={screenType === 'my'}>
+                <If condition={userId === auth.user?.id}>
                   <Text className="font-robotoMedium color-white mt-[46px]">
                     Albums
                   </Text>
@@ -167,14 +204,14 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   </View>
                 </View>
 
-                <If condition={screenType === 'not my'}>
+                <If condition={userId !== auth.user?.id}>
                   <SmallButton
                     label={isPeeping ? 'Peeping' : 'Peep'}
-                    onPress={() => setIsPeeping(current => !current)}
+                    onPress={peepUser}
                   />
                 </If>
 
-                <If condition={screenType === 'my'}>
+                <If condition={userId === auth.user?.id}>
                   <Pressable
                     onPress={() =>
                       setBottomSheetType(BottomSheetType.PROFILE_MENU)
@@ -188,7 +225,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                 <Pressable
                   onPress={() =>
                     navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
-                      type: screenType,
+                      type: userId === auth.user?.id ? 'my' : 'not my',
                     })
                   }>
                   <Image
@@ -202,7 +239,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                 <Pressable
                   onPress={() =>
                     navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
-                      type: screenType,
+                      type: userId === auth.user?.id ? 'my' : 'not my',
                     })
                   }>
                   <Image
@@ -303,7 +340,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
             snapPoints={getSnapPoints()}
             onClose={() => setBottomSheetType(null)}>
             <If condition={bottomSheetType === BottomSheetType.PROFILE_MENU}>
-              {screenType === 'my' ? (
+              {userId === auth.user?.id ? (
                 <MyProfileMenu />
               ) : (
                 <ProfileMenu

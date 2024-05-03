@@ -29,7 +29,11 @@ interface AuthContextType {
   ) => Promise<FirebaseAuthTypes.UserCredential | null | undefined>;
   updateUser: (
     updatedInfo: Partial<User>,
-    {post}?: Partial<{post: boolean}>,
+    {
+      post,
+    }?: {
+      post: boolean;
+    },
   ) => Promise<void>;
   deleteUser: () => Promise<void>;
   localUser: Partial<User> | null;
@@ -112,20 +116,20 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
       updatedInfo: Partial<User>,
       {post = true}: Partial<{post: boolean}> = {post: true},
     ) => {
-      console.log('🚀 ~ AuthProvider ~ post:', post);
-      if (user) {
-        const newUser = {
-          ...user,
-          ...updatedInfo,
-        } as User;
-        setUser(newUser);
-
-        if (post) {
-          await editUser(newUser);
-        }
-
+      if (!user) {
         return;
       }
+
+      const newUser = {
+        ...user,
+        ...updatedInfo,
+      } as User;
+      setUser(newUser);
+
+      if (post) {
+        await editUser(newUser);
+      }
+      return;
     },
     [user],
   );

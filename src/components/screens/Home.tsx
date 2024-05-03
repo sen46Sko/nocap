@@ -49,7 +49,9 @@ export const Home: React.FC<Props> = ({navigation}) => {
 
               <Pressable
                 onPress={() =>
-                  navigation.navigate(Screens.PROFILE, {type: 'my'})
+                  navigation.navigate(Screens.PROFILE, {
+                    userId: auth.user?.id || '',
+                  })
                 }>
                 <View className="h-[24px] w-[24px] rounded-full bg-white" />
               </Pressable>
@@ -63,9 +65,11 @@ export const Home: React.FC<Props> = ({navigation}) => {
                 userId={post.userId}
                 imageLink={post.imageLink}
                 title={post.title}
-                openImage={() => navigation.navigate(Screens.FEED_CARD_DETAILS)}
+                openImage={() =>
+                  navigation.navigate(Screens.FEED_CARD_DETAILS, {post})
+                }
                 openProfile={() =>
-                  navigation.navigate(Screens.PROFILE, {type: 'not my'})
+                  navigation.navigate(Screens.PROFILE, {userId: post.userId})
                 }
               />
             ))}

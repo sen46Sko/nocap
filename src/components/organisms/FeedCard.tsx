@@ -6,7 +6,6 @@ import {LikeButton} from 'components/atoms/buttons/LikeButton';
 
 import {Share} from 'assets/images';
 import {getUserIfExists, setUserPeeping} from 'api/users';
-import {User} from 'utils/types/User';
 import {useAuth} from 'contexts/AuthContext';
 import {If} from 'components/atoms/If';
 
@@ -27,12 +26,12 @@ export const FeedCard: React.FC<Props> = ({
 }) => {
   const [isPeeping, setIsPeeping] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [userName, setUserName] = useState('');
 
   const auth = useAuth();
 
   useEffect(() => {
-    getUserIfExists(userId).then(setUser);
+    getUserIfExists(userId).then(res => setUserName(res?.username || ''));
   }, [userId]);
 
   useEffect(() => {
@@ -75,7 +74,7 @@ export const FeedCard: React.FC<Props> = ({
           onPress={openProfile}>
           <View className="bg-white h-[24px] w-[24px] rounded-full" />
           <Text className="font-robotoBold color-white text-[16px]">
-            {user?.username}
+            {userName}
           </Text>
         </Pressable>
 
