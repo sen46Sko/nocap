@@ -1,5 +1,5 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   SafeAreaView,
   ScrollView,
@@ -26,7 +26,6 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
-import {setUserPeeping} from 'api/users';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -49,24 +48,10 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
 
   const peepUser = () => {
     if (isPeeping) {
-      setUserPeeping('unpeep', userId);
-      auth.updateUser(
-        {
-          peeps: auth.user?.peeps
-            ? auth.user.peeps.filter(id => id !== userId)
-            : [],
-        },
-        {post: false},
-      );
+      auth.setPeeping('unpeep', userId);
       setIsPeeping(false);
     } else {
-      setUserPeeping('peep', userId);
-      auth.updateUser(
-        {
-          peeps: auth.user?.peeps ? [...auth.user.peeps, userId] : [userId],
-        },
-        {post: false},
-      );
+      auth.setPeeping('peep', userId);
       setIsPeeping(true);
     }
   };

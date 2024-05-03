@@ -1,4 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
+import functions from '@react-native-firebase/functions';
 import {Post} from 'utils/types/Post';
 
 export async function getPosts() {
@@ -14,4 +15,8 @@ export async function getPosts() {
     );
 
   return posts;
+}
+
+export async function setPostLoving(status: 'love' | 'unlove', postId: string) {
+  return functions().httpsCallable('setPostLoving')({status, postId});
 }

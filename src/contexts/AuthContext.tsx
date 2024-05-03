@@ -9,11 +9,18 @@ import React, {
   useState,
 } from 'react';
 
+import {
+  getUserIfExists,
+  setUserPeeping,
+  createUser,
+  removeUser,
+  editUser,
+} from 'api/users';
+
 import {navigate} from 'utils/helpers';
 import {Screens} from 'utils/types/navigation';
 import {User} from 'utils/types/User';
 
-import {createUser, editUser, getUserIfExists, removeUser} from 'api/users';
 // import {createImage, deleteImage} from 'api/photos';
 
 import {GOOGLE_CLIENT_ID} from '@env';
@@ -27,15 +34,9 @@ interface AuthContextType {
   verifyCode: (
     code: string,
   ) => Promise<FirebaseAuthTypes.UserCredential | null | undefined>;
-  updateUser: (
-    updatedInfo: Partial<User>,
-    {
-      post,
-    }?: {
-      post: boolean;
-    },
-  ) => Promise<void>;
+  updateUser: (updatedInfo: Partial<User>) => Promise<void>;
   deleteUser: () => Promise<void>;
+  setPeeping: (status: 'peep' | 'unpeep', userId: string) => Promise<void>;
   localUser: Partial<User> | null;
   postUser: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -51,6 +52,7 @@ const AuthContext = createContext<AuthContextType>({
   //   refetchUser: async () => undefined,
   updateUser: async () => {},
   deleteUser: async () => {},
+  setPeeping: async () => {},
   localUser: null,
   postUser: async () => {},
   signOut: async () => {},
@@ -112,10 +114,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   }, [localUser]);
 
   const updateUser = useCallback(
-    async (
-      updatedInfo: Partial<User>,
-      {post = true}: Partial<{post: boolean}> = {post: true},
-    ) => {
+    async (updatedInfo: Partial<User>) => {
       if (!user) {
         return;
       }
@@ -126,10 +125,32 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
       } as User;
       setUser(newUser);
 
-      if (post) {
-        await editUser(newUser);
+      return editUser(newUser);
+    },
+    [user],
+  );
+
+  const setPeeping = useCallback(
+    async (status: 'peep' | 'unpeep', userId: string) => {
+      if (!user) {
+        return;
       }
-      return;
+
+      setUser(current => {
+        const newUser = {...current} as User;
+
+        if (status === 'peep') {
+          const newPeeps = [...user.peeps, userId];
+          newUser.peeps = newPeeps;
+        } else {
+          const newPeeps = user.peeps.filter(id => id !== userId);
+          newUser.peeps = newPeeps;
+        }
+
+        return newUser;
+      });
+
+      await setUserPeeping(status, userId);
     },
     [user],
   );
@@ -225,6 +246,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         verifyCode,
         // refetchUser,
         updateUser,
+        setPeeping,
         deleteUser,
         localUser,
         postUser,

@@ -1,5 +1,3 @@
-import {Post} from './Post';
-
 export enum Screens {
   WELCOME = 'Welcome',
   PHONE_AUTH = 'PhoneAuth',
@@ -30,7 +28,7 @@ export type RootStackParamList = {
   [Screens.CONTACTS]: undefined;
 
   [Screens.HOME]: undefined;
-  [Screens.FEED_CARD_DETAILS]: {post: Post};
+  [Screens.FEED_CARD_DETAILS]: {postId: string};
 
   [Screens.SEARCH]: undefined;
 

@@ -8,6 +8,7 @@ import {AppNavigation} from 'navigation/AppNavigation';
 import {AuthProvider} from 'contexts/AuthContext';
 
 import './global.css';
+import {PostsProvider} from 'contexts/PostsContext';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -18,7 +19,9 @@ function App(): JSX.Element {
   return (
     <GestureHandlerRootView style={styles.gestureHandler}>
       <AuthProvider>
-        <AppNavigation />
+        <PostsProvider>
+          <AppNavigation />
+        </PostsProvider>
       </AuthProvider>
     </GestureHandlerRootView>
   );

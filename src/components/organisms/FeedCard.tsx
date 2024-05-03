@@ -3,66 +3,68 @@ import React, {useEffect, useState} from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {LikeButton} from 'components/atoms/buttons/LikeButton';
-
-import {Share} from 'assets/images';
-import {getUserIfExists, setUserPeeping} from 'api/users';
-import {useAuth} from 'contexts/AuthContext';
 import {If} from 'components/atoms/If';
 
+import {usePosts} from 'contexts/PostsContext';
+import {useAuth} from 'contexts/AuthContext';
+
+import {getUserIfExists} from 'api/users';
+
+import {Post} from 'utils/types/Post';
+
+import {Share} from 'assets/images';
+
 type Props = {
-  title: string;
-  imageLink: string;
-  userId: string;
+  post: Post;
   openImage: () => void;
   openProfile: () => void;
 };
 
-export const FeedCard: React.FC<Props> = ({
-  title,
-  imageLink,
-  userId,
-  openImage,
-  openProfile,
-}) => {
+export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
   const [isPeeping, setIsPeeping] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLoving, setIsLoving] = useState(false);
   const [userName, setUserName] = useState('');
 
   const auth = useAuth();
+  const posts = usePosts();
 
   useEffect(() => {
-    getUserIfExists(userId).then(res => setUserName(res?.username || ''));
-  }, [userId]);
+    getUserIfExists(post.userId).then(res => setUserName(res?.username || ''));
+  }, [post.userId]);
 
   useEffect(() => {
-    if (auth.user?.peeps.some(id => id === userId)) {
+    if (auth.user?.peeps && auth.user.peeps.some(id => id === post.userId)) {
       setIsPeeping(true);
     } else {
       setIsPeeping(false);
     }
-  }, [auth.user?.peeps, userId]);
+  }, [auth.user?.peeps, post.userId]);
+
+  useEffect(() => {
+    if (post.loves.some(id => id === auth.user?.id)) {
+      setIsLoving(true);
+    } else {
+      setIsLoving(false);
+    }
+  }, [auth.user?.id, post.loves]);
 
   const peepUser = () => {
     if (isPeeping) {
-      setUserPeeping('unpeep', userId);
-      auth.updateUser(
-        {
-          peeps: auth.user?.peeps
-            ? auth.user.peeps.filter(id => id !== userId)
-            : [],
-        },
-        {post: false},
-      );
+      auth.setPeeping('unpeep', post.userId);
       setIsPeeping(false);
     } else {
-      setUserPeeping('peep', userId);
-      auth.updateUser(
-        {
-          peeps: auth.user?.peeps ? [...auth.user.peeps, userId] : [userId],
-        },
-        {post: false},
-      );
+      auth.setPeeping('peep', post.userId);
       setIsPeeping(true);
+    }
+  };
+
+  const lovePost = () => {
+    if (isLoving) {
+      posts.setLoving('unlove', post.id);
+      setIsLoving(false);
+    } else {
+      posts.setLoving('love', post.id);
+      setIsLoving(true);
     }
   };
 
@@ -78,7 +80,7 @@ export const FeedCard: React.FC<Props> = ({
           </Text>
         </Pressable>
 
-        <If condition={userId !== auth.user?.id}>
+        <If condition={post.userId !== auth.user?.id}>
           <SmallButton
             label={isPeeping ? 'Peeping' : 'Peep'}
             onPress={peepUser}
@@ -88,7 +90,7 @@ export const FeedCard: React.FC<Props> = ({
 
       <Image
         source={{
-          uri: imageLink,
+          uri: post.imageLink,
         }}
         className="w-full h-[516px]"
       />
@@ -96,15 +98,12 @@ export const FeedCard: React.FC<Props> = ({
       <View className="px-[10px] flex-row items-center justify-between">
         <View className="flex-row">
           <Text className="font-robotoRegular text-[16px] color-white">
-            {title}
+            {post.title}
           </Text>
         </View>
 
         <View className="flex-row gap-[24px] items-center">
-          <LikeButton
-            isLiked={isLiked}
-            onPress={() => setIsLiked(current => !current)}
-          />
+          <LikeButton isLiked={isLoving} onPress={lovePost} />
           <Share />
         </View>
       </View>
