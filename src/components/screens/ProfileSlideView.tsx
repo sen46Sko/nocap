@@ -35,6 +35,7 @@ import {
   Phone,
   Share,
 } from 'assets/images';
+import {Post} from 'utils/types/Post';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -43,7 +44,7 @@ type Props = NativeStackScreenProps<
 
 export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
   const {user, currentIndex} = route.params;
-  const [isLiked, setIsLiked] = useState(false);
+
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
 
@@ -58,6 +59,14 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
         return ['90%'];
       case BottomSheetType.SUBMITTED_REPORT:
         return ['30%'];
+    }
+  };
+
+  const lovePost = (post: Post) => {
+    if (post.loves.some(id => id === auth.user?.id)) {
+      posts.setLoving('unlove', post.id);
+    } else {
+      posts.setLoving('love', post.id);
     }
   };
 
@@ -95,8 +104,8 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
               <View className="px-[6px] flex-row items-center justify-between">
                 <View className="flex-row items-center gap-[8px]">
                   <LikeButton
-                    isLiked={isLiked}
-                    onPress={() => setIsLiked(current => !current)}
+                    isLiked={post.loves.some(id => id === auth.user?.id)}
+                    onPress={() => lovePost(post)}
                   />
                   <Text className="font-robotoMedium color-white">
                     {post.loves.length}
