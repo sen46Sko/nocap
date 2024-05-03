@@ -9,29 +9,32 @@ import {
   Text,
   View,
 } from 'react-native';
+import Swiper from 'react-native-swiper';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
 import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
+import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
+import {MyPhotoMenu} from 'components/organisms/bottomSheetScreens/MyPhotoMenu';
+import {AlbumsMenu} from 'components/organisms/bottomSheetScreens/AlbumsMenu';
 import {LikeButton} from 'components/atoms/buttons/LikeButton';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {If} from 'components/atoms/If';
+
+import {usePosts} from 'contexts/PostsContext';
+import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 import {
-  Albums,
-  Calendar,
-  Expand,
   Locaiton,
+  Calendar,
   MenuGray,
+  Expand,
+  Albums,
   Phone,
   Share,
 } from 'assets/images';
-import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
-import Swiper from 'react-native-swiper';
-import {MyPhotoMenu} from 'components/organisms/bottomSheetScreens/MyPhotoMenu';
-import {AlbumsMenu} from 'components/organisms/bottomSheetScreens/AlbumsMenu';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -39,10 +42,13 @@ type Props = NativeStackScreenProps<
 >;
 
 export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
-  const {type: screenType} = route.params;
+  const {user, currentIndex} = route.params;
   const [isLiked, setIsLiked] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+
+  const auth = useAuth();
+  const posts = usePosts();
 
   const getSnapPoints = () => {
     switch (bottomSheetType) {
@@ -58,10 +64,12 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <View className="px-[10px] py-[12px] flex-row items-center justify-between border-b border-grayDark">
-        <Text className=" font-robotoMedium text-[16px] color-white">Name</Text>
+        <Text className=" font-robotoMedium text-[16px] color-white">
+          {user.username}
+        </Text>
 
         <View className="flex-row items-center gap-[24px]">
-          <If condition={screenType === 'my'}>
+          <If condition={user.id === auth.user?.id}>
             <Pressable
               onPress={() => setBottomSheetType(BottomSheetType.ALBUMS_MENU)}>
               <Albums />
@@ -73,142 +81,75 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
         </View>
       </View>
 
-      <Swiper loop={false} showsPagination={false}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View className="gap-[16px]">
-            <Image
-              source={{
-                uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-              }}
-              className="w-full h-[390px] mt-[100px]"
-            />
+      <Swiper loop={false} showsPagination={false} index={currentIndex}>
+        {posts.getUserPosts(user.id).map(post => (
+          <ScrollView showsVerticalScrollIndicator={false} key={post.id}>
+            <View className="gap-[16px]">
+              <Image
+                source={{
+                  uri: post.imageLink,
+                }}
+                className="w-full h-[390px] mt-[100px]"
+              />
 
-            <View className="px-[6px] flex-row items-center justify-between">
-              <View className="flex-row items-center gap-[8px]">
-                <LikeButton
-                  isLiked={isLiked}
-                  onPress={() => setIsLiked(current => !current)}
-                />
-                <Text className="font-robotoMedium color-white">1,310</Text>
+              <View className="px-[6px] flex-row items-center justify-between">
+                <View className="flex-row items-center gap-[8px]">
+                  <LikeButton
+                    isLiked={isLiked}
+                    onPress={() => setIsLiked(current => !current)}
+                  />
+                  <Text className="font-robotoMedium color-white">
+                    {post.loves.length}
+                  </Text>
+                </View>
+
+                <View className="flex-row gap-[24px] items-center">
+                  <Share />
+
+                  <Pressable
+                    onPress={() =>
+                      setBottomSheetType(
+                        user.id === auth.user?.id
+                          ? BottomSheetType.MY_PHOTO_MENU
+                          : BottomSheetType.PROFILE_MENU,
+                      )
+                    }>
+                    <MenuGray />
+                  </Pressable>
+                </View>
               </View>
 
-              <View className="flex-row gap-[24px] items-center">
-                <Share />
-
-                <Pressable
-                  onPress={() =>
-                    setBottomSheetType(
-                      screenType === 'my'
-                        ? BottomSheetType.MY_PHOTO_MENU
-                        : BottomSheetType.PROFILE_MENU,
-                    )
-                  }>
-                  <MenuGray />
-                </Pressable>
-              </View>
-            </View>
-
-            <View className="flex-row px-[6px]">
-              <Text className="font-robotoRegular color-white">
-                Girls pose at Maintown
-              </Text>
-              <Text className="font-robotoRegular color-grayMedium">
-                ...more
-              </Text>
-            </View>
-
-            <View className="px-[6px] gap-[10px] mt-[8px]">
-              <View className="flex-row items-center">
-                <Locaiton />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  Singapore
+              <View className="flex-row px-[6px]">
+                <Text className="font-robotoRegular color-white">
+                  {post.title}
                 </Text>
               </View>
 
-              <View className="flex-row items-center">
-                <Calendar />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  12 February 2024, 12:04 pm
-                </Text>
-              </View>
+              <View className="px-[6px] gap-[10px] mt-[8px]">
+                <View className="flex-row items-center">
+                  <Locaiton />
+                  <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                    Singapore
+                  </Text>
+                </View>
 
-              <View className="flex-row items-center">
-                <Phone />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  Phone 15 Pro Max
-                </Text>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
+                <View className="flex-row items-center">
+                  <Calendar />
+                  <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                    12 February 2024, 12:04 pm
+                  </Text>
+                </View>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View className="gap-[16px]">
-            <Image
-              source={{
-                uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-              }}
-              className="w-full h-[390px] mt-[100px]"
-            />
-
-            <View className="px-[6px] flex-row items-center justify-between">
-              <View className="flex-row items-center gap-[8px]">
-                <LikeButton
-                  isLiked={isLiked}
-                  onPress={() => setIsLiked(current => !current)}
-                />
-                <Text className="font-robotoMedium color-white">1,310</Text>
-              </View>
-
-              <View className="flex-row gap-[24px] items-center">
-                <Share />
-
-                <Pressable
-                  onPress={() =>
-                    setBottomSheetType(
-                      screenType === 'my'
-                        ? BottomSheetType.MY_PHOTO_MENU
-                        : BottomSheetType.PROFILE_MENU,
-                    )
-                  }>
-                  <MenuGray />
-                </Pressable>
+                <View className="flex-row items-center">
+                  <Phone />
+                  <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                    Phone 15 Pro Max
+                  </Text>
+                </View>
               </View>
             </View>
-
-            <View className="flex-row px-[6px]">
-              <Text className="font-robotoRegular color-white">
-                Girls pose at Maintown
-              </Text>
-              <Text className="font-robotoRegular color-grayMedium">
-                ...more
-              </Text>
-            </View>
-
-            <View className="px-[6px] gap-[10px] mt-[8px]">
-              <View className="flex-row items-center">
-                <Locaiton />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  Singapore
-                </Text>
-              </View>
-
-              <View className="flex-row items-center">
-                <Calendar />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  12 February 2024, 12:04 pm
-                </Text>
-              </View>
-
-              <View className="flex-row items-center">
-                <Phone />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  Phone 15 Pro Max
-                </Text>
-              </View>
-            </View>
-          </View>
-        </ScrollView>
+          </ScrollView>
+        ))}
       </Swiper>
 
       <If condition={bottomSheetType !== null}>

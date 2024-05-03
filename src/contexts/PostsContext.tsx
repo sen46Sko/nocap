@@ -14,11 +14,13 @@ import {Post} from 'utils/types/Post';
 
 interface PostsContextType {
   posts: Post[];
+  getUserPosts: (userId: string) => Post[];
   setLoving: (status: 'love' | 'unlove', postId: string) => void;
 }
 
 const PostsContext = createContext<PostsContextType>({
   posts: [],
+  getUserPosts: () => [],
   setLoving: () => {},
 });
 
@@ -31,6 +33,9 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
     getPosts().then(setPosts);
   }, []);
 
+  const getUserPosts = (userId: string) => {
+    return posts.filter(post => post.userId === userId);
+  };
   const setLoving = (status: 'love' | 'unlove', postId: string) => {
     setPostLoving(status, postId);
 
@@ -55,6 +60,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
       value={{
         posts,
         setLoving,
+        getUserPosts,
       }}>
       {children}
     </PostsContext.Provider>

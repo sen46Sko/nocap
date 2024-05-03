@@ -1,3 +1,5 @@
+import {User} from 'utils/types/User';
+
 export enum Screens {
   WELCOME = 'Welcome',
   PHONE_AUTH = 'PhoneAuth',
@@ -33,7 +35,7 @@ export type RootStackParamList = {
   [Screens.SEARCH]: undefined;
 
   [Screens.PROFILE]: {userId: string};
-  [Screens.PROFILE_SLIDE_VIEW]: {type: 'my' | 'not my'};
+  [Screens.PROFILE_SLIDE_VIEW]: {user: User; currentIndex: number};
   [Screens.NOTIFICATIONS]: undefined;
   [Screens.PEEPERS]: undefined;
 };

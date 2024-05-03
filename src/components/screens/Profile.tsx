@@ -20,12 +20,15 @@ import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
 import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {If} from 'components/atoms/If';
 
+import {usePosts} from 'contexts/PostsContext';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
+import {User} from 'utils/types/User';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
+import {getUserIfExists} from 'api/users';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -35,8 +38,14 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
   const [isPeeping, setIsPeeping] = useState(false);
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const auth = useAuth();
+  const posts = usePosts();
+
+  useEffect(() => {
+    getUserIfExists(userId).then(setUser);
+  }, [userId]);
 
   useEffect(() => {
     if (auth.user?.peeps.some(id => id === userId)) {
@@ -101,7 +110,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               <View className="px-[16px]">
                 <View className="flex-row justify-between mt-[16px]">
                   <Text className="font-robotoMedium text-[24px] color-white">
-                    Streetdog
+                    {user?.username || ''}
                   </Text>
 
                   <View className="flex-row items-center gap-[8px]">
@@ -175,7 +184,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   <View className="h-[100px] w-[100px] rounded-full bg-grayMedium" />
                   <View className="gap-[16px]">
                     <Text className="font-robotoMedium text-[20px] color-white">
-                      Street Dog
+                      {user?.username || ''}
                     </Text>
                     <Pressable
                       onPress={() => navigation.navigate(Screens.PEEPERS)}>
@@ -207,112 +216,22 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               </View>
 
               <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
-                      type: userId === auth.user?.id ? 'my' : 'not my',
-                    })
-                  }>
-                  <Image
-                    source={{
-                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                    }}
-                    className="w-[116px] h-[116px] rounded-[4px]"
-                  />
-                </Pressable>
-
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
-                      type: userId === auth.user?.id ? 'my' : 'not my',
-                    })
-                  }>
-                  <Image
-                    source={{
-                      uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                    }}
-                    className="w-[116px] h-[116px] rounded-[4px]"
-                  />
-                </Pressable>
-
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
-                <Image
-                  source={{
-                    uri: 'https://c.pxhere.com/photos/d1/14/tree_lone_alone_one_autumn_fall_wind_green-345290.jpg!d',
-                  }}
-                  className="w-[116px] h-[116px] rounded-[4px]"
-                />
+                {posts.getUserPosts(userId).map((post, index) => (
+                  <Pressable
+                    onPress={() =>
+                      navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
+                        user: user!,
+                        currentIndex: index,
+                      })
+                    }>
+                    <Image
+                      source={{
+                        uri: post.imageLink,
+                      }}
+                      className="w-[116px] h-[116px] rounded-[4px]"
+                    />
+                  </Pressable>
+                ))}
               </View>
             </View>
           </ScrollView>
