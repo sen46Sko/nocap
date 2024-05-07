@@ -189,7 +189,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                       {user?.username || ''}
                     </Text>
                     <Pressable
-                      onPress={() => navigation.navigate(Screens.PEEPERS)}>
+                      onPress={() =>
+                        navigation.navigate(Screens.PEEPERS, {userId})
+                      }>
                       <Text className="font-robotoBold text-[16px] color-orange">
                         {`${peepersCount} Peepers`}
                       </Text>

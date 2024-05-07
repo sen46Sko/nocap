@@ -1,19 +1,38 @@
 import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import classNames from 'classnames';
+
+import {useAuth} from 'contexts/AuthContext';
+
+import {getPeepersCount, getUserIfExists} from 'api/users';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
-import {ContactItem} from 'components/molecules/ContactItem';
-import classNames from 'classnames';
+import {User} from 'utils/types/User';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PEEPERS>;
 
-export const Peepers: React.FC<Props> = ({navigation}) => {
+export const Peepers: React.FC<Props> = ({navigation, route}) => {
+  const {userId} = route.params;
   const [activeTab, setActiveTab] = useState<'peepers' | 'peeps' | 'contacts'>(
     'peepers',
   );
+  const [peepersCount, setPeepersCount] = useState(0);
+  const [user, setUser] = useState<User | null>(null);
+
+  const auth = useAuth();
+
+  useEffect(() => {
+    getPeepersCount(userId).then(setPeepersCount);
+
+    if (auth.user?.id === userId) {
+      setUser(auth.user);
+    } else {
+      getUserIfExists(userId).then(setUser);
+    }
+  }, [auth.user, userId]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -25,7 +44,7 @@ export const Peepers: React.FC<Props> = ({navigation}) => {
                 'color-orange': activeTab === 'peepers',
                 'color-grayMedium': activeTab !== 'peepers',
               })}>
-              25 Peepers
+              {`${peepersCount} Peepers`}
             </Text>
           </Pressable>
 
@@ -37,7 +56,7 @@ export const Peepers: React.FC<Props> = ({navigation}) => {
                 'color-orange': activeTab === 'peeps',
                 'color-grayMedium': activeTab !== 'peeps',
               })}>
-              100 Peeps
+              {`${user?.peeps.length} Peeps`}
             </Text>
           </Pressable>
 
@@ -59,42 +78,7 @@ export const Peepers: React.FC<Props> = ({navigation}) => {
         </Pressable>
       </View>
 
-      <View className="p-[16px] gap-[16px]">
-        <ContactItem
-          name="Van heusen"
-          buttonLabel="Peep"
-          onPress={() => {}}
-          photoUri=""
-        />
-
-        <ContactItem
-          name="Rahul K"
-          buttonLabel="Peep"
-          onPress={() => {}}
-          photoUri=""
-        />
-
-        <ContactItem
-          name="Varun"
-          buttonLabel="Peep"
-          onPress={() => {}}
-          photoUri=""
-        />
-
-        <ContactItem
-          name="Andrews"
-          buttonLabel="Peep"
-          onPress={() => {}}
-          photoUri=""
-        />
-
-        <ContactItem
-          name="Salman Van"
-          buttonLabel="Peep"
-          onPress={() => {}}
-          photoUri=""
-        />
-      </View>
+      <View className="p-[16px] gap-[16px]" />
     </SafeAreaView>
   );
 };
