@@ -14,6 +14,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {User} from 'utils/types/User';
 
 import {Expand} from 'assets/images';
+import {ContactsList} from 'components/organisms/ContactsList';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PEEPERS>;
 
@@ -89,17 +90,19 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
             </Text>
           </Pressable>
 
-          <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
+          <If condition={userId === auth.user?.id}>
+            <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
 
-          <Pressable onPress={() => setActiveTab('contacts')}>
-            <Text
-              className={classNames('font-robotoMedium text-[16px]', {
-                'color-orange': activeTab === 'contacts',
-                'color-grayMedium': activeTab !== 'contacts',
-              })}>
-              Contacts
-            </Text>
-          </Pressable>
+            <Pressable onPress={() => setActiveTab('contacts')}>
+              <Text
+                className={classNames('font-robotoMedium text-[16px]', {
+                  'color-orange': activeTab === 'contacts',
+                  'color-grayMedium': activeTab !== 'contacts',
+                })}>
+                Contacts
+              </Text>
+            </Pressable>
+          </If>
         </View>
 
         <Pressable onPress={() => navigation.goBack()}>
@@ -107,10 +110,8 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
         </Pressable>
       </View>
 
-      <View className="p-[16px] gap-[16px]" />
-
-      <View className="px-[16px] gap-[16px]">
-        <If condition={activeTab === 'peepers'}>
+      <If condition={activeTab === 'peepers'}>
+        <View className="px-[16px] gap-[16px]">
           {peepers.map(user => (
             <ContactItem
               key={user.id}
@@ -122,9 +123,11 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
               onPress={() => peepUser(user.id)}
             />
           ))}
-        </If>
+        </View>
+      </If>
 
-        <If condition={activeTab === 'peeps'}>
+      <If condition={activeTab === 'peeps'}>
+        <View className="px-[16px] gap-[16px]">
           {peeps.map(user => (
             <ContactItem
               key={user.id}
@@ -134,8 +137,12 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
               onPress={() => peepUser(user.id)}
             />
           ))}
-        </If>
-      </View>
+        </View>
+      </If>
+
+      <If condition={activeTab === 'contacts'}>
+        <ContactsList />
+      </If>
     </SafeAreaView>
   );
 };
