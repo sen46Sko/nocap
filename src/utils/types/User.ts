@@ -8,4 +8,5 @@ export type User = {
   birthDate: Timestamp;
   gender: string;
   peeps: string[];
+  imageLink: string;
 };

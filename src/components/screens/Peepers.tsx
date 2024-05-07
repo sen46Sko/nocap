@@ -1,16 +1,19 @@
 import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import classNames from 'classnames';
+
+import {ContactItem} from 'components/molecules/ContactItem';
+import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {getPeepersCount, getUserIfExists} from 'api/users';
+import {getPeepers, getUserIfExists} from 'api/users';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {User} from 'utils/types/User';
 
 import {Expand} from 'assets/images';
-import {User} from 'utils/types/User';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PEEPERS>;
 
@@ -19,20 +22,46 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
   const [activeTab, setActiveTab] = useState<'peepers' | 'peeps' | 'contacts'>(
     'peepers',
   );
-  const [peepersCount, setPeepersCount] = useState(0);
-  const [user, setUser] = useState<User | null>(null);
+  const [peepers, setPeepers] = useState<User[]>([]);
+  const [peeps, setPeeps] = useState<User[]>([]);
 
   const auth = useAuth();
 
   useEffect(() => {
-    getPeepersCount(userId).then(setPeepersCount);
+    getPeepers(userId).then(async peepersIds => {
+      const user =
+        auth.user?.id === userId ? auth.user : await getUserIfExists(userId);
+      const fetchedPeeps: User[] = [];
+      const fetchedPeepers: User[] = [];
 
-    if (auth.user?.id === userId) {
-      setUser(auth.user);
-    } else {
-      getUserIfExists(userId).then(setUser);
-    }
+      for (const peepId of user!.peeps) {
+        await getUserIfExists(peepId).then(res => {
+          if (res) {
+            fetchedPeeps.push(res);
+          }
+        });
+      }
+
+      for (const peeperId of peepersIds) {
+        await getUserIfExists(peeperId).then(res => {
+          if (res) {
+            fetchedPeepers.push(res);
+          }
+        });
+      }
+
+      setPeeps(fetchedPeeps);
+      setPeepers(fetchedPeepers);
+    });
   }, [auth.user, userId]);
+
+  const peepUser = (id: string) => {
+    if (auth.user?.peeps.some(peepId => peepId === id)) {
+      auth.setPeeping('unpeep', id);
+    } else {
+      auth.setPeeping('peep', id);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,7 +73,7 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
                 'color-orange': activeTab === 'peepers',
                 'color-grayMedium': activeTab !== 'peepers',
               })}>
-              {`${peepersCount} Peepers`}
+              {`${peepers.length} Peepers`}
             </Text>
           </Pressable>
 
@@ -56,7 +85,7 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
                 'color-orange': activeTab === 'peeps',
                 'color-grayMedium': activeTab !== 'peeps',
               })}>
-              {`${user?.peeps.length} Peeps`}
+              {`${peeps.length} Peeps`}
             </Text>
           </Pressable>
 
@@ -79,6 +108,34 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
       </View>
 
       <View className="p-[16px] gap-[16px]" />
+
+      <View className="px-[16px] gap-[16px]">
+        <If condition={activeTab === 'peepers'}>
+          {peepers.map(user => (
+            <ContactItem
+              key={user.id}
+              name={user.username}
+              buttonLabel={
+                auth.user?.peeps.some(id => id === user.id) ? 'Peeping' : 'Peep'
+              }
+              photoUri={user.imageLink}
+              onPress={() => peepUser(user.id)}
+            />
+          ))}
+        </If>
+
+        <If condition={activeTab === 'peeps'}>
+          {peeps.map(user => (
+            <ContactItem
+              key={user.id}
+              name={user.username}
+              buttonLabel="Peeping"
+              photoUri={user.imageLink}
+              onPress={() => peepUser(user.id)}
+            />
+          ))}
+        </If>
+      </View>
     </SafeAreaView>
   );
 };

@@ -23,12 +23,13 @@ import {If} from 'components/atoms/If';
 import {usePosts} from 'contexts/PostsContext';
 import {useAuth} from 'contexts/AuthContext';
 
+import {getPeepers, getUserIfExists} from 'api/users';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
-import {getPeepersCount, getUserIfExists} from 'api/users';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -46,7 +47,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
 
   useEffect(() => {
     getUserIfExists(userId).then(setUser);
-    getPeepersCount(userId).then(setPeepersCount);
+    getPeepers(userId).then(res => setPeepersCount(res.length));
   }, [userId]);
 
   useEffect(() => {
@@ -104,7 +105,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
             <View>
               <Image
                 source={{
-                  uri: 'https://images.pexels.com/photos/3225517/pexels-photo-3225517.jpeg',
+                  uri: user?.imageLink || '',
                 }}
                 className="w-full h-[464px]"
               />
@@ -183,7 +184,11 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
             <View className="px-[16px]">
               <View className="flex-row justify-between items-start mt-[16px]">
                 <View className="flex-row gap-[16px] items-center">
-                  <View className="h-[100px] w-[100px] rounded-full bg-grayMedium" />
+                  <Image
+                    source={{uri: user?.imageLink || ''}}
+                    className="h-[100px] w-[100px] rounded-full"
+                  />
+
                   <View className="gap-[16px]">
                     <Text className="font-robotoMedium text-[20px] color-white">
                       {user?.username || ''}

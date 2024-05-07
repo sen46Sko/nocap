@@ -25,6 +25,7 @@ import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
+import {Post} from 'utils/types/Post';
 
 import {
   Locaiton,
@@ -35,7 +36,6 @@ import {
   Phone,
   Share,
 } from 'assets/images';
-import {Post} from 'utils/types/Post';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

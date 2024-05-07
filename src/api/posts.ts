@@ -1,5 +1,6 @@
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
+
 import {Post} from 'utils/types/Post';
 
 export async function getPosts() {

@@ -3,10 +3,11 @@ import {
   ListRenderItemInfo,
   SafeAreaView,
   Pressable,
+  ViewToken,
   FlatList,
+  Image,
   Text,
   View,
-  ViewToken,
 } from 'react-native';
 import React, {useCallback} from 'react';
 
@@ -17,9 +18,9 @@ import {usePosts} from 'contexts/PostsContext';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {Post} from 'utils/types/Post';
 
 import {Plus, SearchWhite} from 'assets/images';
-import {Post} from 'utils/types/Post';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.HOME>;
 
@@ -103,7 +104,10 @@ export const Home: React.FC<Props> = ({navigation}) => {
                   userId: auth.user?.id || '',
                 })
               }>
-              <View className="h-[24px] w-[24px] rounded-full bg-white" />
+              <Image
+                source={{uri: auth.user?.imageLink || ''}}
+                className="h-[24px] w-[24px] rounded-full"
+              />
             </Pressable>
           </View>
         </View>

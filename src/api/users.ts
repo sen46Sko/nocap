@@ -38,13 +38,16 @@ export async function setUserPeeping(
   return functions().httpsCallable('setUserPeeping')({status, userId});
 }
 
-export async function getPeepersCount(userId: string) {
-  return firestore()
+export async function getPeepers(userId: string) {
+  const peepers: string[] = [];
+
+  await firestore()
     .collection('Profiles')
     .where('peeps', 'array-contains', userId)
-    .count()
     .get()
-    .then(res => res.data().count);
+    .then(res => res.forEach(docRef => peepers.push(docRef.id)));
+
+  return peepers;
 }
 
 export async function createUser(user: User) {

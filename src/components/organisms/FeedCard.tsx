@@ -11,6 +11,7 @@ import {useAuth} from 'contexts/AuthContext';
 import {getUserIfExists} from 'api/users';
 
 import {Post} from 'utils/types/Post';
+import {User} from 'utils/types/User';
 
 import {Share} from 'assets/images';
 
@@ -23,13 +24,13 @@ type Props = {
 export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
   const [isPeeping, setIsPeeping] = useState(false);
   const [isLoving, setIsLoving] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [user, setUser] = useState<User | null>(null);
 
   const auth = useAuth();
   const posts = usePosts();
 
   useEffect(() => {
-    getUserIfExists(post.userId).then(res => setUserName(res?.username || ''));
+    getUserIfExists(post.userId).then(setUser);
   }, [post.userId]);
 
   useEffect(() => {
@@ -74,9 +75,12 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
         <Pressable
           className="flex-row items-center gap-[8px]"
           onPress={openProfile}>
-          <View className="bg-white h-[24px] w-[24px] rounded-full" />
+          <Image
+            source={{uri: user?.imageLink || ''}}
+            className="bg-white h-[24px] w-[24px] rounded-full"
+          />
           <Text className="font-robotoBold color-white text-[16px]">
-            {userName}
+            {user?.username || ''}
           </Text>
         </Pressable>
 
