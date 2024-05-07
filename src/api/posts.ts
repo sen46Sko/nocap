@@ -20,3 +20,7 @@ export async function getPosts() {
 export async function setPostLoving(status: 'love' | 'unlove', postId: string) {
   return functions().httpsCallable('setPostLoving')({status, postId});
 }
+
+export async function viewPost(postId: string) {
+  return functions().httpsCallable('viewPost')({postId});
+}

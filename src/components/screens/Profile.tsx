@@ -9,7 +9,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import Swiper from 'react-native-swiper';
+import PagerView from 'react-native-pager-view';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
 import {NotificaitonsMenu} from 'components/organisms/bottomSheetScreens/NotificationsMenu';
@@ -28,7 +28,7 @@ import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
 import {Expand, MenuOrange, Notifications} from 'assets/images';
-import {getUserIfExists} from 'api/users';
+import {getPeepersCount, getUserIfExists} from 'api/users';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -39,12 +39,14 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
   const [user, setUser] = useState<User | null>(null);
+  const [peepersCount, setPeepersCount] = useState(0);
 
   const auth = useAuth();
   const posts = usePosts();
 
   useEffect(() => {
     getUserIfExists(userId).then(setUser);
+    getPeepersCount(userId).then(setPeepersCount);
   }, [userId]);
 
   useEffect(() => {
@@ -97,7 +99,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
           </Pressable>
         </View>
 
-        <Swiper horizontal={false} loop={false} showsPagination={false}>
+        <PagerView orientation="vertical" useNext scrollEnabled>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
               <Image
@@ -189,7 +191,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                     <Pressable
                       onPress={() => navigation.navigate(Screens.PEEPERS)}>
                       <Text className="font-robotoBold text-[16px] color-orange">
-                        25 Peepers
+                        {`${peepersCount} Peepers`}
                       </Text>
                     </Pressable>
                     <Text className="font-robotoRegular color-grayLight">
@@ -218,6 +220,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
                 {posts.getUserPosts(userId).map((post, index) => (
                   <Pressable
+                    key={post.id}
                     onPress={() =>
                       navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
                         user: user!,
@@ -235,7 +238,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               </View>
             </View>
           </ScrollView>
-        </Swiper>
+        </PagerView>
       </View>
 
       <If condition={bottomSheetType !== null}>

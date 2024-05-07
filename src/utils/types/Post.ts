@@ -4,4 +4,5 @@ export type Post = {
   imageLink: string;
   title: string;
   loves: string[];
+  views: string[];
 };
