@@ -9,4 +9,5 @@ export type User = {
   gender: string;
   peeps: string[];
   imageLink: string;
+  bio: string;
 };

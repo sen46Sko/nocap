@@ -106,6 +106,9 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     }
     const newUser = {
       ...localUser,
+      bio: '',
+      imageLink: '',
+      peeps: [],
     } as User;
 
     setLocalUser(newUser);

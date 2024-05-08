@@ -1,17 +1,21 @@
 import {Alert, Pressable, Share, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {CustomInput} from 'components/atoms/CustomInput';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {Pencil} from 'assets/images';
+import {useAuth} from 'contexts/AuthContext';
 
 type Props = {};
 
 export const MyProfileMenu: React.FC<Props> = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [bio, setBio] = useState('Photographs on spot');
+  const [bio, setBio] = useState('');
+
+  const auth = useAuth();
+
   const onShare = () => {
     try {
       Share.share(
@@ -25,6 +29,15 @@ export const MyProfileMenu: React.FC<Props> = () => {
     }
   };
 
+  const updateBio = () => {
+    setIsEditing(false);
+    auth.updateUser({bio});
+  };
+
+  useEffect(() => {
+    setBio(auth.user?.bio || '');
+  }, [auth.user?.bio]);
+
   return (
     <View className="gap-[24px]">
       <View className="flex-row gap-[14px] justify-end">
@@ -33,7 +46,7 @@ export const MyProfileMenu: React.FC<Props> = () => {
           onPress={() => setIsEditing(true)}>
           <Pencil />
         </Pressable>
-        <SmallButton label="Save" onPress={() => setIsEditing(false)} />
+        <SmallButton label="Save" onPress={updateBio} />
       </View>
 
       <View className="gap-[16px]">
@@ -48,7 +61,7 @@ export const MyProfileMenu: React.FC<Props> = () => {
           />
         ) : (
           <Text className=" font-robotoMedium text-[16px] color-grayLight">
-            Photographs on spot
+            {bio}
           </Text>
         )}
       </View>

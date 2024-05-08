@@ -134,7 +134,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                 </View>
 
                 <Text className="font-robotoRegular text-[16px] color-grayLight mt-[8px]">
-                  Street style wears
+                  {user?.bio || ''}
                 </Text>
 
                 <If condition={userId === auth.user?.id}>
