@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import classNames from 'classnames';
 
+import {ContactsList} from 'components/organisms/ContactsList';
 import {ContactItem} from 'components/molecules/ContactItem';
 import {If} from 'components/atoms/If';
 
@@ -14,7 +15,6 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {User} from 'utils/types/User';
 
 import {Expand} from 'assets/images';
-import {ContactsList} from 'components/organisms/ContactsList';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PEEPERS>;
 

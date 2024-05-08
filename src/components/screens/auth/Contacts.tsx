@@ -9,12 +9,12 @@ import {
   View,
 } from 'react-native';
 
+import {ContactsList} from 'components/organisms/ContactsList';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
-import {ContactsList} from 'components/organisms/ContactsList';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CONTACTS>;
 

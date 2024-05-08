@@ -43,10 +43,11 @@ type Props = NativeStackScreenProps<
 >;
 
 export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
-  const {user, currentIndex} = route.params;
+  const {user, initialIndex} = route.params;
 
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   const auth = useAuth();
   const posts = usePosts();
@@ -90,7 +91,11 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
         </View>
       </View>
 
-      <Swiper loop={false} showsPagination={false} index={currentIndex}>
+      <Swiper
+        loop={false}
+        showsPagination={false}
+        index={currentIndex}
+        onIndexChanged={setCurrentIndex}>
         {posts.getUserPosts(user.id).map(post => (
           <ScrollView showsVerticalScrollIndicator={false} key={post.id}>
             <View className="gap-[16px]">
@@ -177,7 +182,10 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
             </If>
 
             <If condition={bottomSheetType === BottomSheetType.ALBUMS_MENU}>
-              <AlbumsMenu />
+              <AlbumsMenu
+                imageId={posts.posts[currentIndex].id}
+                close={() => setBottomSheetType(null)}
+              />
             </If>
 
             <If

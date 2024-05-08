@@ -35,7 +35,7 @@ export type RootStackParamList = {
   [Screens.SEARCH]: undefined;
 
   [Screens.PROFILE]: {userId: string};
-  [Screens.PROFILE_SLIDE_VIEW]: {user: User; currentIndex: number};
+  [Screens.PROFILE_SLIDE_VIEW]: {user: User; initialIndex: number};
   [Screens.NOTIFICATIONS]: undefined;
   [Screens.PEEPERS]: {userId: string};
 };

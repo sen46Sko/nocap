@@ -149,7 +149,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                     {user?.albums.map(album => (
                       <View
                         className="border border-grayDark rounded-[24px] p-[10px]"
-                        key={album.name}>
+                        key={album.id}>
                         <Text className="font-robotoMedium color-white">
                           {album.name}
                         </Text>
@@ -216,7 +216,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                     onPress={() =>
                       navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
                         user: user!,
-                        currentIndex: index,
+                        initialIndex: index,
                       })
                     }>
                     <Image

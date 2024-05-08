@@ -2,9 +2,9 @@ import {createNavigationContainerRef} from '@react-navigation/native';
 import {Dimensions, Platform} from 'react-native';
 import {Contact} from 'react-native-contacts';
 
-import {RootStackParamList} from 'utils/types/navigation';
-
 import {getAllUsers} from 'api/users';
+
+import {RootStackParamList} from 'utils/types/navigation';
 
 export const screenWidth = Dimensions.get('window').width;
 export const screenHeight = Dimensions.get('window').height;
@@ -98,4 +98,12 @@ export const isBirthDateValid = (date: Date) => {
   dateAtMidnight.setHours(0, 0, 0, 0);
 
   return dateAtMidnight < today;
+};
+
+export const getHighestIdFromArray = (array: {id: number}[]) => {
+  if (!array.length) {
+    return 0;
+  }
+
+  return Math.max(...array.map(item => item.id));
 };

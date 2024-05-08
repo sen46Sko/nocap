@@ -1,5 +1,5 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   SafeAreaView,
   ScrollView,
@@ -25,9 +25,9 @@ import {getUserIfExists} from 'api/users';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
+import {Post} from 'utils/types/Post';
 
 import {Calendar, Eye, Locaiton, MenuGray, Phone, Share} from 'assets/images';
-import {Post} from 'utils/types/Post';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

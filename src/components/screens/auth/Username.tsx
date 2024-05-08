@@ -17,7 +17,7 @@ import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {isUsernameTaken, isUsernameValid} from 'utils/helpers';
+import {isUsernameTaken, isUsernameValid} from 'utils/types/helpers';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.USERNAME>;

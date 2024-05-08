@@ -8,7 +8,7 @@ import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {getAge, getDateString, isBirthDateValid} from 'utils/helpers';
+import {getAge, getDateString, isBirthDateValid} from 'utils/types/helpers';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.BIRTH_DATE>;

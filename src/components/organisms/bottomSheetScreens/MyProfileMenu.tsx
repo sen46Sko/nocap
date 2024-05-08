@@ -5,8 +5,9 @@ import {CustomInput} from 'components/atoms/CustomInput';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
-import {Pencil} from 'assets/images';
 import {useAuth} from 'contexts/AuthContext';
+
+import {Pencil} from 'assets/images';
 
 type Props = {};
 

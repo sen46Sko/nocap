@@ -1,12 +1,15 @@
-import {SearchGray} from 'assets/images';
+import {Alert, Linking, PermissionsAndroid, Platform, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Contact, getAll} from 'react-native-contacts';
+
 import {CustomInput} from 'components/atoms/CustomInput';
-import {If} from 'components/atoms/If';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {ContactItem} from 'components/molecules/ContactItem';
-import React, {useEffect, useState} from 'react';
-import {Alert, Linking, PermissionsAndroid, Platform, View} from 'react-native';
-import {Contact, getAll} from 'react-native-contacts';
-import {sortContacts} from 'utils/helpers';
+import {If} from 'components/atoms/If';
+
+import {sortContacts} from 'utils/types/helpers';
+
+import {SearchGray} from 'assets/images';
 
 export const ContactsList = () => {
   const [registeredContacts, setRegisteredContacts] = useState<Contact[]>([]);

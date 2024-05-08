@@ -1,5 +1,7 @@
 import {Timestamp} from 'firebase/firestore';
 
+import {Album} from 'utils/types/Album';
+
 export type User = {
   id: string;
   username: string;
@@ -10,5 +12,5 @@ export type User = {
   peeps: string[];
   imageLink: string;
   bio: string;
-  albums: {name: string; images: string[]}[];
+  albums: Album[];
 };
