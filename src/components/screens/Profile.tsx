@@ -137,39 +137,24 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   {user?.bio || ''}
                 </Text>
 
-                <If condition={userId === auth.user?.id}>
+                <If
+                  condition={
+                    userId === auth.user?.id && !!auth.user.albums.length
+                  }>
                   <Text className="font-robotoMedium color-white mt-[46px]">
                     Albums
                   </Text>
 
                   <View className="flex-row gap-[10px] mt-[16px]">
-                    <View className="border border-grayDark rounded-[24px] p-[10px]">
-                      <Text className="font-robotoMedium color-white">Sky</Text>
-                    </View>
-
-                    <View className="border border-grayDark rounded-[24px] p-[10px]">
-                      <Text className="font-robotoMedium color-white">
-                        Dogs
-                      </Text>
-                    </View>
-
-                    <View className="border border-grayDark rounded-[24px] p-[10px]">
-                      <Text className="font-robotoMedium color-white">
-                        Sneakers
-                      </Text>
-                    </View>
-
-                    <View className="border border-grayDark rounded-[24px] p-[10px]">
-                      <Text className="font-robotoMedium color-white">
-                        Food
-                      </Text>
-                    </View>
-
-                    <View className="border border-grayDark rounded-[24px] p-[10px]">
-                      <Text className="font-robotoMedium color-white">
-                        Portraits
-                      </Text>
-                    </View>
+                    {user?.albums.map(album => (
+                      <View
+                        className="border border-grayDark rounded-[24px] p-[10px]"
+                        key={album.name}>
+                        <Text className="font-robotoMedium color-white">
+                          {album.name}
+                        </Text>
+                      </View>
+                    ))}
                   </View>
                 </If>
 

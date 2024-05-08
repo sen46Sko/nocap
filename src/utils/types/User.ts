@@ -10,4 +10,5 @@ export type User = {
   peeps: string[];
   imageLink: string;
   bio: string;
+  albums: {name: string; images: string[]}[];
 };
