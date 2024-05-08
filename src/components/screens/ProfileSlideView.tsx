@@ -183,7 +183,7 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
 
             <If condition={bottomSheetType === BottomSheetType.ALBUMS_MENU}>
               <AlbumsMenu
-                imageId={posts.posts[currentIndex].id}
+                imageId={posts.getUserPosts(user.id)[currentIndex].id}
                 close={() => setBottomSheetType(null)}
               />
             </If>

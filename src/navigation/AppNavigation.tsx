@@ -34,7 +34,12 @@ export const AppNavigation = () => {
         <Stack.Screen name={Screens.FINISH_SIGNUP} component={FinishSignup} />
         <Stack.Screen name={Screens.CONTACTS} component={Contacts} />
 
-        <Stack.Screen name={Screens.HOME} component={Home} />
+        <Stack.Screen
+          name={Screens.HOME}
+          component={Home}
+          options={{gestureEnabled: false}}
+        />
+
         <Stack.Screen
           name={Screens.FEED_CARD_DETAILS}
           component={FeedCardDetails}

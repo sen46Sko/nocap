@@ -33,7 +33,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
 
   useEffect(() => {
     getPosts().then(setPosts);
-  }, []);
+  }, [auth.user]);
 
   const getUserPosts = (userId: string) => {
     return posts.filter(post => post.userId === userId);
