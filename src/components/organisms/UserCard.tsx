@@ -5,7 +5,7 @@ import {useAuth} from 'contexts/AuthContext';
 
 import {User} from 'utils/types/User';
 
-import {Cross} from 'assets/images';
+import {CrossGray} from 'assets/images';
 
 type Props = {
   user: User;
@@ -43,7 +43,7 @@ export const UserCard: React.FC<Props> = ({user, removeSuggestion}) => {
         </View>
 
         <Pressable onPress={removeSuggestion}>
-          <Cross />
+          <CrossGray />
         </Pressable>
       </View>
 

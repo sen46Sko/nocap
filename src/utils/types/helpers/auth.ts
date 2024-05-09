@@ -1,8 +1,5 @@
 import {getAllUsers} from 'api/users';
 
-export const getDateString = (date: Date) =>
-  date.toLocaleDateString('wo').split('-').join(' - ');
-
 export const getAge = (birthDate: Date) => {
   const today = new Date();
   var years = today.getFullYear() - birthDate.getFullYear();

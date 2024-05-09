@@ -25,7 +25,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Google, Logo} from 'assets/images';
 
-type Props = NativeStackScreenProps<RootStackParamList, Screens.PHONE_AUTH>;
+type Props = NativeStackScreenProps<RootStackParamList, Screens.AUTH>;
 
 export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
   const {type: screenType} = route.params;
@@ -150,7 +150,7 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
 
             <Pressable
               onPress={() =>
-                navigation.navigate(Screens.PHONE_AUTH, {
+                navigation.navigate(Screens.AUTH, {
                   type: screenType === 'login' ? 'signup' : 'login',
                 })
               }>

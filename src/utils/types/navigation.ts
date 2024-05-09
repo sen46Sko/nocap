@@ -2,7 +2,7 @@ import {User} from 'utils/types/User';
 
 export enum Screens {
   WELCOME = 'Welcome',
-  PHONE_AUTH = 'PhoneAuth',
+  AUTH = 'Auth',
   USERNAME = 'Username',
   BIRTH_DATE = 'BirthDate',
   GENDER = 'Gender',
@@ -20,11 +20,13 @@ export enum Screens {
   PEEPERS = 'Peepers',
 
   SETTINGS = 'Settings',
+  USERNAME_SETTINGS = 'UsernameSettings',
+  BIRTHDATE_SETTINGS = 'BirthDateSettings',
 }
 
 export type RootStackParamList = {
   [Screens.WELCOME]: undefined;
-  [Screens.PHONE_AUTH]: {type: 'login' | 'signup'};
+  [Screens.AUTH]: {type: 'login' | 'signup'};
   [Screens.USERNAME]: undefined;
   [Screens.BIRTH_DATE]: undefined;
   [Screens.GENDER]: undefined;
@@ -42,4 +44,6 @@ export type RootStackParamList = {
   [Screens.PEEPERS]: {userId: string};
 
   [Screens.SETTINGS]: undefined;
+  [Screens.USERNAME_SETTINGS]: undefined;
+  [Screens.BIRTHDATE_SETTINGS]: undefined;
 };

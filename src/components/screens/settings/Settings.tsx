@@ -22,13 +22,17 @@ export const Settings: React.FC<Props> = ({navigation}) => {
   const auth = useAuth();
 
   const birthday = useMemo(() => {
-    const date = new Date(auth.user?.birthDate.seconds as number);
+    const date = auth.user?.birthDate.toDate();
+    if (!date) {
+      return '';
+    }
+
     const day = date.getDate();
     const month = date.toLocaleString('default', {month: 'long'});
     const year = date.getFullYear();
 
     return `${day} ${month} ${year}`;
-  }, [auth.user?.birthDate.seconds]);
+  }, [auth.user?.birthDate]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,32 +51,41 @@ export const Settings: React.FC<Props> = ({navigation}) => {
             BASIC INFO
           </Text>
 
-          <View className="gap-[8px]">
-            <Text className="font-robotoRegular text-[16px] color-grayLight">
-              Name
-            </Text>
-            <Text className="font-robotoMedium text-[16px] color-white">
-              {auth.user?.username}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.USERNAME_SETTINGS)}>
+            <View className="gap-[8px]">
+              <Text className="font-robotoRegular text-[16px] color-grayLight">
+                Name
+              </Text>
+              <Text className="font-robotoMedium text-[16px] color-white">
+                {auth.user?.username}
+              </Text>
+            </View>
+          </Pressable>
 
-          <View className="gap-[8px]">
-            <Text className="font-robotoRegular text-[16px] color-grayLight">
-              Username
-            </Text>
-            <Text className="font-robotoMedium text-[16px] color-white">
-              {auth.user?.username}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.USERNAME_SETTINGS)}>
+            <View className="gap-[8px]">
+              <Text className="font-robotoRegular text-[16px] color-grayLight">
+                Username
+              </Text>
+              <Text className="font-robotoMedium text-[16px] color-white">
+                {auth.user?.username}
+              </Text>
+            </View>
+          </Pressable>
 
-          <View className="gap-[8px]">
-            <Text className="font-robotoRegular text-[16px] color-grayLight">
-              Birthday
-            </Text>
-            <Text className="font-robotoMedium text-[16px] color-white">
-              {birthday}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.BIRTHDATE_SETTINGS)}>
+            <View className="gap-[8px]">
+              <Text className="font-robotoRegular text-[16px] color-grayLight">
+                Birthday
+              </Text>
+              <Text className="font-robotoMedium text-[16px] color-white">
+                {birthday}
+              </Text>
+            </View>
+          </Pressable>
 
           <View className="gap-[8px]">
             <Text className="font-robotoRegular text-[16px] color-grayLight">

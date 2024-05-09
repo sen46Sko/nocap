@@ -3,10 +3,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
 import {ProfileSlideView} from 'components/screens/profile/ProfileSlideView';
+import {UsernameSettings} from 'components/screens/settings/UsernameSettings';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
-import {PhoneAuth} from 'components/screens/auth/PhoneAuth';
+import {PhoneAuth} from 'components/screens/auth/Auth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
 import {Username} from 'components/screens/auth/Username';
 import {Settings} from 'components/screens/settings/Settings';
@@ -20,6 +21,7 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/types/helpers';
+import {BirthDateSettings} from 'components/screens/settings/BirthDateSettings';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -28,7 +30,7 @@ export const AppNavigation = () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name={Screens.WELCOME} component={Welcome} />
-        <Stack.Screen name={Screens.PHONE_AUTH} component={PhoneAuth} />
+        <Stack.Screen name={Screens.AUTH} component={PhoneAuth} />
         <Stack.Screen name={Screens.USERNAME} component={Username} />
         <Stack.Screen name={Screens.BIRTH_DATE} component={BirthDate} />
         <Stack.Screen name={Screens.GENDER} component={Gender} />
@@ -90,6 +92,14 @@ export const AppNavigation = () => {
         />
 
         <Stack.Screen name={Screens.SETTINGS} component={Settings} />
+        <Stack.Screen
+          name={Screens.USERNAME_SETTINGS}
+          component={UsernameSettings}
+        />
+        <Stack.Screen
+          name={Screens.BIRTHDATE_SETTINGS}
+          component={BirthDateSettings}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -36,16 +36,14 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
             <BigButton
               label="Log in"
               style="gray"
-              onPress={() =>
-                navigation.navigate(Screens.PHONE_AUTH, {type: 'login'})
-              }
+              onPress={() => navigation.navigate(Screens.AUTH, {type: 'login'})}
             />
 
             <BigButton
               label="Sign up"
               style="white"
               onPress={() =>
-                navigation.navigate(Screens.PHONE_AUTH, {type: 'signup'})
+                navigation.navigate(Screens.AUTH, {type: 'signup'})
               }
             />
           </View>

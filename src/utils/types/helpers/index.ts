@@ -17,6 +17,9 @@ export const navigate = (name: any, params?: any) => {
   }
 };
 
+export const getDateString = (date: Date) =>
+  date.toLocaleDateString('wo').split('-').join(' - ');
+
 export const sortContacts = async (contacts: Contact[]) => {
   const fetchedUsers = await getAllUsers();
   const registered: Contact[] = [];
