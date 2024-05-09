@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 import {CustomInput} from 'components/atoms/CustomInput';
 import {UserCard} from 'components/organisms/UserCard';
@@ -18,15 +18,24 @@ import {usePosts} from 'contexts/PostsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
-import {Expand, SearchLightGray, SeeMore} from 'assets/images';
+import {Expand, SearchLightGray} from 'assets/images';
 import {Post} from 'utils/types/Post';
+import {getSuggestedUsers} from 'api/users';
+import {useAuth} from 'contexts/AuthContext';
+import {User} from 'utils/types/User';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
 
 export const Search: React.FC<Props> = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggested, setSuggested] = useState<User[]>([]);
 
   const posts = usePosts();
+  const auth = useAuth();
+
+  useEffect(() => {
+    getSuggestedUsers(auth.user?.id!).then(setSuggested);
+  }, [auth.user?.id]);
 
   const trendingPosts = useMemo(() => {
     const sortingFunc = (a: Post, b: Post) => b.loves.length - a.loves.length;
@@ -128,23 +137,29 @@ export const Search: React.FC<Props> = ({navigation}) => {
                 </View>
               </View>
 
-              <View className="gap-[8px]">
-                <Text className="font-robotoMedium text-[16px] color-white">
-                  Suggested for you
-                </Text>
+              <If condition={!!suggested.length}>
+                <View className="gap-[8px]">
+                  <Text className="font-robotoMedium text-[16px] color-white">
+                    Suggested for you
+                  </Text>
 
-                <View className="flex-row gap-[10px] items-center">
-                  <UserCard />
-                  <UserCard />
-
-                  <View className="gap-[8px] w-[33px] ml-[16px]">
-                    <SeeMore />
-                    <Text className="font-robotoMedium color-white">
-                      See more
-                    </Text>
+                  <View className="flex-row gap-[10px] items-center">
+                    {suggested.map(user => (
+                      <UserCard
+                        key={user.id}
+                        user={user}
+                        removeSuggestion={() =>
+                          setSuggested(current =>
+                            current.filter(
+                              suggestion => suggestion.id !== user.id,
+                            ),
+                          )
+                        }
+                      />
+                    ))}
                   </View>
                 </View>
-              </View>
+              </If>
 
               <View className="gap-[8px]">
                 <View className="flex-row items-center justify-between">

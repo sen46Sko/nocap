@@ -50,6 +50,38 @@ export async function getPeepers(userId: string) {
   return peepers;
 }
 
+export async function getSuggestedUsers(userId: string) {
+  const profilesRef = firestore().collection('Profiles');
+  const users: User[] = [];
+
+  await profilesRef
+    .doc(userId)
+    .get()
+    .then(doc => doc.get('peeps'))
+    .then(async peepIds => {
+      for (const peepId of peepIds as string[]) {
+        await profilesRef
+          .doc(peepId)
+          .get()
+          .then(doc => doc.get('peeps'))
+          .then(async suggestedPeepIds => {
+            for (const suggestedPeepId of suggestedPeepIds as string[]) {
+              await profilesRef
+                .doc(suggestedPeepId)
+                .get()
+                .then(res => {
+                  if (res.data()?.id !== userId) {
+                    users.push(res.data() as User);
+                  }
+                });
+            }
+          });
+      }
+    });
+
+  return users;
+}
+
 export async function createUser(user: User) {
   return firestore().collection('Profiles').doc(user.id).set(user);
 }
