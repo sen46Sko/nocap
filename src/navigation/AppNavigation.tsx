@@ -2,23 +2,24 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
-import {ProfileSlideView} from 'components/screens/ProfileSlideView';
+import {ProfileSlideView} from 'components/screens/profile/ProfileSlideView';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
-import {Notifications} from 'components/screens/Notifications';
+import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {PhoneAuth} from 'components/screens/auth/PhoneAuth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
 import {Username} from 'components/screens/auth/Username';
+import {Settings} from 'components/screens/settings/Settings';
 import {Contacts} from 'components/screens/auth/Contacts';
 import {Welcome} from 'components/screens/auth/Welcome';
-import {Profile} from 'components/screens/Profile';
+import {Peepers} from 'components/screens/profile/Peepers';
+import {Profile} from 'components/screens/profile/Profile';
 import {Gender} from 'components/screens/auth/Gender';
 import {Search} from 'components/screens/Search';
 import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/types/helpers';
-import {Peepers} from 'components/screens/Peepers';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -39,7 +40,6 @@ export const AppNavigation = () => {
           component={Home}
           options={{gestureEnabled: false}}
         />
-
         <Stack.Screen
           name={Screens.FEED_CARD_DETAILS}
           component={FeedCardDetails}
@@ -47,7 +47,6 @@ export const AppNavigation = () => {
             animation: 'none',
           }}
         />
-
         <Stack.Screen
           name={Screens.SEARCH}
           component={Search}
@@ -89,6 +88,8 @@ export const AppNavigation = () => {
             animation: 'slide_from_bottom',
           }}
         />
+
+        <Stack.Screen name={Screens.SETTINGS} component={Settings} />
       </Stack.Navigator>
     </NavigationContainer>
   );

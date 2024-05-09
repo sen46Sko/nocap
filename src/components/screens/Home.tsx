@@ -100,9 +100,10 @@ export const Home: React.FC<Props> = ({navigation}) => {
 
             <Pressable
               onPress={() =>
-                navigation.navigate(Screens.PROFILE, {
-                  userId: auth.user?.id || '',
-                })
+                // navigation.navigate(Screens.PROFILE, {
+                //   userId: auth.user?.id || '',
+                // })
+                navigation.navigate(Screens.SETTINGS)
               }>
               <Image
                 source={{uri: auth.user?.imageLink || ''}}

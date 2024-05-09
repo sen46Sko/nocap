@@ -18,6 +18,8 @@ export enum Screens {
   PROFILE_SLIDE_VIEW = 'ProfileSlideView',
   NOTIFICATIONS = 'Notifications',
   PEEPERS = 'Peepers',
+
+  SETTINGS = 'Settings',
 }
 
 export type RootStackParamList = {
@@ -38,4 +40,6 @@ export type RootStackParamList = {
   [Screens.PROFILE_SLIDE_VIEW]: {user: User; initialIndex: number};
   [Screens.NOTIFICATIONS]: undefined;
   [Screens.PEEPERS]: {userId: string};
+
+  [Screens.SETTINGS]: undefined;
 };
