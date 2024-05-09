@@ -22,6 +22,7 @@ import {Home} from 'components/screens/Home';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/types/helpers';
 import {BirthDateSettings} from 'components/screens/settings/BirthDateSettings';
+import {GenderSettings} from 'components/screens/settings/GenderSettings';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -99,6 +100,10 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.BIRTHDATE_SETTINGS}
           component={BirthDateSettings}
+        />
+        <Stack.Screen
+          name={Screens.GENDER_SETTINGS}
+          component={GenderSettings}
         />
       </Stack.Navigator>
     </NavigationContainer>

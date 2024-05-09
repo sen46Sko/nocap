@@ -26,7 +26,12 @@ export const BirthDateSettings: React.FC<Props> = ({navigation}) => {
       return;
     }
 
-    setDate(auth.user.birthDate.toDate());
+    setDate(
+      new Timestamp(
+        auth.user?.birthDate.seconds as number,
+        auth.user?.birthDate.nanoseconds as number,
+      ).toDate(),
+    );
   }, [auth.user]);
 
   const submit = () => {

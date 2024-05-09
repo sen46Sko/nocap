@@ -15,6 +15,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
 import {If} from 'components/atoms/If';
+import {Timestamp} from 'firebase/firestore';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SETTINGS>;
 
@@ -22,7 +23,11 @@ export const Settings: React.FC<Props> = ({navigation}) => {
   const auth = useAuth();
 
   const birthday = useMemo(() => {
-    const date = auth.user?.birthDate.toDate();
+    const date = new Timestamp(
+      auth.user?.birthDate.seconds as number,
+      auth.user?.birthDate.nanoseconds as number,
+    ).toDate();
+
     if (!date) {
       return '';
     }
@@ -87,14 +92,17 @@ export const Settings: React.FC<Props> = ({navigation}) => {
             </View>
           </Pressable>
 
-          <View className="gap-[8px]">
-            <Text className="font-robotoRegular text-[16px] color-grayLight">
-              Gender
-            </Text>
-            <Text className="font-robotoMedium text-[16px] color-white">
-              {auth.user?.gender}
-            </Text>
-          </View>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.GENDER_SETTINGS)}>
+            <View className="gap-[8px]">
+              <Text className="font-robotoRegular text-[16px] color-grayLight">
+                Gender
+              </Text>
+              <Text className="font-robotoMedium text-[16px] color-white">
+                {auth.user?.gender}
+              </Text>
+            </View>
+          </Pressable>
 
           <Text className="font-robotoMedium self-center color-grayLight">
             LOGIN INFO

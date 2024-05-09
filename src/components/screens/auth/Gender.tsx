@@ -4,18 +4,16 @@ import {
   SafeAreaView,
   StyleSheet,
   Keyboard,
-  Text,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {CustomInput} from 'components/atoms/CustomInput';
-import {SelectItem} from 'components/molecules/SelectItem';
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {GenderPicker} from 'components/organisms/GenderPicker';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.GENDER>;
 
@@ -42,59 +40,15 @@ export const Gender: React.FC<Props> = ({navigation}) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <View className="flex-1 px-[16px] mt-[40px] mb-[40px] justify-between">
-          <View className="gap-[16px]">
-            <View className="h-[1px] w-full bg-grayDark" />
+          <View className="h-[1px] w-full bg-grayDark" />
 
-            <Text className="color-grayLight font-robotoRegular text-[16px]">
-              Gender
-            </Text>
-
-            <Text className="color-white font-robotoMedium text-[16px] h-[22px]">
-              {gender !== 'Custom' ? gender : customGender}
-            </Text>
-
-            <View className="h-[1px] w-full bg-grayDark" />
-
-            <Text className="color-grayLight font-robotoRegular text-[16px]">
-              This won't be part of your public profile.
-            </Text>
-
-            <View className="gap-[24px]">
-              <SelectItem
-                isSelected={gender === 'Female'}
-                onSelect={() => selectItem('Female')}
-                label="Female"
-                type="radio"
-              />
-
-              <SelectItem
-                isSelected={gender === 'Male'}
-                onSelect={() => selectItem('Male')}
-                label="Male"
-                type="radio"
-              />
-
-              <SelectItem
-                isSelected={gender === 'Custom'}
-                onSelect={() => selectItem('Custom')}
-                label="Custom"
-                type="radio"
-              />
-
-              <CustomInput
-                placeholder="Custom gender"
-                value={customGender}
-                setValue={setCustomGender}
-                disabled={gender !== 'Custom'}
-              />
-
-              <SelectItem
-                isSelected={gender === 'Prefer not to say'}
-                onSelect={() => selectItem('Prefer not to say')}
-                label="Prefer not to say"
-                type="radio"
-              />
-            </View>
+          <View className="mt-[16px]">
+            <GenderPicker
+              gender={gender}
+              selectGender={selectItem}
+              customGender={customGender}
+              setCustomGender={setCustomGender}
+            />
           </View>
 
           <View className="items-center gap-[80px]">
