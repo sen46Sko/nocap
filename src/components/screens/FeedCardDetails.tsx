@@ -8,6 +8,8 @@ import {
   Image,
   Text,
   View,
+  Share,
+  Alert,
 } from 'react-native';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
@@ -27,7 +29,14 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {Post} from 'utils/types/Post';
 
-import {Calendar, Eye, Locaiton, MenuGray, Phone, Share} from 'assets/images';
+import {
+  Share as ShareIcon,
+  Calendar,
+  Locaiton,
+  MenuGray,
+  Phone,
+  Eye,
+} from 'assets/images';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -90,6 +99,19 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
     }
   };
 
+  const onShare = () => {
+    try {
+      Share.share(
+        {
+          url: 'https://www.google.com',
+        },
+        {tintColor: '#000000'},
+      );
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -144,7 +166,10 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
                     {post?.views.length || 0}
                   </Text>
                 </View>
-                <Share />
+
+                <Pressable onPress={onShare}>
+                  <ShareIcon />
+                </Pressable>
               </View>
             </View>
 

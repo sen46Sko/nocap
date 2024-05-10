@@ -7,17 +7,15 @@ import {
   Pressable,
   Image,
   Text,
+  Share,
   View,
+  Alert,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
-import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
-import {ProfileMenu} from 'components/organisms/bottomSheetScreens/ProfileMenu';
-import {MyPhotoMenu} from 'components/organisms/bottomSheetScreens/MyPhotoMenu';
 import {AlbumsMenu} from 'components/organisms/bottomSheetScreens/AlbumsMenu';
 import {LikeButton} from 'components/atoms/buttons/LikeButton';
-import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
 import {If} from 'components/atoms/If';
 
 import {usePosts} from 'contexts/PostsContext';
@@ -30,11 +28,10 @@ import {Post} from 'utils/types/Post';
 import {
   Locaiton,
   Calendar,
-  MenuGray,
   Expand,
   Albums,
   Phone,
-  Share,
+  Share as ShareIcon,
 } from 'assets/images';
 
 type Props = NativeStackScreenProps<
@@ -52,14 +49,16 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
   const auth = useAuth();
   const posts = usePosts();
 
-  const getSnapPoints = () => {
-    switch (bottomSheetType) {
-      default:
-        return ['50%'];
-      case BottomSheetType.REPORT_MENU:
-        return ['90%'];
-      case BottomSheetType.SUBMITTED_REPORT:
-        return ['30%'];
+  const onShare = () => {
+    try {
+      Share.share(
+        {
+          url: 'https://www.google.com',
+        },
+        {tintColor: '#000000'},
+      );
+    } catch (error: any) {
+      Alert.alert(error.message);
     }
   };
 
@@ -117,20 +116,11 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
                   </Text>
                 </View>
 
-                <View className="flex-row gap-[24px] items-center">
-                  <Share />
-
-                  <Pressable
-                    onPress={() =>
-                      setBottomSheetType(
-                        user.id === auth.user?.id
-                          ? BottomSheetType.MY_PHOTO_MENU
-                          : BottomSheetType.PROFILE_MENU,
-                      )
-                    }>
-                    <MenuGray />
-                  </Pressable>
-                </View>
+                <Pressable
+                  onPress={onShare}
+                  className="flex-row gap-[24px] items-center">
+                  <ShareIcon />
+                </Pressable>
               </View>
 
               <View className="flex-row px-[6px]">
@@ -169,46 +159,13 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
       <If condition={bottomSheetType !== null}>
         <View className="absolute bottom-0 top-0 right-0 left-0">
           <CustomBottomSheet
-            snapPoints={getSnapPoints()}
+            snapPoints={['50%%']}
             onClose={() => setBottomSheetType(null)}>
-            <If condition={bottomSheetType === BottomSheetType.PROFILE_MENU}>
-              <ProfileMenu
-                onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
-              />
-            </If>
-
-            <If condition={bottomSheetType === BottomSheetType.MY_PHOTO_MENU}>
-              <MyPhotoMenu />
-            </If>
-
             <If condition={bottomSheetType === BottomSheetType.ALBUMS_MENU}>
               <AlbumsMenu
                 imageId={posts.getUserPosts(user.id)[currentIndex].id}
                 close={() => setBottomSheetType(null)}
               />
-            </If>
-
-            <If
-              condition={
-                bottomSheetType === BottomSheetType.REPORT_MENU ||
-                bottomSheetType === BottomSheetType.REPORT_SMTH_ELSE
-              }>
-              <ReportMenu
-                isReportElse={
-                  bottomSheetType === BottomSheetType.REPORT_SMTH_ELSE
-                }
-                onReportElse={() =>
-                  setBottomSheetType(BottomSheetType.REPORT_SMTH_ELSE)
-                }
-                onSubmitReport={() =>
-                  setBottomSheetType(BottomSheetType.SUBMITTED_REPORT)
-                }
-              />
-            </If>
-
-            <If
-              condition={bottomSheetType === BottomSheetType.SUBMITTED_REPORT}>
-              <SubmittedReport />
             </If>
           </CustomBottomSheet>
         </View>

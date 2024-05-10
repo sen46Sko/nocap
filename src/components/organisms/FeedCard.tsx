@@ -1,4 +1,4 @@
-import {Image, Pressable, Text, View} from 'react-native';
+import {Alert, Image, Pressable, Share, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
@@ -13,7 +13,7 @@ import {getUserIfExists} from 'api/users';
 import {Post} from 'utils/types/Post';
 import {User} from 'utils/types/User';
 
-import {Share} from 'assets/images';
+import {Share as ShareIcon} from 'assets/images';
 
 type Props = {
   post: Post;
@@ -69,6 +69,19 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
     }
   };
 
+  const onShare = () => {
+    try {
+      Share.share(
+        {
+          url: 'https://www.google.com',
+        },
+        {tintColor: '#000000'},
+      );
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
+
   return (
     <Pressable className="gap-[8px]" onPress={openImage}>
       <View className="px-[10px] flex-row items-center justify-between">
@@ -108,7 +121,9 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
 
         <View className="flex-row gap-[24px] items-center">
           <LikeButton isLiked={isLoving} onPress={lovePost} />
-          <Share />
+          <Pressable onPress={onShare}>
+            <ShareIcon />
+          </Pressable>
         </View>
       </View>
     </Pressable>
