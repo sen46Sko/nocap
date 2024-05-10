@@ -7,4 +7,5 @@ export enum BottomSheetType {
   SUBMITTED_REPORT,
   NOTIFICTIONS_MENU,
   ALBUMS_MENU,
+  LOGOUT,
 }

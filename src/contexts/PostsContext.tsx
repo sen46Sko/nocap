@@ -32,7 +32,9 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
   const auth = useAuth();
 
   useEffect(() => {
-    getPosts().then(setPosts);
+    if (auth.user) {
+      getPosts().then(setPosts);
+    }
   }, [auth.user]);
 
   const getUserPosts = (userId: string) => {

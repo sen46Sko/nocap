@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {useAuth} from 'contexts/AuthContext';
@@ -16,10 +16,14 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {Expand} from 'assets/images';
 import {If} from 'components/atoms/If';
 import {Timestamp} from 'firebase/firestore';
+import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
+import {Logout} from 'components/organisms/bottomSheetScreens/Logout';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SETTINGS>;
 
 export const Settings: React.FC<Props> = ({navigation}) => {
+  const [isBottomSheetOpen, setIsBottomSHeetOpen] = useState(false);
+
   const auth = useAuth();
 
   const birthday = useMemo(() => {
@@ -148,8 +152,7 @@ export const Settings: React.FC<Props> = ({navigation}) => {
 
           <Pressable
             onPress={() => {
-              auth.signOut();
-              navigation.navigate(Screens.WELCOME);
+              setIsBottomSHeetOpen(true);
             }}>
             <Text className="font-robotoMedium text-[16px] color-red">
               Log out
@@ -157,6 +160,20 @@ export const Settings: React.FC<Props> = ({navigation}) => {
           </Pressable>
         </View>
       </ScrollView>
+
+      <If condition={isBottomSheetOpen}>
+        <CustomBottomSheet
+          snapPoints={['50%']}
+          onClose={() => setIsBottomSHeetOpen(false)}>
+          <Logout
+            close={() => setIsBottomSHeetOpen(false)}
+            logout={() => {
+              auth.signOut();
+              navigation.navigate(Screens.WELCOME);
+            }}
+          />
+        </CustomBottomSheet>
+      </If>
     </SafeAreaView>
   );
 };
