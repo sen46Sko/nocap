@@ -23,6 +23,7 @@ export enum Screens {
   USERNAME_SETTINGS = 'UsernameSettings',
   BIRTHDATE_SETTINGS = 'BirthDateSettings',
   GENDER_SETTINGS = 'GenderSettings',
+  LANGUAGE_SETTINGS = 'LanguageSettings',
 }
 
 export type RootStackParamList = {
@@ -48,4 +49,5 @@ export type RootStackParamList = {
   [Screens.USERNAME_SETTINGS]: undefined;
   [Screens.BIRTHDATE_SETTINGS]: undefined;
   [Screens.GENDER_SETTINGS]: undefined;
+  [Screens.LANGUAGE_SETTINGS]: undefined;
 };

@@ -138,9 +138,12 @@ export const Settings: React.FC<Props> = ({navigation}) => {
             OTHERS
           </Text>
 
-          <Text className="font-robotoMedium text-[16px] color-grayLight">
-            Language
-          </Text>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.LANGUAGE_SETTINGS)}>
+            <Text className="font-robotoMedium text-[16px] color-grayLight">
+              Language
+            </Text>
+          </Pressable>
 
           <Text className="font-robotoMedium text-[16px] color-grayLight">
             Device permissions
