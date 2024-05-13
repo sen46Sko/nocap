@@ -1,6 +1,13 @@
-import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  Text,
+  View,
+  TextInput,
+} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {useAuth} from 'contexts/AuthContext';
 
@@ -14,15 +21,28 @@ type Props = NativeStackScreenProps<
 >;
 
 export const UsernameSettings: React.FC<Props> = ({navigation}) => {
+  const [name, setName] = useState('');
+
   const auth = useAuth();
+
+  useEffect(() => {
+    if (auth.user) {
+      setName(auth.user?.username);
+    }
+  }, [auth.user]);
+
+  const submit = () => {
+    auth.updateUser({username: name});
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <View className="px-[16px] py-[12px] flex-row justify-between items-center border-b border-grayDark">
-        <Pressable onPress={() => navigation.goBack()}>
+        <Pressable onPress={navigation.goBack}>
           <CrossOrange />
         </Pressable>
-        <Pressable onPress={() => navigation.goBack()}>
+        <Pressable onPress={submit}>
           <CheckOrange />
         </Pressable>
       </View>
@@ -43,9 +63,11 @@ export const UsernameSettings: React.FC<Props> = ({navigation}) => {
           <Text className="font-robotoRegular text-[16px] color-grayLight">
             Enter new name
           </Text>
-          <Text className="font-robotoMedium text-[16px] color-white">
-            {auth.user?.username}
-          </Text>
+          <TextInput
+            value={name}
+            onChangeText={setName}
+            className="font-robotoMedium text-[16px] color-white"
+          />
         </View>
 
         <View className="w-full h-[1px] bg-grayDark" />
