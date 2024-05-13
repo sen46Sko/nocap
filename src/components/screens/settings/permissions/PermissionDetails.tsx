@@ -5,6 +5,8 @@ import React from 'react';
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, Expand} from 'assets/images';
+import {BigButton} from 'components/atoms/buttons/BigButton';
+import {openSettings} from 'react-native-permissions';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -63,6 +65,13 @@ export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
             isAllowed ? ' not' : ''
           } allowed to access this device's ${permission.toLowerCase()}.`}
         </Text>
+      </View>
+      <View className="flex-1 justify-center px-[16px]">
+        <BigButton
+          style="white"
+          label="Update device settings"
+          onPress={openSettings}
+        />
       </View>
     </SafeAreaView>
   );
