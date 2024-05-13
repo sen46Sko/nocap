@@ -50,7 +50,7 @@ export const BirthDateSettings: React.FC<Props> = ({navigation}) => {
         </Pressable>
       </View>
 
-      <View className="px-[16px] gap-[24px] mt-[24px] flex-1">
+      <View className="px-[16px] gap-[16px] mt-[16px] flex-1">
         <View className="gap-[8px]">
           <Text className="font-robotoRegular text-[16px] color-grayLight">
             Date of birth

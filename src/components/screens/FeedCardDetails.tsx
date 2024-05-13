@@ -160,7 +160,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
               </View>
 
               <View className="flex-row gap-[24px] items-center">
-                <View className="flex-row gap-[4px]">
+                <View className="flex-row gap-[4px] items-center">
                   <Eye />
                   <Text className="font-robotoMedium color-white">
                     {post?.views.length || 0}

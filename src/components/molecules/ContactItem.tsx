@@ -17,7 +17,7 @@ export const ContactItem: React.FC<Props> = ({
   onPress,
 }) => {
   return (
-    <View className="flex-row items-center justify-between">
+    <View className="flex-row items-center justify-between gap-[8px] w-full">
       <View className="flex-row items-center gap-[16px]">
         {photoUri ? (
           <Image
@@ -28,7 +28,10 @@ export const ContactItem: React.FC<Props> = ({
           <View className="w-[40px] h-[40px] rounded-full bg-grayLight" />
         )}
 
-        <Text className="color-white font-robotoMedium text-[16px]">
+        <Text
+          numberOfLines={1}
+          className="color-white font-robotoMedium text-[16px] max-w-[200px]"
+          w-full>
           {name}
         </Text>
       </View>

@@ -9,6 +9,7 @@ export {default as CrossGray} from './CrossGray.svg';
 export {default as Calendar} from './Calendar.svg';
 export {default as Locaiton} from './Location.svg';
 export {default as MenuGray} from './MenuGray.svg';
+export {default as EyeGray} from './EyeGray.svg';
 export {default as Expand} from './Expand.svg';
 export {default as Albums} from './Albums.svg';
 export {default as Google} from './Google.svg';

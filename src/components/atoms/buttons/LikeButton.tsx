@@ -1,4 +1,4 @@
-import {Pressable, Text} from 'react-native';
+import {Image, Pressable} from 'react-native';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -13,9 +13,12 @@ export const LikeButton: React.FC<Props> = ({isLiked, onPress}) => {
       onPress={onPress}
       className={classNames(
         'h-[32px] w-[32px] rounded-full items-center justify-center transition-colors',
-        {'bg-grayDark': !isLiked, 'bg-orange': isLiked},
+        {'bg-grayDark': !isLiked, 'bg-white': isLiked},
       )}>
-      <Text className="text-[20px]">😍</Text>
+      <Image
+        source={require('@assets/images/LoveEmoji.png')}
+        className="h-[20px] w-[20px]"
+      />
     </Pressable>
   );
 };

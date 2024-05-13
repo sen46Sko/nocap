@@ -34,7 +34,7 @@ export const GenderPicker: React.FC<Props> = ({
         This won't be part of your public profile.
       </Text>
 
-      <View className="gap-[24px]">
+      <View className="gap-[16px]">
         <SelectItem
           isSelected={gender === 'Female'}
           onSelect={() => selectGender('Female')}

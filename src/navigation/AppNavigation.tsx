@@ -2,9 +2,14 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 
+import {PermissionsSettings} from 'components/screens/settings/permissions/PermissionsSettings';
+import {PermissionDetails} from 'components/screens/settings/permissions/PermissionDetails';
+import {BirthDateSettings} from 'components/screens/settings/BirthDateSettings';
 import {ProfileSlideView} from 'components/screens/profile/ProfileSlideView';
+import {LanguageSettings} from 'components/screens/settings/LanguageSettings';
 import {UsernameSettings} from 'components/screens/settings/UsernameSettings';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
+import {GenderSettings} from 'components/screens/settings/GenderSettings';
 import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {PhoneAuth} from 'components/screens/auth/Auth';
@@ -21,9 +26,6 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/types/helpers';
-import {BirthDateSettings} from 'components/screens/settings/BirthDateSettings';
-import {GenderSettings} from 'components/screens/settings/GenderSettings';
-import {LanguageSettings} from 'components/screens/settings/LanguageSettings';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -109,6 +111,14 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.LANGUAGE_SETTINGS}
           component={LanguageSettings}
+        />
+        <Stack.Screen
+          name={Screens.PERMISSIONS_SETTINGS}
+          component={PermissionsSettings}
+        />
+        <Stack.Screen
+          name={Screens.PERMISSION_DETAILS}
+          component={PermissionDetails}
         />
       </Stack.Navigator>
     </NavigationContainer>

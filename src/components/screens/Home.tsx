@@ -52,20 +52,19 @@ export const Home: React.FC<Props> = ({navigation}) => {
     () => (
       <View className="gap-[16px] mt-[24px] mb-[24px]">
         <BigButton
-          label="Log out"
-          style="white"
-          onPress={() => {
-            auth.signOut();
-            navigation.navigate(Screens.WELCOME);
-          }}
-        />
-
-        <BigButton
           label="Delete profile"
           style="white"
           onPress={() => {
             auth.deleteUser();
             navigation.navigate(Screens.WELCOME);
+          }}
+        />
+
+        <BigButton
+          label="Settings"
+          style="white"
+          onPress={() => {
+            navigation.navigate(Screens.SETTINGS);
           }}
         />
       </View>
@@ -100,10 +99,9 @@ export const Home: React.FC<Props> = ({navigation}) => {
 
             <Pressable
               onPress={() =>
-                // navigation.navigate(Screens.PROFILE, {
-                //   userId: auth.user?.id || '',
-                // })
-                navigation.navigate(Screens.SETTINGS)
+                navigation.navigate(Screens.PROFILE, {
+                  userId: auth.user?.id || '',
+                })
               }>
               <Image
                 source={{uri: auth.user?.imageLink || ''}}

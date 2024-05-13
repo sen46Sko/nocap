@@ -13,7 +13,7 @@ import {getUserIfExists} from 'api/users';
 import {Post} from 'utils/types/Post';
 import {User} from 'utils/types/User';
 
-import {Share as ShareIcon} from 'assets/images';
+import {EyeGray, Share as ShareIcon} from 'assets/images';
 
 type Props = {
   post: Post;
@@ -99,8 +99,9 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
 
         <If condition={post.userId !== auth.user?.id}>
           <SmallButton
-            label={isPeeping ? 'Peeping' : 'Peep'}
             onPress={peepUser}
+            {...(!isPeeping && {label: 'Peep'})}
+            {...(isPeeping && {Icon: EyeGray})}
           />
         </If>
       </View>

@@ -91,12 +91,24 @@ export const ContactsList = () => {
           {registeredContacts.map(contact => (
             <ContactItem
               key={contact.givenName + contact.familyName}
-              name={`${contact.givenName} ${contact.familyName || ''}`}
+              name="ASdasdasdasdas"
               buttonLabel="Peep"
               photoUri={contact.thumbnailPath || ''}
               onPress={() => {}}
             />
           ))}
+          <ContactItem
+            name="Asdsd"
+            buttonLabel="Peep"
+            photoUri=""
+            onPress={() => {}}
+          />
+          <ContactItem
+            name="asdfasdfasdfasdfasdf"
+            buttonLabel="Peep"
+            photoUri=""
+            onPress={() => {}}
+          />
         </View>
       </If>
 

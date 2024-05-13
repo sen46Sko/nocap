@@ -24,6 +24,8 @@ export enum Screens {
   BIRTHDATE_SETTINGS = 'BirthDateSettings',
   GENDER_SETTINGS = 'GenderSettings',
   LANGUAGE_SETTINGS = 'LanguageSettings',
+  PERMISSIONS_SETTINGS = 'PermissionsSettings',
+  PERMISSION_DETAILS = 'PermissionsDetails',
 }
 
 export type RootStackParamList = {
@@ -50,4 +52,6 @@ export type RootStackParamList = {
   [Screens.BIRTHDATE_SETTINGS]: undefined;
   [Screens.GENDER_SETTINGS]: undefined;
   [Screens.LANGUAGE_SETTINGS]: undefined;
+  [Screens.PERMISSIONS_SETTINGS]: undefined;
+  [Screens.PERMISSION_DETAILS]: {isAllowed: boolean; permission: string};
 };
