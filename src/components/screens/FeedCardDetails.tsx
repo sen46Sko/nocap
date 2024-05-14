@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  Text,
-  View,
   Share,
   Alert,
+  Text,
+  View,
 } from 'react-native';
 
 import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
@@ -30,11 +30,11 @@ import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {Post} from 'utils/types/Post';
 
 import {
-  Share as ShareIcon,
   Calendar,
   Locaiton,
   MenuGray,
   Phone,
+  Share as ShareIcon,
   Eye,
 } from 'assets/images';
 

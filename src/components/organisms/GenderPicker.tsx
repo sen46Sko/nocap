@@ -1,7 +1,8 @@
+import {Text, View} from 'react-native';
+import React from 'react';
+
 import {CustomInput} from 'components/atoms/CustomInput';
 import {SelectItem} from 'components/molecules/SelectItem';
-import React from 'react';
-import {Text, View} from 'react-native';
 
 type Props = {
   gender: string;

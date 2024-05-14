@@ -54,16 +54,16 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need it to show users near you</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need it to take photos</string>
 	<key>NSContactsUsageDescription</key>
 	<string>We need it to show contacts, that use nocap</string>
-	<key>NSCameraUsageDescription</key>
-    <string>We need it to take photos</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need it to show users near you</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>We need it to record sound from you microphone</string>
+	<string>We need it to record sound from you microphone</string>
 	<key>NSUserNotificationsUsageDescription</key>
-    <string>We need it to send you notifications</string>
+	<string>We need it to send you notifications</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>

@@ -6,10 +6,10 @@ import {
   StyleSheet,
   Pressable,
   Image,
-  Text,
   Share,
-  View,
   Alert,
+  Text,
+  View,
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 

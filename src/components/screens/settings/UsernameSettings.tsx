@@ -1,13 +1,13 @@
+import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   SafeAreaView,
   StyleSheet,
   Pressable,
+  TextInput,
   Text,
   View,
-  TextInput,
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
 
 import {useAuth} from 'contexts/AuthContext';
 

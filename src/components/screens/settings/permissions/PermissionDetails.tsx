@@ -1,12 +1,13 @@
 import {SafeAreaView, StyleSheet, Pressable, View, Text} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {openSettings} from 'react-native-permissions';
 import React from 'react';
+
+import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, Expand} from 'assets/images';
-import {BigButton} from 'components/atoms/buttons/BigButton';
-import {openSettings} from 'react-native-permissions';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

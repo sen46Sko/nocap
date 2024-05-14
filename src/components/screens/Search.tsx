@@ -15,14 +15,15 @@ import {UserCard} from 'components/organisms/UserCard';
 import {If} from 'components/atoms/If';
 
 import {usePosts} from 'contexts/PostsContext';
+import {useAuth} from 'contexts/AuthContext';
+
+import {getSuggestedUsers} from 'api/users';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {Post} from 'utils/types/Post';
+import {User} from 'utils/types/User';
 
 import {Expand, SearchLightGray} from 'assets/images';
-import {Post} from 'utils/types/Post';
-import {getSuggestedUsers} from 'api/users';
-import {useAuth} from 'contexts/AuthContext';
-import {User} from 'utils/types/User';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
 

@@ -1,23 +1,24 @@
+import React, {useMemo, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Timestamp} from 'firebase/firestore';
 import {
   SafeAreaView,
+  ScrollView,
   StyleSheet,
   Pressable,
   Text,
   View,
-  ScrollView,
 } from 'react-native';
-import React, {useMemo, useState} from 'react';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+
+import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
+import {Logout} from 'components/organisms/bottomSheetScreens/Logout';
+import {If} from 'components/atoms/If';
 
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
-import {If} from 'components/atoms/If';
-import {Timestamp} from 'firebase/firestore';
-import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
-import {Logout} from 'components/organisms/bottomSheetScreens/Logout';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SETTINGS>;
 

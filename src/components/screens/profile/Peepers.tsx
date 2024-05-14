@@ -1,7 +1,14 @@
-import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import classNames from 'classnames';
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 
 import {ContactsList} from 'components/organisms/ContactsList';
 import {ContactItem} from 'components/molecules/ContactItem';
@@ -66,83 +73,87 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View className="px-[16px] py-[12px] flex-row items-center justify-between border-b border-grayDark">
-        <View className="flex-row items-center gap-[10px]">
-          <Pressable onPress={() => setActiveTab('peepers')}>
-            <Text
-              className={classNames('font-robotoMedium text-[16px]', {
-                'color-orange': activeTab === 'peepers',
-                'color-grayMedium': activeTab !== 'peepers',
-              })}>
-              {`${peepers.length} Peepers`}
-            </Text>
-          </Pressable>
-
-          <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
-
-          <Pressable onPress={() => setActiveTab('peeps')}>
-            <Text
-              className={classNames('font-robotoMedium text-[16px]', {
-                'color-orange': activeTab === 'peeps',
-                'color-grayMedium': activeTab !== 'peeps',
-              })}>
-              {`${peeps.length} Peeps`}
-            </Text>
-          </Pressable>
-
-          <If condition={userId === auth.user?.id}>
-            <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
-
-            <Pressable onPress={() => setActiveTab('contacts')}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View className="px-[16px] py-[12px] flex-row items-center justify-between border-b border-grayDark">
+          <View className="flex-row items-center gap-[10px]">
+            <Pressable onPress={() => setActiveTab('peepers')}>
               <Text
                 className={classNames('font-robotoMedium text-[16px]', {
-                  'color-orange': activeTab === 'contacts',
-                  'color-grayMedium': activeTab !== 'contacts',
+                  'color-orange': activeTab === 'peepers',
+                  'color-grayMedium': activeTab !== 'peepers',
                 })}>
-                Contacts
+                {`${peepers.length} Peepers`}
               </Text>
             </Pressable>
-          </If>
+
+            <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
+
+            <Pressable onPress={() => setActiveTab('peeps')}>
+              <Text
+                className={classNames('font-robotoMedium text-[16px]', {
+                  'color-orange': activeTab === 'peeps',
+                  'color-grayMedium': activeTab !== 'peeps',
+                })}>
+                {`${peeps.length} Peeps`}
+              </Text>
+            </Pressable>
+
+            <If condition={userId === auth.user?.id}>
+              <View className="h-[5px] w-[5px] rounded-full bg-grayMedium" />
+
+              <Pressable onPress={() => setActiveTab('contacts')}>
+                <Text
+                  className={classNames('font-robotoMedium text-[16px]', {
+                    'color-orange': activeTab === 'contacts',
+                    'color-grayMedium': activeTab !== 'contacts',
+                  })}>
+                  Contacts
+                </Text>
+              </Pressable>
+            </If>
+          </View>
+
+          <Pressable onPress={() => navigation.goBack()}>
+            <Expand />
+          </Pressable>
         </View>
 
-        <Pressable onPress={() => navigation.goBack()}>
-          <Expand />
-        </Pressable>
-      </View>
+        <If condition={activeTab === 'peepers'}>
+          <View className="px-[16px] gap-[16px]">
+            {peepers.map(user => (
+              <ContactItem
+                key={user.id}
+                name={user.username}
+                buttonLabel={
+                  auth.user?.peeps.some(id => id === user.id)
+                    ? 'Peeping'
+                    : 'Peep'
+                }
+                photoUri={user.imageLink}
+                onPress={() => peepUser(user.id)}
+              />
+            ))}
+          </View>
+        </If>
 
-      <If condition={activeTab === 'peepers'}>
-        <View className="px-[16px] gap-[16px]">
-          {peepers.map(user => (
-            <ContactItem
-              key={user.id}
-              name={user.username}
-              buttonLabel={
-                auth.user?.peeps.some(id => id === user.id) ? 'Peeping' : 'Peep'
-              }
-              photoUri={user.imageLink}
-              onPress={() => peepUser(user.id)}
-            />
-          ))}
-        </View>
-      </If>
+        <If condition={activeTab === 'peeps'}>
+          <View className="px-[16px] gap-[16px]">
+            {peeps.map(user => (
+              <ContactItem
+                key={user.id}
+                name={user.username}
+                buttonLabel="Peeping"
+                photoUri={user.imageLink}
+                onPress={() => peepUser(user.id)}
+              />
+            ))}
+          </View>
+        </If>
 
-      <If condition={activeTab === 'peeps'}>
-        <View className="px-[16px] gap-[16px]">
-          {peeps.map(user => (
-            <ContactItem
-              key={user.id}
-              name={user.username}
-              buttonLabel="Peeping"
-              photoUri={user.imageLink}
-              onPress={() => peepUser(user.id)}
-            />
-          ))}
-        </View>
-      </If>
-
-      <If condition={activeTab === 'contacts'}>
-        <ContactsList />
-      </If>
+        <If condition={activeTab === 'contacts'}>
+          <ContactsList />
+        </If>
+      </ScrollView>
     </SafeAreaView>
   );
 };

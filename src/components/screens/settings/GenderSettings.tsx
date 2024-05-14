@@ -2,12 +2,13 @@ import {SafeAreaView, StyleSheet, Pressable, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
 
+import {GenderPicker} from 'components/organisms/GenderPicker';
+
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, CrossOrange} from 'assets/images';
-import {GenderPicker} from 'components/organisms/GenderPicker';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

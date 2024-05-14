@@ -1,15 +1,15 @@
 import {SafeAreaView, StyleSheet, Pressable, View, Text} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {
+  checkNotifications,
+  checkMultiple,
+  PERMISSIONS,
+} from 'react-native-permissions';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, CrossOrange, Expand} from 'assets/images';
-import {
-  PERMISSIONS,
-  checkMultiple,
-  checkNotifications,
-} from 'react-native-permissions';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,

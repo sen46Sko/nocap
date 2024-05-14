@@ -1,9 +1,9 @@
 import {Animated, Pressable, Text} from 'react-native';
 import React, {useRef} from 'react';
 import {SvgProps} from 'react-native-svg';
+import classNames from 'classnames';
 
 import {If} from 'components/atoms/If';
-import classNames from 'classnames';
 
 type Props = {
   label?: string;

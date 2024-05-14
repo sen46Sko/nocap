@@ -1,6 +1,8 @@
 import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Timestamp} from 'firebase/firestore';
+import DatePicker from 'react-native-date-picker';
 
 import {useAuth} from 'contexts/AuthContext';
 
@@ -8,8 +10,6 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {getDateString} from 'utils/types/helpers';
 
 import {CheckOrange, CrossOrange} from 'assets/images';
-import DatePicker from 'react-native-date-picker';
-import {Timestamp} from 'firebase/firestore';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
