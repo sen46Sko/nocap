@@ -24,6 +24,7 @@ import {User} from 'utils/types/User';
 // import {createImage, deleteImage} from 'api/photos';
 
 import {GOOGLE_CLIENT_ID} from '@env';
+// import {requestNotifications} from 'react-native-permissions';
 
 interface AuthContextType {
   signInWithGoogle: () => Promise<FirebaseAuthTypes.UserCredential | undefined>;
@@ -73,6 +74,8 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         if (fetchedUser) {
           setUser(fetchedUser);
           setLocalUser(fetchedUser);
+
+          // requestNotifications(['alert', 'sound']);
 
           navigate(Screens.HOME);
         } else {

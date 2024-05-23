@@ -1,16 +1,49 @@
+import React, {useEffect} from 'react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Appearance, StyleSheet} from 'react-native';
-import React, {useEffect} from 'react';
+// import messaging, {
+//   FirebaseMessagingTypes,
+// } from '@react-native-firebase/messaging';
 import SplashScreen from 'react-native-splash-screen';
+// import notifee from '@notifee/react-native';
+
+import {PostsProvider} from 'contexts/PostsContext';
+import {AuthProvider} from 'contexts/AuthContext';
 
 import {AppNavigation} from 'navigation/AppNavigation';
 
-import {AuthProvider} from 'contexts/AuthContext';
-
 import './global.css';
-import {PostsProvider} from 'contexts/PostsContext';
 
 function App(): JSX.Element {
+  // const onDisplayNotification = useCallback(
+  //   async (message: FirebaseMessagingTypes.RemoteMessage) => {
+  //     await notifee.requestPermission();
+
+  //     const channelId = await notifee.createChannel({
+  //       id: 'default',
+  //       name: 'Default Channel',
+  //     });
+
+  //     await notifee.displayNotification({
+  //       title: message.notification?.title,
+  //       body: message.notification?.body,
+  //       android: {
+  //         channelId,
+  //         pressAction: {
+  //           id: 'default',
+  //         },
+  //       },
+  //     });
+  //   },
+  //   [],
+  // );
+
+  // useEffect(() => {
+  //   messaging().getToken().then(console.log);
+  //   messaging().onMessage(onDisplayNotification);
+  //   messaging().setBackgroundMessageHandler(onDisplayNotification);
+  // }, [onDisplayNotification]);
+
   useEffect(() => {
     SplashScreen.hide();
     Appearance.setColorScheme('dark');

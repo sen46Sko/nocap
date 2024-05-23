@@ -16,6 +16,7 @@ export const ContactsList = () => {
   const [unregisteredContacts, setUnregisteredContacts] = useState<Contact[]>(
     [],
   );
+  // const [isLoading, setIsLoading] = useState();
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
