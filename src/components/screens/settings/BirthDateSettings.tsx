@@ -7,7 +7,7 @@ import DatePicker from 'react-native-date-picker';
 import {useAuth} from 'contexts/AuthContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {getDateString} from 'utils/types/helpers';
+import {getDateString} from 'utils/helpers';
 
 import {CheckOrange, CrossOrange} from 'assets/images';
 

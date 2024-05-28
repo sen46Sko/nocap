@@ -1,13 +1,14 @@
 import {SafeAreaView, StyleSheet, Pressable, View, Text} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {openSettings} from 'react-native-permissions';
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {BigButton} from 'components/atoms/buttons/BigButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, Expand} from 'assets/images';
+import {usePermissions} from 'contexts/PermissionsContext';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -15,7 +16,32 @@ type Props = NativeStackScreenProps<
 >;
 
 export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
-  const {isAllowed, permission} = route.params;
+  const {permissionName} = route.params;
+
+  const permissions = usePermissions();
+
+  const isAllowed = useMemo(() => {
+    switch (permissionName) {
+      default:
+      case 'Camera':
+        return permissions.camera === 'granted';
+      case 'Contacts':
+        return permissions.contacts === 'granted';
+      case 'Location':
+        return permissions.location === 'granted';
+      case 'Microphone':
+        return permissions.microphone === 'granted';
+      case 'Notifications':
+        return permissions.notifications === 'granted';
+    }
+  }, [
+    permissionName,
+    permissions.camera,
+    permissions.contacts,
+    permissions.location,
+    permissions.microphone,
+    permissions.notifications,
+  ]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +52,7 @@ export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
           </Pressable>
 
           <Text className="font-robotoMedium text-[16px] color-grayLight">
-            {permission}
+            {permissionName}
           </Text>
         </View>
         <Pressable onPress={navigation.goBack}>
@@ -35,7 +61,7 @@ export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
       </View>
 
       <View className="px-[16px]">
-        <Text className="font-robotoRegular text-[16px] color-grayLight mt-[16px]">{`${permission} permission to this device to this device is`}</Text>
+        <Text className="font-robotoRegular text-[16px] color-grayLight mt-[16px]">{`${permissionName} permission to this device to this device is`}</Text>
 
         {isAllowed ? (
           <Text className="font-robotoRegular text-[16px] color-green mt-[16px]">
@@ -50,7 +76,7 @@ export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
         <Text className="font-robotoRegular color-grayMedium mt-[8px]">
           {`Nocap is${
             !isAllowed ? ' not' : ''
-          } allowed to access this device's ${permission.toLowerCase()}.`}
+          } allowed to access this device's ${permissionName.toLowerCase()}.`}
         </Text>
 
         <Text className="font-robotoRegular text-[16px] color-grayLight mt-[24px]">
@@ -64,7 +90,7 @@ export const PermissionDetails: React.FC<Props> = ({navigation, route}) => {
         <Text className="font-robotoRegular color-grayMedium mt-[8px]">
           {`Nocap is${
             isAllowed ? ' not' : ''
-          } allowed to access this device's ${permission.toLowerCase()}.`}
+          } allowed to access this device's ${permissionName.toLowerCase()}.`}
         </Text>
       </View>
       <View className="flex-1 justify-center px-[16px]">

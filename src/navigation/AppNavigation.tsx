@@ -25,7 +25,7 @@ import {Search} from 'components/screens/Search';
 import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {navigationRef} from 'utils/types/helpers';
+import {navigationRef} from 'utils/helpers';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

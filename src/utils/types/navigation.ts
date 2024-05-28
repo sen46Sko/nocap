@@ -53,5 +53,5 @@ export type RootStackParamList = {
   [Screens.GENDER_SETTINGS]: undefined;
   [Screens.LANGUAGE_SETTINGS]: undefined;
   [Screens.PERMISSIONS_SETTINGS]: undefined;
-  [Screens.PERMISSION_DETAILS]: {isAllowed: boolean; permission: string};
+  [Screens.PERMISSION_DETAILS]: {permissionName: string};
 };

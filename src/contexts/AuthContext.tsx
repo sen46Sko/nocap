@@ -17,7 +17,7 @@ import {
   editUser,
 } from 'api/users';
 
-import {navigate} from 'utils/types/helpers';
+import {navigate} from 'utils/helpers';
 import {Screens} from 'utils/types/navigation';
 import {User} from 'utils/types/User';
 

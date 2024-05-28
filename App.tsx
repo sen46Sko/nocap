@@ -13,6 +13,7 @@ import {AuthProvider} from 'contexts/AuthContext';
 import {AppNavigation} from 'navigation/AppNavigation';
 
 import './global.css';
+import {PermissionsProvider} from 'contexts/PermissionsContext';
 
 function App(): JSX.Element {
   // const onDisplayNotification = useCallback(
@@ -53,7 +54,9 @@ function App(): JSX.Element {
     <GestureHandlerRootView style={styles.gestureHandler}>
       <AuthProvider>
         <PostsProvider>
-          <AppNavigation />
+          <PermissionsProvider>
+            <AppNavigation />
+          </PermissionsProvider>
         </PostsProvider>
       </AuthProvider>
     </GestureHandlerRootView>

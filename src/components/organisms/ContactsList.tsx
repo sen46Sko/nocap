@@ -7,7 +7,7 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {ContactItem} from 'components/molecules/ContactItem';
 import {If} from 'components/atoms/If';
 
-import {sortContacts} from 'utils/types/helpers';
+import {sortContacts} from 'utils/helpers';
 
 import {SearchGray} from 'assets/images';
 

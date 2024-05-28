@@ -1,4 +1,4 @@
-import {getHighestIdFromArray} from 'utils/types/helpers';
+import {getHighestIdFromArray} from 'utils/helpers';
 import {Album} from 'utils/types/Album';
 
 export const addAlbum = (albums: Album[], title: string) => {

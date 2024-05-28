@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import React, {useCallback} from 'react';
 
-import {BigButton} from 'components/atoms/buttons/BigButton';
 import {FeedCard} from 'components/organisms/FeedCard';
 
 import {usePosts} from 'contexts/PostsContext';
@@ -47,30 +46,6 @@ export const Home: React.FC<Props> = ({navigation}) => {
   );
 
   const renderSeparator = useCallback(() => <View className="h-[24px]" />, []);
-
-  const renderListFooter = useCallback(
-    () => (
-      <View className="gap-[16px] mt-[24px] mb-[24px]">
-        <BigButton
-          label="Delete profile"
-          style="white"
-          onPress={() => {
-            auth.deleteUser();
-            navigation.navigate(Screens.WELCOME);
-          }}
-        />
-
-        <BigButton
-          label="Settings"
-          style="white"
-          onPress={() => {
-            navigation.navigate(Screens.SETTINGS);
-          }}
-        />
-      </View>
-    ),
-    [auth, navigation],
-  );
 
   const onViewableItemsChanged = useCallback(
     ({viewableItems}: {viewableItems: ViewToken[]}) => {
@@ -116,7 +91,6 @@ export const Home: React.FC<Props> = ({navigation}) => {
         data={posts.posts}
         renderItem={renderFeedCard}
         ItemSeparatorComponent={renderSeparator}
-        ListFooterComponent={renderListFooter}
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{itemVisiblePercentThreshold: 50}}

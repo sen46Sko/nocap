@@ -29,7 +29,7 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
-import {Expand, MenuOrange, Notifications} from 'assets/images';
+import {Expand, EyeGray, MenuOrange, Notifications} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -119,8 +119,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   <View className="flex-row items-center gap-[8px]">
                     <If condition={userId !== auth.user?.id}>
                       <SmallButton
-                        label={isPeeping ? 'Peeping' : 'Peep'}
                         onPress={peepUser}
+                        {...(!isPeeping && {label: 'Peep'})}
+                        {...(isPeeping && {Icon: EyeGray})}
                       />
                     </If>
 
@@ -187,23 +188,25 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                       </Text>
                     </Pressable>
                     <Text className="font-robotoRegular color-grayLight">
-                      Clothing
+                      {user?.bio || ''}
                     </Text>
                   </View>
                 </View>
 
                 <If condition={userId !== auth.user?.id}>
                   <SmallButton
-                    label={isPeeping ? 'Peeping' : 'Peep'}
                     onPress={peepUser}
+                    {...(!isPeeping && {label: 'Peep'})}
+                    {...(isPeeping && {Icon: EyeGray})}
                   />
                 </If>
 
                 <If condition={userId === auth.user?.id}>
                   <Pressable
-                    onPress={() =>
-                      setBottomSheetType(BottomSheetType.PROFILE_MENU)
-                    }>
+                    onPress={() => {
+                      navigation.goBack();
+                      navigation.navigate(Screens.SETTINGS);
+                    }}>
                     <MenuOrange />
                   </Pressable>
                 </If>

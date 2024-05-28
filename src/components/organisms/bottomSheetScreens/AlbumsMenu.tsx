@@ -13,7 +13,7 @@ import {
   removeImage,
   addAlbum,
   addImage,
-} from 'utils/types/helpers/albums';
+} from 'utils/helpers/albums';
 import {Album} from 'utils/types/Album';
 
 import {Pencil, Plus} from 'assets/images';

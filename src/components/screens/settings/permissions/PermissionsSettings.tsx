@@ -1,11 +1,8 @@
 import {SafeAreaView, StyleSheet, Pressable, View, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {
-  checkNotifications,
-  checkMultiple,
-  PERMISSIONS,
-} from 'react-native-permissions';
+import React from 'react';
+
+import {usePermissions} from 'contexts/PermissionsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
@@ -17,34 +14,7 @@ type Props = NativeStackScreenProps<
 >;
 
 export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
-  const [permissions, setPermissions] = useState({
-    camera: 'denied',
-    contacts: 'denied,',
-    location: 'denied,',
-    microphone: 'denied,',
-    notifications: 'denied,',
-  });
-
-  useEffect(() => {
-    checkMultiple([
-      PERMISSIONS.IOS.CAMERA,
-      PERMISSIONS.IOS.CONTACTS,
-      PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
-      PERMISSIONS.IOS.MICROPHONE,
-    ]).then(res =>
-      setPermissions(current => ({
-        ...current,
-        camera: res['ios.permission.CAMERA'],
-        contacts: res['ios.permission.CONTACTS'],
-        location: res['ios.permission.LOCATION_WHEN_IN_USE'],
-        microphone: res['ios.permission.MICROPHONE'],
-      })),
-    );
-
-    checkNotifications().then(res =>
-      setPermissions(current => ({...current, notifications: res.status})),
-    );
-  }, []);
+  const permissions = usePermissions();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,8 +32,7 @@ export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
           className="flex-row items-center justify-between"
           onPress={() =>
             navigation.navigate(Screens.PERMISSION_DETAILS, {
-              isAllowed: permissions.camera === 'granted',
-              permission: 'Camera',
+              permissionName: 'Camera',
             })
           }>
           <Text className="font-robotoRegular text-[16px] color-white">
@@ -83,8 +52,7 @@ export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
           className="flex-row items-center justify-between"
           onPress={() =>
             navigation.navigate(Screens.PERMISSION_DETAILS, {
-              isAllowed: permissions.contacts === 'granted',
-              permission: 'Contacts',
+              permissionName: 'Contacts',
             })
           }>
           <Text className="font-robotoRegular text-[16px] color-white">
@@ -104,8 +72,7 @@ export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
           className="flex-row items-center justify-between"
           onPress={() =>
             navigation.navigate(Screens.PERMISSION_DETAILS, {
-              isAllowed: permissions.location === 'granted',
-              permission: 'Location',
+              permissionName: 'Location',
             })
           }>
           <Text className="font-robotoRegular text-[16px] color-white">
@@ -125,8 +92,7 @@ export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
           className="flex-row items-center justify-between"
           onPress={() =>
             navigation.navigate(Screens.PERMISSION_DETAILS, {
-              isAllowed: permissions.microphone === 'granted',
-              permission: 'Microphone',
+              permissionName: 'Microphone',
             })
           }>
           <Text className="font-robotoRegular text-[16px] color-white">
@@ -146,8 +112,7 @@ export const PermissionsSettings: React.FC<Props> = ({navigation}) => {
           className="flex-row items-center justify-between"
           onPress={() =>
             navigation.navigate(Screens.PERMISSION_DETAILS, {
-              isAllowed: permissions.notifications === 'granted',
-              permission: 'Notifications',
+              permissionName: 'Notifications',
             })
           }>
           <Text className="font-robotoRegular text-[16px] color-white">
