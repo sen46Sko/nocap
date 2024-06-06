@@ -12,6 +12,7 @@ import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {GenderSettings} from 'components/screens/settings/GenderSettings';
 import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
+import {ImagePicker} from 'components/screens/photoUploading/ImagePicker';
 import {PhoneAuth} from 'components/screens/auth/Auth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
 import {Username} from 'components/screens/auth/Username';
@@ -119,6 +120,15 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.PERMISSION_DETAILS}
           component={PermissionDetails}
+        />
+
+        <Stack.Screen
+          name={Screens.IMAGE_PICKER}
+          component={ImagePicker}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

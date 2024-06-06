@@ -70,7 +70,10 @@ export const Home: React.FC<Props> = ({navigation}) => {
               <SearchWhite />
             </Pressable>
 
-            <Plus />
+            <Pressable
+              onPress={() => navigation.navigate(Screens.IMAGE_PICKER)}>
+              <Plus />
+            </Pressable>
 
             <Pressable
               onPress={() =>

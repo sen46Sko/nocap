@@ -26,6 +26,8 @@ export enum Screens {
   LANGUAGE_SETTINGS = 'LanguageSettings',
   PERMISSIONS_SETTINGS = 'PermissionsSettings',
   PERMISSION_DETAILS = 'PermissionsDetails',
+
+  IMAGE_PICKER = 'ImagePicker',
 }
 
 export type RootStackParamList = {
@@ -54,4 +56,5 @@ export type RootStackParamList = {
   [Screens.LANGUAGE_SETTINGS]: undefined;
   [Screens.PERMISSIONS_SETTINGS]: undefined;
   [Screens.PERMISSION_DETAILS]: {permissionName: string};
+  [Screens.IMAGE_PICKER]: undefined;
 };

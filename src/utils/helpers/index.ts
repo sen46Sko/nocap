@@ -1,5 +1,6 @@
 import {createNavigationContainerRef} from '@react-navigation/native';
 import {Dimensions, Platform} from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import {Contact} from 'react-native-contacts';
 
 import {getAllUsers} from 'api/users';
@@ -61,3 +62,15 @@ export const getHighestIdFromArray = (array: {id: number}[]) => {
 
   return Math.max(...array.map(item => item.id));
 };
+
+export async function takePhoto() {
+  const data = await ImagePicker.openCamera({
+    mediaType: 'photo',
+    // useFrontCamera: selfie,
+    forceJpg: true,
+  }).catch(e => {
+    console.log('[Take user photo from camera ERROR] ', e);
+  });
+
+  return data?.path;
+}
