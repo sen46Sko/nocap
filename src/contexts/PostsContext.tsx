@@ -8,7 +8,7 @@ import React, {
 
 import {useAuth} from 'contexts/AuthContext';
 
-import {getPosts, setPostLoving, viewPost} from 'api/posts';
+import {getPosts, setPostLoving, uploadPost, viewPost} from 'api/posts';
 
 import {Post} from 'utils/types/Post';
 
@@ -17,6 +17,7 @@ interface PostsContextType {
   getUserPosts: (userId: string) => Post[];
   setLoving: (status: 'love' | 'unlove', postId: string) => void;
   addView: (postId: string) => void;
+  postImage: (imageUri: string, title: string) => Promise<void>;
 }
 
 const PostsContext = createContext<PostsContextType>({
@@ -24,6 +25,7 @@ const PostsContext = createContext<PostsContextType>({
   getUserPosts: () => [],
   setLoving: () => {},
   addView: () => {},
+  postImage: async () => {},
 });
 
 export const PostsProvider = ({children}: {children: ReactNode}) => {
@@ -80,13 +82,31 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
+  const postImage = async (imageUri: string, title: string) => {
+    if (!auth.user) {
+      return;
+    }
+
+    const post = {
+      imageLink: imageUri,
+      title,
+      loves: [],
+      views: [],
+      userId: auth.user.id,
+    };
+    const newPost = await uploadPost(post);
+
+    setPosts(current => [newPost, ...current]);
+  };
+
   return (
     <PostsContext.Provider
       value={{
         posts,
+        addView,
+        postImage,
         setLoving,
         getUserPosts,
-        addView,
       }}>
       {children}
     </PostsContext.Provider>

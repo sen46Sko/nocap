@@ -18,7 +18,9 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
 
 export const ImagePicker: React.FC<Props> = ({navigation}) => {
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState(
+    'https://i.pinimg.com/736x/61/21/df/6121dff24d943ef8878e926f865ec4e4.jpg',
+  );
 
   useEffect(() => {
     takePhoto().then(res => {
@@ -43,8 +45,16 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
         />
 
         <View className="absolute bottom-[100px] flex-row gap-[28px] items-center">
-          <SmallButton label="Edit" onPress={() => {}} />
-          <Pressable>
+          <SmallButton
+            label="Edit"
+            onPress={() =>
+              navigation.navigate(Screens.IMAGE_EDITOR, {imageUri: photo})
+            }
+          />
+          <Pressable
+            onPress={() =>
+              navigation.navigate(Screens.IMAGE_POSTING, {imageUri: photo})
+            }>
             <Text className=" font-robotoMedium text-[16px] color-orange">
               Skip
             </Text>
