@@ -29,6 +29,7 @@ export enum Screens {
 
   IMAGE_PICKER = 'ImagePicker',
   IMAGE_EDITOR = 'ImageEditor',
+  POST_SETTINGS = 'PostSettings',
   IMAGE_POSTING = 'ImagePosting',
 }
 
@@ -60,5 +61,15 @@ export type RootStackParamList = {
   [Screens.PERMISSION_DETAILS]: {permissionName: string};
   [Screens.IMAGE_PICKER]: undefined;
   [Screens.IMAGE_EDITOR]: {imageUri: string};
-  [Screens.IMAGE_POSTING]: {imageUri: string};
+  [Screens.POST_SETTINGS]: {imageUri: string};
+  [Screens.IMAGE_POSTING]: {
+    imageUri: string;
+    settings: {
+      location: boolean;
+      saveToGalery: boolean;
+      deviceInfo: boolean;
+      highQuality: boolean;
+      maxResolution: boolean;
+    };
+  };
 };

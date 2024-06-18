@@ -1,19 +1,20 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
 import {
-  Image,
-  Pressable,
   SafeAreaView,
   StyleSheet,
+  Pressable,
+  Image,
   Text,
   View,
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
 
-import {takePhoto} from 'utils/helpers';
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
+
 import {RootStackParamList, Screens} from 'utils/types/navigation';
+import {takePhoto} from 'utils/helpers';
 
 import {CrossOrange} from 'assets/images';
-import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
 
@@ -53,7 +54,7 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
           />
           <Pressable
             onPress={() =>
-              navigation.navigate(Screens.IMAGE_POSTING, {imageUri: photo})
+              navigation.navigate(Screens.POST_SETTINGS, {imageUri: photo})
             }>
             <Text className=" font-robotoMedium text-[16px] color-orange">
               Skip

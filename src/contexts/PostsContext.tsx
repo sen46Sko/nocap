@@ -17,7 +17,9 @@ interface PostsContextType {
   getUserPosts: (userId: string) => Post[];
   setLoving: (status: 'love' | 'unlove', postId: string) => void;
   addView: (postId: string) => void;
-  postImage: (imageUri: string, title: string) => Promise<void>;
+  postImage: (
+    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
+  ) => Promise<void>;
 }
 
 const PostsContext = createContext<PostsContextType>({
@@ -82,19 +84,19 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
-  const postImage = async (imageUri: string, title: string) => {
+  const postImage = async (
+    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
+  ) => {
     if (!auth.user) {
       return;
     }
 
-    const post = {
-      imageLink: imageUri,
-      title,
+    const newPost = await uploadPost({
+      ...post,
       loves: [],
       views: [],
       userId: auth.user.id,
-    };
-    const newPost = await uploadPost(post);
+    });
 
     setPosts(current => [newPost, ...current]);
   };

@@ -1,4 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import GetLocation from 'react-native-geolocation-service';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,19 +9,21 @@ import {
   TextInput,
   Image,
   View,
+  Platform,
 } from 'react-native';
-import React, {useState} from 'react';
+
+import {SmallButton} from 'components/atoms/buttons/SmallButton';
+
+import {usePosts} from 'contexts/PostsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {Expand} from 'assets/images';
-import {SmallButton} from 'components/atoms/buttons/SmallButton';
-import {usePosts} from 'contexts/PostsContext';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_POSTING>;
 
 export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
-  const {imageUri} = route.params;
+  const {imageUri, settings} = route.params;
 
   const [title, setTitle] = useState('');
 
@@ -30,9 +34,29 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
       return;
     }
 
-    await posts.postImage(imageUri, title);
+    const post = {
+      imageLink: imageUri,
+      title,
+      location: null,
+    };
 
-    navigation.navigate(Screens.HOME);
+    if (settings.location) {
+      if (Platform.OS === 'ios') {
+        await GetLocation.requestAuthorization('whenInUse');
+      }
+      GetLocation.getCurrentPosition(async res => {
+        const location = {
+          latitude: res.coords.latitude,
+          longitude: res.coords.longitude,
+        };
+
+        await posts.postImage({...post, location});
+        navigation.navigate(Screens.HOME);
+      });
+    } else {
+      await posts.postImage(post);
+      navigation.navigate(Screens.HOME);
+    }
   };
 
   return (

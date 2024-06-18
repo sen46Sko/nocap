@@ -1,22 +1,22 @@
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Pressable,
-  View,
   Image,
+  View,
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
 
+import {EditorControls} from 'components/molecules/EditorControls';
 import {EditorTabs} from 'components/molecules/EditorTabs';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {EditorTabsEnum} from 'utils/types/EditorTabsEnum';
+import {EditorFields} from 'utils/types/EditorFields';
 
 import {CheckWhite, CrossOrange, CrossWhite} from 'assets/images';
-import {EditorControls} from 'components/molecules/EditorControls';
-import {EditorFields} from 'utils/types/EditorFields';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_EDITOR>;
 
@@ -70,7 +70,7 @@ export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
               </Pressable>
               <Pressable
                 onPress={() =>
-                  navigation.navigate(Screens.IMAGE_POSTING, {imageUri})
+                  navigation.navigate(Screens.POST_SETTINGS, {imageUri})
                 }>
                 <CheckWhite />
               </Pressable>

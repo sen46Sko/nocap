@@ -12,6 +12,8 @@ import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {GenderSettings} from 'components/screens/settings/GenderSettings';
 import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
+import {ImagePosting} from 'components/screens/photoUploading/ImagePosting';
+import {PostSettings} from 'components/screens/photoUploading/PostSettings';
 import {ImageEditor} from 'components/screens/photoUploading/ImageEditor';
 import {ImagePicker} from 'components/screens/photoUploading/ImagePicker';
 import {PhoneAuth} from 'components/screens/auth/Auth';
@@ -28,7 +30,6 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
-import {ImagePosting} from 'components/screens/photoUploading/ImagePosting';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -136,6 +137,15 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.IMAGE_EDITOR}
           component={ImageEditor}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+
+        <Stack.Screen
+          name={Screens.POST_SETTINGS}
+          component={PostSettings}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',
