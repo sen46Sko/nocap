@@ -4,6 +4,7 @@ export type Post = {
   imageLink: string;
   title: string;
   location: {latitude: number; longitude: number} | null;
+  deviceInfo: string | null;
   loves: string[];
   views: string[];
 };

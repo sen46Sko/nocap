@@ -194,12 +194,14 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
                 </Text>
               </View>
 
-              <View className="flex-row items-center">
-                <Phone />
-                <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                  Phone 15 Pro Max
-                </Text>
-              </View>
+              <If condition={!!post?.deviceInfo}>
+                <View className="flex-row items-center">
+                  <Phone />
+                  <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                    {post?.deviceInfo}
+                  </Text>
+                </View>
+              </If>
             </View>
           </View>
         </FadeScaleAnim>
