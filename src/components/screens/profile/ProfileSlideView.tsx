@@ -5,7 +5,6 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Image,
   Share,
   Alert,
   Text,
@@ -33,6 +32,8 @@ import {
   Phone,
   Share as ShareIcon,
 } from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -98,11 +99,10 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
         {posts.getUserPosts(user.id).map(post => (
           <ScrollView showsVerticalScrollIndicator={false} key={post.id}>
             <View className="gap-[16px]">
-              <Image
-                source={{
-                  uri: post.imageLink,
-                }}
-                className="w-full h-[390px] mt-[100px]"
+              <ImageAutoHeight
+                uri={post.imageLink}
+                width={screenWidth}
+                className="mt-[100px]"
               />
 
               <View className="px-[6px] flex-row items-center justify-between">
@@ -144,12 +144,14 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
                   </Text>
                 </View>
 
-                <View className="flex-row items-center">
-                  <Phone />
-                  <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                    Phone 15 Pro Max
-                  </Text>
-                </View>
+                <If condition={!!post.deviceInfo}>
+                  <View className="flex-row items-center">
+                    <Phone />
+                    <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                      {post.deviceInfo}
+                    </Text>
+                  </View>
+                </If>
               </View>
             </View>
           </ScrollView>

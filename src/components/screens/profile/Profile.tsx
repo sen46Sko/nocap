@@ -30,6 +30,8 @@ import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
 import {Expand, EyeGray, MenuOrange, Notifications} from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -103,11 +105,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
         <PagerView orientation="vertical" useNext scrollEnabled>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              <Image
-                source={{
-                  uri: user?.imageLink || '',
-                }}
-                className="w-full h-[464px]"
+              <ImageAutoHeight
+                uri={user?.imageLink || ''}
+                width={screenWidth}
               />
 
               <View className="px-[16px]">

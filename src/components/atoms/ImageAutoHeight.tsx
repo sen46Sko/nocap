@@ -1,34 +1,33 @@
 import React, {useEffect, useState} from 'react';
 import {Image, ImageProps} from 'react-native';
+import {If} from './If';
 
 type Props = {
   uri: string;
   width: number;
   className?: string;
-  props?: ImageProps;
-};
+} & Partial<ImageProps>;
 
 export const ImageAutoHeight: React.FC<Props> = ({
   uri,
   className = '',
   width,
-  props,
+  ...props
 }) => {
   const [aspectRatio, setAspectRatio] = useState(0);
-  console.log('🚀 ~ aspectRatio:', aspectRatio);
   useEffect(() => {
     Image.getSize(uri, (imageWidth, imageHeight) =>
       setAspectRatio(imageWidth / imageHeight),
     );
   }, [uri]);
   return (
-    aspectRatio > 0 && (
+    <If condition={aspectRatio > 0 && uri !== ''}>
       <Image
         {...props}
         source={{uri}}
         className={className}
         style={{width, height: width / aspectRatio}}
       />
-    )
+    </If>
   );
 };

@@ -1,20 +1,14 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useEffect, useState} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Pressable,
-  Image,
-  Text,
-  View,
-} from 'react-native';
+import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {takePhoto} from 'utils/helpers';
+import {screenWidth, takePhoto} from 'utils/helpers';
 
 import {CrossOrange} from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
 
@@ -41,9 +35,10 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
       </View>
 
       <View className="gap-[16px] mt-[16px] h-full items-center justify-between">
-        <Image
-          source={{uri: photo.path}}
-          className="w-full h-[516px] rounded-t-[8px]"
+        <ImageAutoHeight
+          uri={photo.path}
+          width={screenWidth}
+          className="rounded-t-[8px]"
         />
 
         <View className="absolute bottom-[100px] flex-row gap-[28px] items-center">

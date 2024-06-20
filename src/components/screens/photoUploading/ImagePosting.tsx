@@ -6,7 +6,6 @@ import {
   StyleSheet,
   Pressable,
   TextInput,
-  Image,
   View,
 } from 'react-native';
 
@@ -20,6 +19,8 @@ import {getLocation} from 'utils/helpers/post';
 import {Post} from 'utils/types/Post';
 
 import {Expand} from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_POSTING>;
 
@@ -68,9 +69,10 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
         </View>
 
         <View className="mt-[16px] h-full items-center">
-          <Image
-            source={{uri: image.path}}
-            className="w-full h-[516px] rounded-t-[8px]"
+          <ImageAutoHeight
+            uri={image.path}
+            width={screenWidth}
+            className=" rounded-t-[8px]"
           />
 
           <View className="w-full px-[16px] gap-[40px] mt-[22px] font-robotoRegular text-[16px]">

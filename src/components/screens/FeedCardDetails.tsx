@@ -5,7 +5,6 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Image,
   Share,
   Alert,
   Text,
@@ -37,6 +36,8 @@ import {
   Share as ShareIcon,
   Eye,
 } from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
@@ -142,11 +143,9 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
             </View>
 
             <If condition={!!post?.imageLink}>
-              <Image
-                source={{
-                  uri: post?.imageLink || '',
-                }}
-                className="w-full h-[516px]"
+              <ImageAutoHeight
+                uri={post?.imageLink || ''}
+                width={screenWidth}
                 onLoad={() => setIsPhotoLoaded(true)}
               />
             </If>
