@@ -66,11 +66,11 @@ export const getHighestIdFromArray = (array: {id: number}[]) => {
 export async function takePhoto() {
   const data = await ImagePicker.openCamera({
     mediaType: 'photo',
-    // useFrontCamera: selfie,
     forceJpg: true,
+    includeBase64: true,
   }).catch(e => {
     console.log('[Take user photo from camera ERROR] ', e);
   });
 
-  return data?.path;
+  return {path: data?.path || '', base64: data?.data || ''};
 }

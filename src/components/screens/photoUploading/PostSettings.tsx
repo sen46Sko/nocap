@@ -18,7 +18,7 @@ import {CheckOrange, CrossOrange} from 'assets/images';
 type Props = NativeStackScreenProps<RootStackParamList, Screens.POST_SETTINGS>;
 
 export const PostSettings: React.FC<Props> = ({navigation, route}) => {
-  const {imageUri} = route.params;
+  const {image} = route.params;
   const [location, setLocation] = useState(false);
   const [saveToGalery, setSaveToGalery] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState(false);
@@ -38,7 +38,7 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
           <Pressable
             onPress={() =>
               navigation.navigate(Screens.IMAGE_POSTING, {
-                imageUri,
+                image,
                 settings: {
                   location,
                   saveToGalery,

@@ -5,7 +5,6 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Image,
   View,
 } from 'react-native';
 
@@ -17,11 +16,13 @@ import {EditorTabsEnum} from 'utils/types/EditorTabsEnum';
 import {EditorFields} from 'utils/types/EditorFields';
 
 import {CheckWhite, CrossOrange, CrossWhite} from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_EDITOR>;
 
 export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
-  const {imageUri} = route.params;
+  const {image} = route.params;
 
   const [activeTab, setActiveTab] = useState(EditorTabsEnum.WHITE_BALANCE);
   const [imageSettings, setImageSettings] = useState<EditorFields>({
@@ -46,9 +47,10 @@ export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
         /> */}
 
         <View className="mt-[16px] h-full items-center">
-          <Image
-            source={{uri: imageUri}}
-            className="w-full h-[516px] rounded-t-[8px]"
+          <ImageAutoHeight
+            uri={image.path}
+            width={screenWidth}
+            className="rounded-t-[8px]"
           />
 
           <View className="w-full px-[16px] gap-[40px]">
@@ -70,7 +72,7 @@ export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
               </Pressable>
               <Pressable
                 onPress={() =>
-                  navigation.navigate(Screens.POST_SETTINGS, {imageUri})
+                  navigation.navigate(Screens.POST_SETTINGS, {image})
                 }>
                 <CheckWhite />
               </Pressable>

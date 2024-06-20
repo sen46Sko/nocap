@@ -19,9 +19,10 @@ import {CrossOrange} from 'assets/images';
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
 
 export const ImagePicker: React.FC<Props> = ({navigation}) => {
-  const [photo, setPhoto] = useState(
-    'https://i.pinimg.com/736x/61/21/df/6121dff24d943ef8878e926f865ec4e4.jpg',
-  );
+  const [photo, setPhoto] = useState({
+    path: 'https://i.pinimg.com/736x/61/21/df/6121dff24d943ef8878e926f865ec4e4.jpg',
+    base64: '',
+  });
 
   useEffect(() => {
     takePhoto().then(res => {
@@ -41,7 +42,7 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
 
       <View className="gap-[16px] mt-[16px] h-full items-center justify-between">
         <Image
-          source={{uri: photo}}
+          source={{uri: photo.path}}
           className="w-full h-[516px] rounded-t-[8px]"
         />
 
@@ -49,12 +50,12 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
           <SmallButton
             label="Edit"
             onPress={() =>
-              navigation.navigate(Screens.IMAGE_EDITOR, {imageUri: photo})
+              navigation.navigate(Screens.IMAGE_EDITOR, {image: photo})
             }
           />
           <Pressable
             onPress={() =>
-              navigation.navigate(Screens.POST_SETTINGS, {imageUri: photo})
+              navigation.navigate(Screens.POST_SETTINGS, {image: photo})
             }>
             <Text className=" font-robotoMedium text-[16px] color-orange">
               Skip

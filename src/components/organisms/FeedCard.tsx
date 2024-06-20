@@ -14,6 +14,8 @@ import {Post} from 'utils/types/Post';
 import {User} from 'utils/types/User';
 
 import {EyeGray, Share as ShareIcon} from 'assets/images';
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {screenWidth} from 'utils/helpers';
 
 type Props = {
   post: Post;
@@ -106,12 +108,7 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
         </If>
       </View>
 
-      <Image
-        source={{
-          uri: post.imageLink,
-        }}
-        className="w-full h-[516px]"
-      />
+      <ImageAutoHeight uri={post.imageLink} width={screenWidth} />
 
       <View className="px-[10px] flex-row items-center justify-between">
         <View className="flex-row">

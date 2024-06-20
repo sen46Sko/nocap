@@ -1,12 +1,14 @@
 import GeoLocation from 'react-native-geolocation-service';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
+import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+// import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
-export const getDeviceInfo = async () => {
+export async function getDeviceInfo() {
   const deviceName = await DeviceInfo.getDeviceName();
   const manufacturer = await DeviceInfo.getManufacturer();
   return `${manufacturer} ${deviceName}`;
-};
+}
 
 export async function getLocation(): Promise<{
   latitude: number;
@@ -28,4 +30,8 @@ export async function getLocation(): Promise<{
       }
     });
   });
+}
+
+export async function saveImage(uri: string) {
+  CameraRoll.saveAsset(uri, {type: 'photo', album: 'nocap'});
 }

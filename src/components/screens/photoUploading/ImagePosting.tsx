@@ -15,7 +15,7 @@ import {SmallButton} from 'components/atoms/buttons/SmallButton';
 import {usePosts} from 'contexts/PostsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {getDeviceInfo} from 'utils/helpers/post';
+import {getDeviceInfo, saveImage} from 'utils/helpers/post';
 import {getLocation} from 'utils/helpers/post';
 import {Post} from 'utils/types/Post';
 
@@ -24,7 +24,7 @@ import {Expand} from 'assets/images';
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_POSTING>;
 
 export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
-  const {imageUri, settings} = route.params;
+  const {image, settings} = route.params;
 
   const [title, setTitle] = useState('');
 
@@ -32,11 +32,15 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
 
   const handlePost = async () => {
     const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'> = {
-      imageLink: imageUri,
+      imageLink: image.path,
       title,
       location: null,
       deviceInfo: null,
     };
+
+    if (settings.saveToGalery) {
+      saveImage(image.path);
+    }
 
     if (settings.deviceInfo) {
       const deviceInfo = await getDeviceInfo();
@@ -65,7 +69,7 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
 
         <View className="mt-[16px] h-full items-center">
           <Image
-            source={{uri: imageUri}}
+            source={{uri: image.path}}
             className="w-full h-[516px] rounded-t-[8px]"
           />
 
