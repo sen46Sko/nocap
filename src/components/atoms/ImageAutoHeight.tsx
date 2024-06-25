@@ -16,12 +16,14 @@ export const ImageAutoHeight: React.FC<Props> = ({
 }) => {
   const [aspectRatio, setAspectRatio] = useState(0);
   useEffect(() => {
-    Image.getSize(uri, (imageWidth, imageHeight) =>
-      setAspectRatio(imageWidth / imageHeight),
-    );
+    if (uri !== '') {
+      Image.getSize(uri, (imageWidth, imageHeight) =>
+        setAspectRatio(imageWidth / imageHeight),
+      );
+    }
   }, [uri]);
   return (
-    <If condition={aspectRatio > 0 && uri !== ''}>
+    <If condition={aspectRatio !== 0}>
       <Image
         {...props}
         source={{uri}}

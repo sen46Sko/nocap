@@ -60,16 +60,15 @@ export type RootStackParamList = {
   [Screens.PERMISSIONS_SETTINGS]: undefined;
   [Screens.PERMISSION_DETAILS]: {permissionName: string};
   [Screens.IMAGE_PICKER]: undefined;
-  [Screens.IMAGE_EDITOR]: {image: {path: string; base64: string}};
-  [Screens.POST_SETTINGS]: {image: {path: string; base64: string}};
+  [Screens.IMAGE_EDITOR]: {image: string};
+  [Screens.POST_SETTINGS]: {image: string};
   [Screens.IMAGE_POSTING]: {
-    image: {path: string; base64: string};
+    image: string;
     settings: {
       location: boolean;
       saveToGalery: boolean;
       deviceInfo: boolean;
       highQuality: boolean;
-      maxResolution: boolean;
     };
   };
 };

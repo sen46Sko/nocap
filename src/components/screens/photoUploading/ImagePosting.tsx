@@ -33,14 +33,14 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
 
   const handlePost = async () => {
     const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'> = {
-      imageLink: image.path,
+      imageLink: image,
       title,
       location: null,
       deviceInfo: null,
     };
 
     if (settings.saveToGalery) {
-      saveImage(image.path);
+      saveImage(image);
     }
 
     if (settings.deviceInfo) {
@@ -70,7 +70,7 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
 
         <View className="mt-[16px] h-full items-center">
           <ImageAutoHeight
-            uri={image.path}
+            uri={image}
             width={screenWidth}
             className=" rounded-t-[8px]"
           />

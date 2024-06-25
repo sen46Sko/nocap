@@ -67,10 +67,9 @@ export async function takePhoto() {
   const data = await ImagePicker.openCamera({
     mediaType: 'photo',
     forceJpg: true,
-    includeBase64: true,
   }).catch(e => {
     console.log('[Take user photo from camera ERROR] ', e);
   });
 
-  return {path: data?.path || '', base64: data?.data || ''};
+  return data?.path || '';
 }

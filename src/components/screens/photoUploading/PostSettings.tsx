@@ -23,7 +23,6 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
   const [saveToGalery, setSaveToGalery] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState(false);
   const [highQuality, setHighQuality] = useState(false);
-  const [maxResolution, setMaxResolution] = useState(false);
   const [postType, setPostType] = useState<'photo' | 'onspot' | 'video'>(
     'photo',
   );
@@ -44,7 +43,6 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
                   saveToGalery,
                   deviceInfo,
                   highQuality,
-                  maxResolution,
                 },
               })
             }>
@@ -79,13 +77,6 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
             type="check"
             isSelected={highQuality}
             onSelect={() => setHighQuality(current => !current)}
-          />
-
-          <SelectItem
-            label="Post at max resolution"
-            type="check"
-            isSelected={maxResolution}
-            onSelect={() => setMaxResolution(current => !current)}
           />
 
           <Text className="self-center color-white text-[16px] font-robotoRegular">

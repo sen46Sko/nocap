@@ -13,10 +13,7 @@ import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
 
 export const ImagePicker: React.FC<Props> = ({navigation}) => {
-  const [photo, setPhoto] = useState({
-    path: 'https://i.pinimg.com/736x/61/21/df/6121dff24d943ef8878e926f865ec4e4.jpg',
-    base64: '',
-  });
+  const [photo, setPhoto] = useState('');
 
   useEffect(() => {
     takePhoto().then(res => {
@@ -36,7 +33,7 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
 
       <View className="gap-[16px] mt-[16px] h-full items-center justify-between">
         <ImageAutoHeight
-          uri={photo.path}
+          uri={photo}
           width={screenWidth}
           className="rounded-t-[8px]"
         />
