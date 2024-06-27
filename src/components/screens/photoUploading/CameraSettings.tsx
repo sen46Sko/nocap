@@ -1,31 +1,45 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Pressable,
   View,
-  Text,
 } from 'react-native';
-import React, {useState} from 'react';
 
 import {SelectItem} from 'components/molecules/SelectItem';
+
+import {useSettings} from 'contexts/CameraSettingsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 
 import {CheckOrange, CrossOrange} from 'assets/images';
 
-type Props = NativeStackScreenProps<RootStackParamList, Screens.POST_SETTINGS>;
+type Props = NativeStackScreenProps<
+  RootStackParamList,
+  Screens.CAMERA_SETTINGS
+>;
 
-export const PostSettings: React.FC<Props> = ({navigation, route}) => {
-  const {image} = route.params;
+export const CameraSettings: React.FC<Props> = ({navigation}) => {
   const [location, setLocation] = useState(false);
   const [saveToGalery, setSaveToGalery] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState(false);
   const [highQuality, setHighQuality] = useState(false);
-  const [postType, setPostType] = useState<'photo' | 'onspot' | 'video'>(
-    'photo',
-  );
+
+  const settings = useSettings();
+
+  useEffect(() => {
+    setLocation(settings.location);
+    setSaveToGalery(settings.saveToGalery);
+    setDeviceInfo(settings.deviceInfo);
+    setHighQuality(settings.highQuality);
+  }, [
+    settings.deviceInfo,
+    settings.highQuality,
+    settings.location,
+    settings.saveToGalery,
+  ]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,17 +49,13 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
             <CrossOrange />
           </Pressable>
           <Pressable
-            onPress={() =>
-              navigation.navigate(Screens.IMAGE_POSTING, {
-                image,
-                settings: {
-                  location,
-                  saveToGalery,
-                  deviceInfo,
-                  highQuality,
-                },
-              })
-            }>
+            onPress={() => {
+              settings.setLocation(location);
+              settings.setDeviceInfo(deviceInfo);
+              settings.setHighQuality(highQuality);
+              settings.setSaveToGalery(saveToGalery);
+              navigation.goBack();
+            }}>
             <CheckOrange />
           </Pressable>
         </View>
@@ -77,31 +87,6 @@ export const PostSettings: React.FC<Props> = ({navigation, route}) => {
             type="check"
             isSelected={highQuality}
             onSelect={() => setHighQuality(current => !current)}
-          />
-
-          <Text className="self-center color-white text-[16px] font-robotoRegular">
-            Post type
-          </Text>
-
-          <SelectItem
-            label="Photo"
-            type="radio"
-            isSelected={postType === 'photo'}
-            onSelect={() => setPostType('photo')}
-          />
-
-          <SelectItem
-            label="Onspot"
-            type="radio"
-            isSelected={postType === 'onspot'}
-            onSelect={() => setPostType('onspot')}
-          />
-
-          <SelectItem
-            label="Video"
-            type="radio"
-            isSelected={postType === 'video'}
-            onSelect={() => setPostType('video')}
           />
         </View>
       </ScrollView>

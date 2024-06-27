@@ -36,7 +36,7 @@ export const ImagePreview: React.FC<Props> = ({navigation, route}) => {
             onPress={() => navigation.navigate(Screens.IMAGE_EDITOR, {image})}
           />
           <Pressable
-            onPress={() => navigation.navigate(Screens.POST_SETTINGS, {image})}>
+            onPress={() => navigation.navigate(Screens.IMAGE_POSTING, {image})}>
             <Text className=" font-robotoMedium text-[16px] color-orange">
               Skip
             </Text>

@@ -27,12 +27,11 @@ export enum Screens {
   PERMISSIONS_SETTINGS = 'PermissionsSettings',
   PERMISSION_DETAILS = 'PermissionsDetails',
 
-  IMAGE_PREVIEW = 'ImagePreview',
-  IMAGE_PICKER = 'ImagePicker',
-  IMAGE_EDITOR = 'ImageEditor',
-  POST_SETTINGS = 'PostSettings',
-  IMAGE_POSTING = 'ImagePosting',
   CAMERA_SCREEN = 'CameraScreen',
+  CAMERA_SETTINGS = 'CameraSettings',
+  IMAGE_PREVIEW = 'ImagePreview',
+  IMAGE_EDITOR = 'ImageEditor',
+  IMAGE_POSTING = 'ImagePosting',
 }
 
 export type RootStackParamList = {
@@ -63,16 +62,8 @@ export type RootStackParamList = {
   [Screens.PERMISSION_DETAILS]: {permissionName: string};
 
   [Screens.CAMERA_SCREEN]: undefined;
+  [Screens.CAMERA_SETTINGS]: undefined;
   [Screens.IMAGE_PREVIEW]: {image: string};
   [Screens.IMAGE_EDITOR]: {image: string};
-  [Screens.POST_SETTINGS]: {image: string};
-  [Screens.IMAGE_POSTING]: {
-    image: string;
-    settings: {
-      location: boolean;
-      saveToGalery: boolean;
-      deviceInfo: boolean;
-      highQuality: boolean;
-    };
-  };
+  [Screens.IMAGE_POSTING]: {image: string};
 };

@@ -10,10 +10,12 @@ import {LanguageSettings} from 'components/screens/settings/LanguageSettings';
 import {UsernameSettings} from 'components/screens/settings/UsernameSettings';
 import {FeedCardDetails} from 'components/screens/FeedCardDetails';
 import {GenderSettings} from 'components/screens/settings/GenderSettings';
+import {CameraSettings} from 'components/screens/photoUploading/CameraSettings';
 import {Notifications} from 'components/screens/profile/Notifications';
 import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {ImagePosting} from 'components/screens/photoUploading/ImagePosting';
-import {PostSettings} from 'components/screens/photoUploading/PostSettings';
+import {ImagePreview} from 'components/screens/photoUploading/ImagePreview';
+import {CameraScreen} from 'components/screens/photoUploading/CameraScreen';
 import {ImageEditor} from 'components/screens/photoUploading/ImageEditor';
 import {PhoneAuth} from 'components/screens/auth/Auth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
@@ -29,8 +31,6 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
-import {ImagePreview} from 'components/screens/photoUploading/ImagePreview';
-import {CameraScreen} from 'components/screens/photoUploading/CameraScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -151,8 +151,8 @@ export const AppNavigation = () => {
           }}
         />
         <Stack.Screen
-          name={Screens.POST_SETTINGS}
-          component={PostSettings}
+          name={Screens.CAMERA_SETTINGS}
+          component={CameraSettings}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',

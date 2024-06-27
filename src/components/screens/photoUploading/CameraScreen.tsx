@@ -63,6 +63,10 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
   };
 
   const takePicture = async () => {
+    if (timer) {
+      await new Promise(resolve => setTimeout(resolve, timer * 1000));
+    }
+
     let photo = await cameraRef.current?.takePictureAsync();
 
     if (!photo) {
@@ -116,7 +120,7 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
             </If>
           </Pressable>
 
-          <Pressable>
+          <Pressable onPress={() => navigation.navigate(Screens.CAMERA_SETTINGS)}>
             <Settings />
           </Pressable>
         </View>
