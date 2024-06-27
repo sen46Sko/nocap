@@ -1,27 +1,19 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
-import {screenWidth, takePhoto} from 'utils/helpers';
+import {screenWidth} from 'utils/helpers';
 
 import {CrossOrange} from 'assets/images';
 import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 
-type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PICKER>;
+type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PREVIEW>;
 
-export const ImagePicker: React.FC<Props> = ({navigation}) => {
-  const [photo, setPhoto] = useState('');
-
-  useEffect(() => {
-    takePhoto().then(res => {
-      if (res) {
-        setPhoto(res);
-      }
-    });
-  }, []);
+export const ImagePreview: React.FC<Props> = ({navigation, route}) => {
+  const {image} = route.params;
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,7 +25,7 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
 
       <View className="gap-[16px] mt-[16px] h-full items-center justify-between">
         <ImageAutoHeight
-          uri={photo}
+          uri={image}
           width={screenWidth}
           className="rounded-t-[8px]"
         />
@@ -41,14 +33,10 @@ export const ImagePicker: React.FC<Props> = ({navigation}) => {
         <View className="absolute bottom-[100px] flex-row gap-[28px] items-center">
           <SmallButton
             label="Edit"
-            onPress={() =>
-              navigation.navigate(Screens.IMAGE_EDITOR, {image: photo})
-            }
+            onPress={() => navigation.navigate(Screens.IMAGE_EDITOR, {image})}
           />
           <Pressable
-            onPress={() =>
-              navigation.navigate(Screens.POST_SETTINGS, {image: photo})
-            }>
+            onPress={() => navigation.navigate(Screens.POST_SETTINGS, {image})}>
             <Text className=" font-robotoMedium text-[16px] color-orange">
               Skip
             </Text>

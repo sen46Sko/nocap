@@ -23,3 +23,11 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
+
+allprojects {
+    repositories {
+        maven {
+            url "$rootDir/../node_modules/expo-camera/android/maven"
+        }
+    }
+}

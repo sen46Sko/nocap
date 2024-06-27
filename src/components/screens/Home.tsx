@@ -71,7 +71,7 @@ export const Home: React.FC<Props> = ({navigation}) => {
             </Pressable>
 
             <Pressable
-              onPress={() => navigation.navigate(Screens.IMAGE_PICKER)}>
+              onPress={() => navigation.navigate(Screens.CAMERA_SCREEN)}>
               <Plus />
             </Pressable>
 

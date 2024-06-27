@@ -15,7 +15,6 @@ import {FinishSignup} from 'components/screens/auth/FinishSignup';
 import {ImagePosting} from 'components/screens/photoUploading/ImagePosting';
 import {PostSettings} from 'components/screens/photoUploading/PostSettings';
 import {ImageEditor} from 'components/screens/photoUploading/ImageEditor';
-import {ImagePicker} from 'components/screens/photoUploading/ImagePicker';
 import {PhoneAuth} from 'components/screens/auth/Auth';
 import {BirthDate} from 'components/screens/auth/BirthDate';
 import {Username} from 'components/screens/auth/Username';
@@ -30,6 +29,8 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
+import {ImagePreview} from 'components/screens/photoUploading/ImagePreview';
+import {CameraScreen} from 'components/screens/photoUploading/CameraScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -126,14 +127,21 @@ export const AppNavigation = () => {
         />
 
         <Stack.Screen
-          name={Screens.IMAGE_PICKER}
-          component={ImagePicker}
+          name={Screens.CAMERA_SCREEN}
+          component={CameraScreen}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',
           }}
         />
-
+        <Stack.Screen
+          name={Screens.IMAGE_PREVIEW}
+          component={ImagePreview}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
         <Stack.Screen
           name={Screens.IMAGE_EDITOR}
           component={ImageEditor}
@@ -142,7 +150,6 @@ export const AppNavigation = () => {
             animation: 'slide_from_bottom',
           }}
         />
-
         <Stack.Screen
           name={Screens.POST_SETTINGS}
           component={PostSettings}
@@ -151,7 +158,6 @@ export const AppNavigation = () => {
             animation: 'slide_from_bottom',
           }}
         />
-
         <Stack.Screen
           name={Screens.IMAGE_POSTING}
           component={ImagePosting}
