@@ -116,7 +116,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <FadeScaleAnim isStarted={isPhotoLoaded}>
+        <FadeScaleAnim isStarted={isPhotoLoaded || post?.type === 'video'}>
           <View className="gap-[16px]">
             <View className="px-[10px] py-[16px]">
               <Text className=" font-robotoMedium color-grayMedium text-[24px]">

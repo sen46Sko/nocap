@@ -37,6 +37,7 @@ export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
           <ImageAutoHeight
             uri={image}
             width={screenWidth}
+            type={image.endsWith('.mp4') ? 'video' : 'photo'}
             className="rounded-t-[8px]"
           />
 

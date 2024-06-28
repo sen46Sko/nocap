@@ -102,6 +102,7 @@ export const ProfileSlideView: React.FC<Props> = ({navigation, route}) => {
               <ImageAutoHeight
                 uri={post.imageLink}
                 width={screenWidth}
+                type={post.type}
                 className="mt-[100px]"
               />
 

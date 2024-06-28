@@ -1511,6 +1511,13 @@ PODS:
     - React-Core
   - react-native-splash-screen (3.3.0):
     - React-Core
+  - react-native-video (6.3.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+    - react-native-video/Video (= 6.3.0)
+  - react-native-video/Video (6.3.0):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
   - React-NativeModulesApple (0.72.9):
     - hermes-engine
     - React-callinvoker
@@ -1714,6 +1721,7 @@ DEPENDENCIES:
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
+  - react-native-video (from `../node_modules/react-native-video`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -1862,6 +1870,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-splash-screen:
     :path: "../node_modules/react-native-splash-screen"
+  react-native-video:
+    :path: "../node_modules/react-native-video"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -1995,6 +2005,7 @@ SPEC CHECKSUMS:
   react-native-pager-view: 7ad123a253d73975a0e3518a52ef09361484cfa8
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d
   react-native-splash-screen: 4312f786b13a81b5169ef346d76d33bc0c6dc457
+  react-native-video: ed181c8cb4397787ffc72a6344ff823ed9ec759d
   React-NativeModulesApple: 3d1fab3decbf21afb13a7a3a297053652765190d
   React-perflogger: cb433f318c6667060fc1f62e26eb58d6eb30a627
   React-RCTActionSheet: 0af3f8ac067e8a1dde902810b7ad169d0a0ec31e

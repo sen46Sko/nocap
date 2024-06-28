@@ -108,7 +108,11 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
         </If>
       </View>
 
-      <ImageAutoHeight uri={post.imageLink} width={screenWidth} />
+      <ImageAutoHeight
+        uri={post.imageLink}
+        width={screenWidth}
+        type={post.type}
+      />
 
       <View className="px-[10px] flex-row items-center justify-between">
         <View className="flex-row">
