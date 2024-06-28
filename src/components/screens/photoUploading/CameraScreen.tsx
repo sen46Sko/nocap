@@ -1,14 +1,30 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
 import {Camera, CameraType, FlashMode} from 'expo-camera';
 import {FlipType, manipulateAsync} from 'expo-image-manipulator';
-import {Pressable, SafeAreaView, StyleSheet, View} from 'react-native';
+import DynamicallySelectedPicker from 'react-native-dynamically-selected-picker';
 import React, {useRef, useState} from 'react';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {useIsFocused} from '@react-navigation/native';
+
+import {If} from 'components/atoms/If';
+
+import {useSettings} from 'contexts/CameraSettingsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {screenWidth} from 'utils/helpers';
-import {Expand, Flash, FlashAuto, FlashOff, Selfie, Settings, Timer10, Timer3, Timer5, TimerOff} from 'assets/images';
-import {useIsFocused} from '@react-navigation/native';
-import {If} from 'components/atoms/If';
+
+import {
+  FlashAuto,
+  FlashOff,
+  Settings,
+  TimerOff,
+  Timer10,
+  Timer3,
+  Timer5,
+  Expand,
+  Selfie,
+  Flash,
+} from 'assets/images';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CAMERA_SCREEN>;
 
@@ -19,6 +35,7 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
 
   const cameraRef = useRef<Camera>(null);
 
+  const settings = useSettings();
   const isFocused = useIsFocused();
 
   const toggleCameraType = () => {
@@ -49,7 +66,7 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
       if (current === 0) {
         return 3;
       }
-      
+
       if (current === 3) {
         return 5;
       }
@@ -74,16 +91,13 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
     }
 
     if (cameraType === CameraType.front) {
-      photo = await manipulateAsync(
-        photo.uri,
-        [
-            { rotate: 180 },
-            { flip: FlipType.Vertical },
-        ],
-    );
+      photo = await manipulateAsync(photo.uri, [
+        {rotate: 180},
+        {flip: FlipType.Vertical},
+      ]);
     }
 
-    navigation.navigate(Screens.IMAGE_PREVIEW, {image: photo?.uri})
+    navigation.navigate(Screens.IMAGE_PREVIEW, {image: photo?.uri});
   };
 
   return (
@@ -120,7 +134,8 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
             </If>
           </Pressable>
 
-          <Pressable onPress={() => navigation.navigate(Screens.CAMERA_SETTINGS)}>
+          <Pressable
+            onPress={() => navigation.navigate(Screens.CAMERA_SETTINGS)}>
             <Settings />
           </Pressable>
         </View>
@@ -146,6 +161,42 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
             <Selfie />
           </Pressable>
         </View>
+
+        <View style={styles.selectorContainer}>
+          <DynamicallySelectedPicker
+            items={[
+              {
+                value: 1,
+                label: 'Photo',
+              },
+              {
+                value: 2,
+                label: 'Onspot',
+              },
+              {
+                value: 3,
+                label: 'Video',
+              },
+            ]}
+            onScroll={({index}) => {
+              if (index === 0) {
+                settings.setPostType('photo');
+              }
+              if (index === 1) {
+                settings.setPostType('onspot');
+              }
+              if (index === 2) {
+                settings.setPostType('video');
+              }
+            }}
+            horizontal
+            height={50}
+            width={screenWidth}
+            allItemsColor="#ffffff"
+            fontSize={16}
+            renderGradientOverlay={false}
+          />
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -165,5 +216,9 @@ const styles = StyleSheet.create({
     right: 16,
     flexDirection: 'row',
     gap: 24,
+  },
+  selectorContainer: {
+    height: '100%',
+    paddingTop: '10%',
   },
 });

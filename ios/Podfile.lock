@@ -959,8 +959,12 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.32):
     - BoringSSL-GRPC/Interface (= 0.0.32)
   - BoringSSL-GRPC/Interface (0.0.32)
+  - BVLinearGradient (2.8.3):
+    - React-Core
   - DoubleConversion (1.1.6)
   - EXApplication (5.3.1):
+    - ExpoModulesCore
+  - EXCamera (13.4.4):
     - ExpoModulesCore
   - EXConstants (14.4.2):
     - ExpoModulesCore
@@ -968,12 +972,18 @@ PODS:
     - ExpoModulesCore
   - EXFont (11.4.0):
     - ExpoModulesCore
+  - EXImageLoader (4.3.0):
+    - ExpoModulesCore
+    - React-Core
   - Expo (49.0.23):
     - ExpoModulesCore
   - ExpoAdapterGoogleSignIn (11.0.1):
     - ExpoModulesCore
     - GoogleSignIn (~> 7.0)
     - React-Core
+  - ExpoImageManipulator (11.3.0):
+    - EXImageLoader
+    - ExpoModulesCore
   - ExpoKeepAwake (12.3.0):
     - ExpoModulesCore
   - ExpoModulesCore (1.5.13):
@@ -1490,6 +1500,8 @@ PODS:
     - React-Core
   - react-native-date-picker (5.0.2):
     - React-Core
+  - react-native-dynamically-selected-picker (3.3.0):
+    - React-Core
   - react-native-geolocation-service (5.3.1):
     - React
   - react-native-pager-view (6.3.3):
@@ -1660,13 +1672,17 @@ PODS:
 
 DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
+  - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
+  - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
+  - EXImageLoader (from `../node_modules/expo-image-loader/ios`)
   - Expo (from `../node_modules/expo`)
   - "ExpoAdapterGoogleSignIn (from `../node_modules/@react-native-google-signin/google-signin/expo/ios`)"
+  - ExpoImageManipulator (from `../node_modules/expo-image-manipulator/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
@@ -1693,6 +1709,7 @@ DEPENDENCIES:
   - "react-native-cameraroll (from `../node_modules/@react-native-camera-roll/camera-roll`)"
   - react-native-contacts (from `../node_modules/react-native-contacts`)
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
+  - react-native-dynamically-selected-picker (from `../node_modules/react-native-dynamically-selected-picker`)
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -1765,20 +1782,28 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   boost:
     :podspec: "../node_modules/react-native/third-party-podspecs/boost.podspec"
+  BVLinearGradient:
+    :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   EXApplication:
     :path: "../node_modules/expo-application/ios"
+  EXCamera:
+    :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: "../node_modules/expo-font/ios"
+  EXImageLoader:
+    :path: "../node_modules/expo-image-loader/ios"
   Expo:
     :path: "../node_modules/expo"
   ExpoAdapterGoogleSignIn:
     :path: "../node_modules/@react-native-google-signin/google-signin/expo/ios"
+  ExpoImageManipulator:
+    :path: "../node_modules/expo-image-manipulator/ios"
   ExpoKeepAwake:
     :path: "../node_modules/expo-keep-awake/ios"
   ExpoModulesCore:
@@ -1827,6 +1852,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-contacts"
   react-native-date-picker:
     :path: "../node_modules/react-native-date-picker"
+  react-native-dynamically-selected-picker:
+    :path: "../node_modules/react-native-dynamically-selected-picker"
   react-native-geolocation-service:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-pager-view:
@@ -1903,13 +1930,17 @@ SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   BoringSSL-GRPC: 1e2348957acdbcad360b80a264a90799984b2ba6
+  BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   EXApplication: 042aa2e3f05258a16962ea1a9914bf288db9c9a1
+  EXCamera: 6e6e79bf01a2b8190268d93297d8e79a843d5ede
   EXConstants: ce5bbea779da8031ac818c36bea41b10e14d04e1
   EXFileSystem: f8b838a880254de42a5a7da20ed5ce12e2697c1b
   EXFont: 738c44c390953ebcbab075a4848bfbef025fd9ee
+  EXImageLoader: 34b214f9387e98f3c73989f15d8d5b399c9ab3f7
   Expo: ba9abdf444dc6d2c05a82c4c1b51a2400beb6167
   ExpoAdapterGoogleSignIn: 8b749750f4b43e884a89d5c5c8a64ae21854e84d
+  ExpoImageManipulator: 851be0965dd9f78019771b140282f1816dcc25ea
   ExpoKeepAwake: be4cbd52d9b177cde0fd66daa1913afa3161fc1d
   ExpoModulesCore: d2208be53c1b694c9a5898e871315cae77cb11bd
   FBLazyVector: dc178b8748748c036ef9493a5d59d6d1f91a36ce
@@ -1959,6 +1990,7 @@ SPEC CHECKSUMS:
   react-native-cameraroll: 1184a0e640f2660b39cf9c64fa396b9059e9c325
   react-native-contacts: cb4f3b823550adbce0802901b9e63bf1526ec0af
   react-native-date-picker: 90687f1dbd374ff0265dca99d949998364c22fa9
+  react-native-dynamically-selected-picker: e897a697978cc75d9e1682bffb3afc3f23278e75
   react-native-geolocation-service: 608e1da71a1ac31b4de64d9ef2815f697978c55b
   react-native-pager-view: 7ad123a253d73975a0e3518a52ef09361484cfa8
   react-native-safe-area-context: dcab599c527c2d7de2d76507a523d20a0b83823d

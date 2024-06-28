@@ -1,5 +1,6 @@
 export type Post = {
   id: string;
+  type: 'photo' | 'video' | 'onspot';
   userId: string;
   imageLink: string;
   title: string;

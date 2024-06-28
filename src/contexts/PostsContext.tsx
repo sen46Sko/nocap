@@ -17,7 +17,7 @@ interface PostsContextType {
   getUserPosts: (userId: string) => Post[];
   setLoving: (status: 'love' | 'unlove', postId: string) => void;
   addView: (postId: string) => void;
-  postImage: (
+  addPost: (
     post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
   ) => Promise<void>;
 }
@@ -27,7 +27,7 @@ const PostsContext = createContext<PostsContextType>({
   getUserPosts: () => [],
   setLoving: () => {},
   addView: () => {},
-  postImage: async () => {},
+  addPost: async () => {},
 });
 
 export const PostsProvider = ({children}: {children: ReactNode}) => {
@@ -84,7 +84,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
     });
   };
 
-  const postImage = async (
+  const addPost = async (
     post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
   ) => {
     if (!auth.user) {
@@ -106,7 +106,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
       value={{
         posts,
         addView,
-        postImage,
+        addPost,
         setLoving,
         getUserPosts,
       }}>

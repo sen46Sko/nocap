@@ -9,52 +9,65 @@ import {
   View,
 } from 'react-native';
 
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
+import {useSettings} from 'contexts/CameraSettingsContext';
 import {usePosts} from 'contexts/PostsContext';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {getDeviceInfo, saveImage} from 'utils/helpers/post';
 import {getLocation} from 'utils/helpers/post';
+import {screenWidth} from 'utils/helpers';
 import {Post} from 'utils/types/Post';
 
 import {Expand} from 'assets/images';
-import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
-import {screenWidth} from 'utils/helpers';
+import {If} from 'components/atoms/If';
+import {LoaderSpinner} from 'components/organisms/LoaderSpinner';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_POSTING>;
 
 export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
-  const {image, settings} = route.params;
+  const {image} = route.params;
 
   const [title, setTitle] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const posts = usePosts();
+  const settings = useSettings();
 
   const handlePost = async () => {
-    const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'> = {
-      imageLink: image,
-      title,
-      location: null,
-      deviceInfo: null,
-    };
+    try {
+      setIsLoading(true);
+      const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'> = {
+        imageLink: image,
+        title,
+        location: null,
+        deviceInfo: null,
+        type: settings.postType,
+      };
 
-    if (settings.saveToGalery) {
-      saveImage(image);
+      if (settings.saveToGalery) {
+        saveImage(image);
+      }
+
+      if (settings.deviceInfo) {
+        const deviceInfo = await getDeviceInfo();
+        post.deviceInfo = deviceInfo;
+      }
+
+      if (settings.location) {
+        const location = await getLocation();
+        post.location = location;
+      }
+
+      await posts.addPost(post);
+      navigation.navigate(Screens.HOME);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
     }
-
-    if (settings.deviceInfo) {
-      const deviceInfo = await getDeviceInfo();
-      post.deviceInfo = deviceInfo;
-    }
-
-    if (settings.location) {
-      const location = await getLocation();
-      post.location = location;
-    }
-
-    await posts.postImage(post);
-    navigation.navigate(Screens.HOME);
   };
 
   return (
@@ -86,6 +99,9 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
           </View>
         </View>
       </ScrollView>
+      <If condition={isLoading}>
+        <LoaderSpinner />
+      </If>
     </SafeAreaView>
   );
 };

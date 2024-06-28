@@ -2,13 +2,13 @@ import {SafeAreaView, StyleSheet, Pressable, Text, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
 
+import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {screenWidth} from 'utils/helpers';
 
 import {CrossOrange} from 'assets/images';
-import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.IMAGE_PREVIEW>;
 

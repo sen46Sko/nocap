@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -51,7 +51,7 @@ export const ImageEditor: React.FC<Props> = ({navigation, route}) => {
               </Pressable>
               <Pressable
                 onPress={() =>
-                  navigation.navigate(Screens.POST_SETTINGS, {
+                  navigation.navigate(Screens.IMAGE_POSTING, {
                     image: image,
                   })
                 }>
