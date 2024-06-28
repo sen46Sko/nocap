@@ -24,7 +24,9 @@ import {
   Expand,
   Selfie,
   Flash,
+  Square,
 } from 'assets/images';
+import {CameraView} from 'components/organisms/CameraView';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.CAMERA_SCREEN>;
 
@@ -32,6 +34,7 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
   const [cameraType, setCameraType] = useState(CameraType.back);
   const [flashMode, setFlashMode] = useState(FlashMode.off);
   const [timer, setTimer] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
 
   const cameraRef = useRef<Camera>(null);
 
@@ -84,20 +87,29 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
       await new Promise(resolve => setTimeout(resolve, timer * 1000));
     }
 
-    let photo = await cameraRef.current?.takePictureAsync();
+    let file;
 
-    if (!photo) {
+    if (settings.postType === 'video') {
+      setIsRecording(true);
+      file = await cameraRef.current?.recordAsync();
+    }
+
+    if (settings.postType === 'photo' || settings.postType === 'onspot') {
+      file = await cameraRef.current?.takePictureAsync();
+    }
+
+    if (!file) {
       return;
     }
 
     if (cameraType === CameraType.front) {
-      photo = await manipulateAsync(photo.uri, [
+      file = await manipulateAsync(file.uri, [
         {rotate: 180},
         {flip: FlipType.Vertical},
       ]);
     }
 
-    navigation.navigate(Screens.IMAGE_PREVIEW, {image: photo?.uri});
+    navigation.navigate(Screens.IMAGE_PREVIEW, {image: file?.uri});
   };
 
   return (
@@ -142,10 +154,9 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
       </View>
 
       <If condition={isFocused}>
-        <Camera
+        <CameraView
           ref={cameraRef}
-          style={styles.cameraView}
-          type={cameraType}
+          cameraType={cameraType}
           flashMode={flashMode}
         />
       </If>
@@ -154,9 +165,18 @@ export const CameraScreen: React.FC<Props> = ({navigation}) => {
         <View className="flex-row items-center gap-[78px] justify-center px-[58px]">
           <View className="w-[24px]" />
           <Pressable
-            className="w-[72px] h-[72px] rounded-full bg-white"
-            onPress={takePicture}
-          />
+            className="w-[72px] h-[72px] rounded-full bg-white items-center justify-center"
+            onPress={() => {
+              if (settings.postType !== 'video' || !isRecording) {
+                takePicture();
+                return;
+              }
+
+              cameraRef.current?.stopRecording();
+              setIsRecording(false);
+            }}>
+            {isRecording && <Square width={24} height={24} />}
+          </Pressable>
           <Pressable onPress={toggleCameraType}>
             <Selfie />
           </Pressable>
@@ -206,10 +226,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
-  },
-  cameraView: {
-    width: screenWidth,
-    height: (screenWidth / 3) * 4,
   },
   options: {
     position: 'absolute',

@@ -20,6 +20,7 @@ export {default as Timer10} from './Timer10.svg';
 export {default as Timer5} from './Timer5.svg';
 export {default as Timer3} from './Timer3.svg';
 export {default as Expand} from './Expand.svg';
+export {default as Square} from './Square.svg';
 export {default as Selfie} from './Selfie.svg';
 export {default as Albums} from './Albums.svg';
 export {default as Google} from './Google.svg';
