@@ -29,8 +29,13 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
-import {Expand, EyeGray, MenuOrange, Notifications} from 'assets/images';
-import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
+import {
+  Expand,
+  EyeGray,
+  MenuOrange,
+  Notifications,
+  SwipeArrow,
+} from 'assets/images';
 import {screenWidth} from 'utils/helpers';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
@@ -43,6 +48,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
     useState<BottomSheetType | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [peepersCount, setPeepersCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const auth = useAuth();
   const posts = usePosts();
@@ -91,23 +97,29 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
             <Expand />
           </Pressable>
 
-          <Pressable
-            className="absolute right-[8px]"
-            onPress={() =>
-              userId === auth.user?.id
-                ? navigation.navigate(Screens.NOTIFICATIONS)
-                : setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
-            }>
-            <Notifications />
-          </Pressable>
+          <If condition={currentPage === 1}>
+            <Pressable
+              className="absolute right-[8px]"
+              onPress={() =>
+                userId === auth.user?.id
+                  ? navigation.navigate(Screens.NOTIFICATIONS)
+                  : setBottomSheetType(BottomSheetType.NOTIFICTIONS_MENU)
+              }>
+              <Notifications />
+            </Pressable>
+          </If>
         </View>
 
-        <PagerView orientation="vertical" useNext scrollEnabled>
+        <PagerView
+          orientation="vertical"
+          useNext
+          scrollEnabled
+          onPageSelected={e => setCurrentPage(e.nativeEvent.position)}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              <ImageAutoHeight
-                uri={user?.imageLink || ''}
-                width={screenWidth}
+              <Image
+                source={{uri: user?.imageLink || ''}}
+                style={{width: screenWidth, height: (screenWidth / 3) * 4}}
               />
 
               <View className="px-[16px]">
@@ -138,30 +150,40 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                   {user?.bio || ''}
                 </Text>
 
-                <If
-                  condition={
-                    userId === auth.user?.id && !!auth.user.albums.length
-                  }>
-                  <Text className="font-robotoMedium color-white mt-[46px]">
-                    Albums
-                  </Text>
+                <View className="flex-row items-center justify-between pr-[20px]">
+                  <View>
+                    <If
+                      condition={
+                        userId === auth.user?.id && !!auth.user.albums.length
+                      }>
+                      <Text className="font-robotoMedium color-white mt-[46px]">
+                        Albums
+                      </Text>
 
-                  <View className="flex-row gap-[10px] mt-[16px]">
-                    {user?.albums.map(album => (
-                      <View
-                        className="border border-grayDark rounded-[24px] p-[10px]"
-                        key={album.id}>
-                        <Text className="font-robotoMedium color-white">
-                          {album.name}
-                        </Text>
+                      <View className="flex-row gap-[10px] mt-[16px]">
+                        {user?.albums.map(album => (
+                          <View
+                            className="border border-grayDark rounded-[24px] p-[10px]"
+                            key={album.id}>
+                            <Text className="font-robotoMedium color-white">
+                              {album.name}
+                            </Text>
+                          </View>
+                        ))}
                       </View>
-                    ))}
-                  </View>
-                </If>
+                    </If>
 
-                <Text className="font-robotoRegular color-grayMedium mt-[18px]">
-                  Member since 2024
-                </Text>
+                    <Text className="font-robotoRegular color-grayMedium mt-[16px]">
+                      Member since 2024
+                    </Text>
+                  </View>
+                  <View>
+                    <SwipeArrow />
+                    <Text className="font-robotoMedium text-[16px] color-white">
+                      profile
+                    </Text>
+                  </View>
+                </View>
               </View>
             </View>
           </ScrollView>

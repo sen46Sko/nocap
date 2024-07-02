@@ -7,6 +7,7 @@ export {default as SearchGray} from './SearchGray.svg';
 export {default as MenuOrange} from './MenuOrange.svg';
 export {default as CrossWhite} from './CrossWhite.svg';
 export {default as CheckWhite} from './CheckWhite.svg';
+export {default as SwipeArrow} from './SwipeArrow.svg';
 export {default as FlashAuto} from './FlashAuto.svg';
 export {default as CrossGray} from './CrossGray.svg';
 export {default as Calendar} from './Calendar.svg';

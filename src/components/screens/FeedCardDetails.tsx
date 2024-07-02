@@ -146,6 +146,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
               <ImageAutoHeight
                 uri={post?.imageLink || ''}
                 width={screenWidth}
+                type={post?.type}
                 onLoad={() => setIsPhotoLoaded(true)}
               />
             </If>
