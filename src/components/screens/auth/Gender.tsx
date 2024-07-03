@@ -40,8 +40,6 @@ export const Gender: React.FC<Props> = ({navigation}) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <View className="flex-1 px-[16px] mt-[40px] mb-[40px] justify-between">
-          <View className="h-[1px] w-full bg-grayDark" />
-
           <View className="mt-[16px]">
             <GenderPicker
               gender={gender}

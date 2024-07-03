@@ -5,14 +5,11 @@ import {useAuth} from 'contexts/AuthContext';
 
 import {User} from 'utils/types/User';
 
-import {CrossGray} from 'assets/images';
-
 type Props = {
   user: User;
-  removeSuggestion: () => void;
 };
 
-export const UserCard: React.FC<Props> = ({user, removeSuggestion}) => {
+export const UserCard: React.FC<Props> = ({user}) => {
   const auth = useAuth();
 
   const isPeeping = auth.user?.peeps.some(id => id === user.id);
@@ -41,16 +38,12 @@ export const UserCard: React.FC<Props> = ({user, removeSuggestion}) => {
             {user.username}
           </Text>
         </View>
-
-        <Pressable onPress={removeSuggestion}>
-          <CrossGray />
-        </Pressable>
       </View>
 
       <Pressable
         className="bg-white w-full py-[5px] items-center rounded-[4px]"
         onPress={peepUser}>
-        <Text className="font-robotoMedium text-[16px]">
+        <Text className="font-robotoMedium text-[16px] color-black">
           {isPeeping ? 'Peeping' : 'Peep'}
         </Text>
       </Pressable>

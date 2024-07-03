@@ -146,17 +146,7 @@ export const Search: React.FC<Props> = ({navigation}) => {
 
                   <View className="flex-row gap-[10px] items-center">
                     {suggested.map(user => (
-                      <UserCard
-                        key={user.id}
-                        user={user}
-                        removeSuggestion={() =>
-                          setSuggested(current =>
-                            current.filter(
-                              suggestion => suggestion.id !== user.id,
-                            ),
-                          )
-                        }
-                      />
+                      <UserCard key={user.id} user={user} />
                     ))}
                   </View>
                 </View>

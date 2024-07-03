@@ -90,10 +90,14 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
         <Pressable
           className="flex-row items-center gap-[8px]"
           onPress={openProfile}>
-          <Image
-            source={{uri: user?.imageLink || ''}}
-            className="bg-white h-[24px] w-[24px] rounded-full"
-          />
+          {user?.imageLink ? (
+            <Image
+              source={{uri: user?.imageLink || ''}}
+              className="bg-white h-[24px] w-[24px] rounded-full"
+            />
+          ) : (
+            <View className="bg-white h-[24px] w-[24px] rounded-full" />
+          )}
           <Text className="font-robotoBold color-white text-[16px]">
             {user?.username || ''}
           </Text>
