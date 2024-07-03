@@ -118,41 +118,43 @@ export const Peepers: React.FC<Props> = ({navigation, route}) => {
           </Pressable>
         </View>
 
-        <If condition={activeTab === 'peepers'}>
-          <View className="px-[16px] gap-[16px]">
-            {peepers.map(user => (
-              <ContactItem
-                key={user.id}
-                name={user.username}
-                buttonLabel={
-                  auth.user?.peeps.some(id => id === user.id)
-                    ? 'Peeping'
-                    : 'Peep'
-                }
-                photoUri={user.imageLink}
-                onPress={() => peepUser(user.id)}
-              />
-            ))}
-          </View>
-        </If>
+        <View className="mt-[16px]">
+          <If condition={activeTab === 'peepers'}>
+            <View className="px-[16px] gap-[16px]">
+              {peepers.map(user => (
+                <ContactItem
+                  key={user.id}
+                  name={user.username}
+                  buttonLabel={
+                    auth.user?.peeps.some(id => id === user.id)
+                      ? 'Peeping'
+                      : 'Peep'
+                  }
+                  photoUri={user.imageLink}
+                  onPress={() => peepUser(user.id)}
+                />
+              ))}
+            </View>
+          </If>
 
-        <If condition={activeTab === 'peeps'}>
-          <View className="px-[16px] gap-[16px]">
-            {peeps.map(user => (
-              <ContactItem
-                key={user.id}
-                name={user.username}
-                buttonLabel="Peeping"
-                photoUri={user.imageLink}
-                onPress={() => peepUser(user.id)}
-              />
-            ))}
-          </View>
-        </If>
+          <If condition={activeTab === 'peeps'}>
+            <View className="px-[16px] gap-[16px]">
+              {peeps.map(user => (
+                <ContactItem
+                  key={user.id}
+                  name={user.username}
+                  buttonLabel="Peeping"
+                  photoUri={user.imageLink}
+                  onPress={() => peepUser(user.id)}
+                />
+              ))}
+            </View>
+          </If>
 
-        <If condition={activeTab === 'contacts'}>
-          <ContactsList />
-        </If>
+          <If condition={activeTab === 'contacts'}>
+            <ContactsList />
+          </If>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

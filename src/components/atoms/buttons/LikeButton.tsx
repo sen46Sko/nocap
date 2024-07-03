@@ -1,6 +1,7 @@
 import {Image, Pressable} from 'react-native';
 import classNames from 'classnames';
 import React from 'react';
+import {LoveEmojiUnchecked} from 'assets/images';
 
 type Props = {
   isLiked: boolean;
@@ -12,13 +13,16 @@ export const LikeButton: React.FC<Props> = ({isLiked, onPress}) => {
     <Pressable
       onPress={onPress}
       className={classNames(
-        'h-[32px] w-[32px] rounded-full items-center justify-center transition-colors',
-        {'bg-grayDark': !isLiked, 'bg-white': isLiked},
+        'h-[32px] w-[32px] rounded-full items-center justify-center transition-colors bg-grayDark',
       )}>
-      <Image
-        source={require('@assets/images/LoveEmoji.png')}
-        className="h-[20px] w-[20px]"
-      />
+      {isLiked ? (
+        <Image
+          source={require('@assets/images/LoveEmoji.png')}
+          className="h-[18px] w-[18px]"
+        />
+      ) : (
+        <LoveEmojiUnchecked width={20} height={20} />
+      )}
     </Pressable>
   );
 };

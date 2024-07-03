@@ -215,6 +215,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
             <If condition={bottomSheetType === BottomSheetType.FEED_CARD_MENU}>
               <FeedCardMenu
                 onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
+                onShare={onShare}
               />
             </If>
 

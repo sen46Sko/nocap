@@ -1,3 +1,4 @@
+export {default as LoveEmojiUnchecked} from './LoveEmojiUnchecked.svg';
 export {default as SearchLightGray} from './SearchLightGray.svg';
 export {default as Notifications} from './Notifications.svg';
 export {default as SearchWhite} from './SearchWhite.svg';

@@ -8,8 +8,10 @@ import {
   Text,
   View,
   StyleSheet,
+  Share,
+  Alert,
 } from 'react-native';
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import FastImage from 'react-native-fast-image';
 
 import {FeedCard} from 'components/organisms/FeedCard';
@@ -21,10 +23,19 @@ import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {Post} from 'utils/types/Post';
 
 import {Plus, SearchWhite} from 'assets/images';
+import {If} from 'components/atoms/If';
+import {CustomBottomSheet} from 'components/organisms/CustomBottomSheet';
+import {FeedCardMenu} from 'components/organisms/bottomSheetScreens/FeedCardMenu';
+import {ReportMenu} from 'components/organisms/bottomSheetScreens/ReportMenu';
+import {SubmittedReport} from 'components/organisms/bottomSheetScreens/SubmittedReport';
+import {BottomSheetType} from 'utils/types/BottomSheetType';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.HOME>;
 
 export const Home: React.FC<Props> = ({navigation}) => {
+  const [bottomSheetType, setBottomSheetType] =
+    useState<BottomSheetType | null>(null);
+
   const auth = useAuth();
   const posts = usePosts();
 
@@ -33,11 +44,7 @@ export const Home: React.FC<Props> = ({navigation}) => {
       <FeedCard
         key={post.id}
         post={post}
-        openImage={() =>
-          navigation.navigate(Screens.FEED_CARD_DETAILS, {
-            postId: post.id,
-          })
-        }
+        openMenu={() => setBottomSheetType(BottomSheetType.FEED_CARD_MENU)}
         openProfile={() =>
           navigation.navigate(Screens.PROFILE, {userId: post.userId})
         }
@@ -57,6 +64,32 @@ export const Home: React.FC<Props> = ({navigation}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
+
+  const getSnapPoints = () => {
+    switch (bottomSheetType) {
+      default:
+      case BottomSheetType.FEED_CARD_MENU:
+      case BottomSheetType.REPORT_SMTH_ELSE:
+        return ['50%'];
+      case BottomSheetType.REPORT_MENU:
+        return ['80%'];
+      case BottomSheetType.SUBMITTED_REPORT:
+        return ['30%'];
+    }
+  };
+
+  const onShare = () => {
+    try {
+      Share.share(
+        {
+          url: 'https://www.google.com',
+        },
+        {tintColor: '#000000'},
+      );
+    } catch (error: any) {
+      Alert.alert(error.message);
+    }
+  };
 
   return (
     <View className="bg-black flex-1 gap-[13px]">
@@ -99,6 +132,44 @@ export const Home: React.FC<Props> = ({navigation}) => {
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{itemVisiblePercentThreshold: 50}}
       />
+
+      <If condition={bottomSheetType !== null}>
+        <View className="absolute bottom-0 top-0 right-0 left-0">
+          <CustomBottomSheet
+            snapPoints={getSnapPoints()}
+            onClose={() => setBottomSheetType(null)}>
+            <If condition={bottomSheetType === BottomSheetType.FEED_CARD_MENU}>
+              <FeedCardMenu
+                onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
+                onShare={onShare}
+              />
+            </If>
+
+            <If
+              condition={
+                bottomSheetType === BottomSheetType.REPORT_MENU ||
+                bottomSheetType === BottomSheetType.REPORT_SMTH_ELSE
+              }>
+              <ReportMenu
+                isReportElse={
+                  bottomSheetType === BottomSheetType.REPORT_SMTH_ELSE
+                }
+                onReportElse={() =>
+                  setBottomSheetType(BottomSheetType.REPORT_SMTH_ELSE)
+                }
+                onSubmitReport={() =>
+                  setBottomSheetType(BottomSheetType.SUBMITTED_REPORT)
+                }
+              />
+            </If>
+
+            <If
+              condition={bottomSheetType === BottomSheetType.SUBMITTED_REPORT}>
+              <SubmittedReport />
+            </If>
+          </CustomBottomSheet>
+        </View>
+      </If>
     </View>
   );
 };
