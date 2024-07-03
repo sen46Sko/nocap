@@ -5,11 +5,12 @@ import {
   Pressable,
   ViewToken,
   FlatList,
-  Image,
   Text,
   View,
+  StyleSheet,
 } from 'react-native';
 import React, {useCallback} from 'react';
+import FastImage from 'react-native-fast-image';
 
 import {FeedCard} from 'components/organisms/FeedCard';
 
@@ -81,9 +82,9 @@ export const Home: React.FC<Props> = ({navigation}) => {
                   userId: auth.user?.id || '',
                 })
               }>
-              <Image
+              <FastImage
                 source={{uri: auth.user?.imageLink || ''}}
-                className="h-[24px] w-[24px] rounded-full"
+                style={styles.avatar}
               />
             </Pressable>
           </View>
@@ -101,3 +102,11 @@ export const Home: React.FC<Props> = ({navigation}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  avatar: {
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+  },
+});

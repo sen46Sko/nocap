@@ -1,4 +1,5 @@
-import {Image, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import React from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
@@ -20,8 +21,9 @@ export const ContactItem: React.FC<Props> = ({
     <View className="flex-row items-center justify-between gap-[8px] w-full">
       <View className="flex-row items-center gap-[16px]">
         {photoUri ? (
-          <Image
+          <FastImage
             className="w-[40px] h-[40px] rounded-full"
+            style={styles.avatar}
             source={{uri: photoUri}}
           />
         ) : (
@@ -40,3 +42,11 @@ export const ContactItem: React.FC<Props> = ({
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+  },
+});

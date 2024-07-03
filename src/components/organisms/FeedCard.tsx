@@ -1,4 +1,4 @@
-import {Alert, Image, Pressable, Share, Text, View} from 'react-native';
+import {Alert, Pressable, Share, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 
 import {SmallButton} from 'components/atoms/buttons/SmallButton';
@@ -16,6 +16,7 @@ import {User} from 'utils/types/User';
 import {EyeGray, Share as ShareIcon} from 'assets/images';
 import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 import {screenWidth} from 'utils/helpers';
+import FastImage from 'react-native-fast-image';
 
 type Props = {
   post: Post;
@@ -91,9 +92,9 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
           className="flex-row items-center gap-[8px]"
           onPress={openProfile}>
           {user?.imageLink ? (
-            <Image
+            <FastImage
               source={{uri: user?.imageLink || ''}}
-              className="bg-white h-[24px] w-[24px] rounded-full"
+              style={styles.avatar}
             />
           ) : (
             <View className="bg-white h-[24px] w-[24px] rounded-full" />
@@ -135,3 +136,11 @@ export const FeedCard: React.FC<Props> = ({post, openImage, openProfile}) => {
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+  },
+});

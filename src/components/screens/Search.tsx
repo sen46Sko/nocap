@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Image,
   Text,
   View,
 } from 'react-native';
@@ -24,6 +23,7 @@ import {Post} from 'utils/types/Post';
 import {User} from 'utils/types/User';
 
 import {Expand, SearchLightGray} from 'assets/images';
+import FastImage from 'react-native-fast-image';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
 
@@ -93,17 +93,19 @@ export const Search: React.FC<Props> = ({navigation}) => {
                 </Text>
               </View>
 
-              <View className="flex-row gap-[5px] flex-wrap">
-                {foundPosts.map(post => (
-                  <Pressable onPress={() => openPost(post.id)} key={post.id}>
-                    <Image
-                      source={{
-                        uri: post.imageLink,
-                      }}
-                      className="w-[121px] h-[129px] rounded-[4px]"
-                    />
-                  </Pressable>
-                ))}
+              <View className="items-center">
+                <View style={styles.photosContainer}>
+                  {foundPosts.map(post => (
+                    <Pressable onPress={() => openPost(post.id)} key={post.id}>
+                      <FastImage
+                        source={{
+                          uri: post.imageLink,
+                        }}
+                        style={styles.image}
+                      />
+                    </Pressable>
+                  ))}
+                </View>
               </View>
 
               <Text className="font-robotoRegular text-[16px] color-orange self-center mt-[24px]">
@@ -124,17 +126,21 @@ export const Search: React.FC<Props> = ({navigation}) => {
                   </Text>
                 </View>
 
-                <View className="flex-row gap-[5px] flex-wrap justify-center">
-                  {trendingPosts.map(post => (
-                    <Pressable onPress={() => openPost(post.id)} key={post.id}>
-                      <Image
-                        source={{
-                          uri: post.imageLink,
-                        }}
-                        className="w-[121px] h-[129px] rounded-[4px]"
-                      />
-                    </Pressable>
-                  ))}
+                <View className="items-center">
+                  <View style={styles.photosContainer}>
+                    {trendingPosts.map(post => (
+                      <Pressable
+                        onPress={() => openPost(post.id)}
+                        key={post.id}>
+                        <FastImage
+                          source={{
+                            uri: post.imageLink,
+                          }}
+                          style={styles.image}
+                        />
+                      </Pressable>
+                    ))}
+                  </View>
                 </View>
               </View>
 
@@ -162,17 +168,21 @@ export const Search: React.FC<Props> = ({navigation}) => {
                   </Text>
                 </View>
 
-                <View className="flex-row gap-[5px] flex-wrap justify-center">
-                  {posts.posts.map(post => (
-                    <Pressable onPress={() => openPost(post.id)} key={post.id}>
-                      <Image
-                        source={{
-                          uri: post.imageLink,
-                        }}
-                        className="w-[121px] h-[129px] rounded-[4px]"
-                      />
-                    </Pressable>
-                  ))}
+                <View className="items-center">
+                  <View style={styles.photosContainer}>
+                    {posts.posts.map(post => (
+                      <Pressable
+                        onPress={() => openPost(post.id)}
+                        key={post.id}>
+                        <FastImage
+                          source={{
+                            uri: post.imageLink,
+                          }}
+                          style={styles.image}
+                        />
+                      </Pressable>
+                    ))}
+                  </View>
                 </View>
               </View>
             </View>
@@ -187,5 +197,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
+  },
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 4,
+  },
+  photosContainer: {
+    width: 375,
+    gap: 5,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
 });

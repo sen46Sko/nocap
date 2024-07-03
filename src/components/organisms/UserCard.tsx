@@ -1,4 +1,5 @@
-import {Image, Pressable, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import React from 'react';
 
 import {useAuth} from 'contexts/AuthContext';
@@ -24,11 +25,11 @@ export const UserCard: React.FC<Props> = ({user}) => {
 
   return (
     <View className="p-[10px] border border-grayDark rounded-[8px] gap-[8px]">
-      <Image
+      <FastImage
         source={{
           uri: user.imageLink || '',
         }}
-        className="w-[121px] h-[129px] rounded-[4px]"
+        style={styles.avatar}
       />
 
       <View className="flex-row justify-between">
@@ -50,3 +51,11 @@ export const UserCard: React.FC<Props> = ({user}) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  avatar: {
+    width: 121,
+    height: 129,
+    borderRadius: 4,
+  },
+});

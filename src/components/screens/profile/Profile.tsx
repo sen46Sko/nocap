@@ -5,7 +5,6 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
-  Image,
   Text,
   View,
 } from 'react-native';
@@ -37,6 +36,7 @@ import {
   SwipeArrow,
 } from 'assets/images';
 import {screenWidth} from 'utils/helpers';
+import FastImage from 'react-native-fast-image';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -117,7 +117,7 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
           onPageSelected={e => setCurrentPage(e.nativeEvent.position)}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              <Image
+              <FastImage
                 source={{uri: user?.imageLink || ''}}
                 style={{width: screenWidth, height: (screenWidth / 3) * 4}}
               />
@@ -192,9 +192,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
             <View className="px-[16px]">
               <View className="flex-row justify-between items-start mt-[16px]">
                 <View className="flex-row gap-[16px] items-center">
-                  <Image
+                  <FastImage
                     source={{uri: user?.imageLink || ''}}
-                    className="h-[100px] w-[100px] rounded-full"
+                    style={styles.avatar}
                   />
 
                   <View className="gap-[16px]">
@@ -234,24 +234,26 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
                 </If>
               </View>
 
-              <View className="flex-row gap-[4px] flex-wrap mt-[40px] pb-[60px]">
-                {posts.getUserPosts(userId).map((post, index) => (
-                  <Pressable
-                    key={post.id}
-                    onPress={() =>
-                      navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
-                        user: user!,
-                        initialIndex: index,
-                      })
-                    }>
-                    <Image
-                      source={{
-                        uri: post.imageLink,
-                      }}
-                      className="w-[116px] h-[116px] rounded-[4px]"
-                    />
-                  </Pressable>
-                ))}
+              <View className="items-center">
+                <View style={styles.photosContainer}>
+                  {posts.getUserPosts(userId).map((post, index) => (
+                    <Pressable
+                      key={post.id}
+                      onPress={() =>
+                        navigation.navigate(Screens.PROFILE_SLIDE_VIEW, {
+                          user: user!,
+                          initialIndex: index,
+                        })
+                      }>
+                      <FastImage
+                        source={{
+                          uri: post.imageLink,
+                        }}
+                        style={styles.image}
+                      />
+                    </Pressable>
+                  ))}
+                </View>
               </View>
             </View>
           </ScrollView>
@@ -313,5 +315,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'black',
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  image: {
+    width: 120,
+    height: 120,
+    borderRadius: 4,
+  },
+  photosContainer: {
+    width: 375,
+    gap: 5,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginTop: 40,
+    paddingBottom: 60,
   },
 });
