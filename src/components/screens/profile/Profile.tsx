@@ -29,14 +29,16 @@ import {BottomSheetType} from 'utils/types/BottomSheetType';
 import {User} from 'utils/types/User';
 
 import {
-  Expand,
-  EyeGray,
-  MenuOrange,
   Notifications,
+  MenuOrange,
   SwipeArrow,
+  LogoBlack,
+  EyeGray,
+  Expand,
 } from 'assets/images';
 import {screenWidth} from 'utils/helpers';
 import FastImage from 'react-native-fast-image';
+import {useIsFocused} from '@react-navigation/native';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.PROFILE>;
 
@@ -52,11 +54,14 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
 
   const auth = useAuth();
   const posts = usePosts();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    getUserIfExists(userId).then(setUser);
-    getPeepers(userId).then(res => setPeepersCount(res.length));
-  }, [userId]);
+    if (isFocused) {
+      getUserIfExists(userId).then(setUser);
+      getPeepers(userId).then(res => setPeepersCount(res.length));
+    }
+  }, [userId, isFocused]);
 
   useEffect(() => {
     if (auth.user?.peeps.some(id => id === userId)) {
@@ -117,10 +122,26 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
           onPageSelected={e => setCurrentPage(e.nativeEvent.position)}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View>
-              <FastImage
-                source={{uri: user?.imageLink || ''}}
-                style={{width: screenWidth, height: (screenWidth / 3) * 4}}
-              />
+              {user?.imageLink ? (
+                <FastImage
+                  source={{
+                    uri: user.imageLink,
+                  }}
+                  style={styles.profileImage}
+                />
+              ) : (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate(Screens.PROFILE_PHOTO_CAMERA)
+                  }
+                  style={styles.profileImage}
+                  className="bg-[#161515] items-center justify-center">
+                  <LogoBlack />
+                  <Text className="font-robotoMedium text-[16px] color-white">
+                    Tap to capture profile picture
+                  </Text>
+                </Pressable>
+              )}
 
               <View className="px-[16px]">
                 <View className="flex-row justify-between mt-[16px]">
@@ -193,7 +214,9 @@ export const Profile: React.FC<Props> = ({navigation, route}) => {
               <View className="flex-row justify-between items-start mt-[16px]">
                 <View className="flex-row gap-[16px] items-center">
                   <FastImage
-                    source={{uri: user?.imageLink || ''}}
+                    source={{
+                      uri: user?.imageLink || '',
+                    }}
                     style={styles.avatar}
                   />
 
@@ -320,6 +343,15 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+    backgroundColor: '#161515',
+  },
+  profileImage: {
+    width: screenWidth,
+    height: (screenWidth / 3) * 4,
+    backgroundColor: '#161515',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 30,
   },
   image: {
     width: 120,

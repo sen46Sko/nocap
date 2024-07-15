@@ -2,6 +2,7 @@ import GeoLocation from 'react-native-geolocation-service';
 import DeviceInfo from 'react-native-device-info';
 import {Platform} from 'react-native';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
+import RNFetchBlob from 'rn-fetch-blob';
 // import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 
 export async function getDeviceInfo() {
@@ -34,4 +35,18 @@ export async function getLocation(): Promise<{
 
 export async function saveImage(uri: string) {
   CameraRoll.saveAsset(uri, {type: 'photo', album: 'nocap'});
+}
+
+export async function saveImageByUrl(url: string) {
+  if (!url.length) {
+    return;
+  }
+  RNFetchBlob.config({
+    fileCache: true,
+    appendExt: 'jpg',
+  })
+    .fetch('GET', url)
+    .then(res => {
+      CameraRoll.saveAsset(res.path(), {type: 'photo'});
+    });
 }

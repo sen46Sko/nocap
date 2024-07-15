@@ -35,6 +35,7 @@ type Props = NativeStackScreenProps<RootStackParamList, Screens.HOME>;
 export const Home: React.FC<Props> = ({navigation}) => {
   const [bottomSheetType, setBottomSheetType] =
     useState<BottomSheetType | null>(null);
+  const [selectedImageUri, setSelectedImageUri] = useState<string>('');
 
   const auth = useAuth();
   const posts = usePosts();
@@ -44,7 +45,10 @@ export const Home: React.FC<Props> = ({navigation}) => {
       <FeedCard
         key={post.id}
         post={post}
-        openMenu={() => setBottomSheetType(BottomSheetType.FEED_CARD_MENU)}
+        openMenu={() => {
+          setSelectedImageUri(post.imageLink);
+          setBottomSheetType(BottomSheetType.FEED_CARD_MENU);
+        }}
         openProfile={() =>
           navigation.navigate(Screens.PROFILE, {userId: post.userId})
         }
@@ -140,6 +144,7 @@ export const Home: React.FC<Props> = ({navigation}) => {
             onClose={() => setBottomSheetType(null)}>
             <If condition={bottomSheetType === BottomSheetType.FEED_CARD_MENU}>
               <FeedCardMenu
+                imageUri={selectedImageUri}
                 onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
                 onShare={onShare}
               />

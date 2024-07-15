@@ -1,5 +1,7 @@
 import firestore from '@react-native-firebase/firestore';
 import functions from '@react-native-firebase/functions';
+import storage from '@react-native-firebase/storage';
+import {Platform} from 'react-native';
 
 import {User} from 'utils/types/User';
 
@@ -80,6 +82,27 @@ export async function getSuggestedUsers(userId: string) {
     });
 
   return users;
+}
+
+export async function updateProfileImage(user: User, newImageUri: string) {
+  if (user.imageLink) {
+    storage().refFromURL(user.imageLink).delete();
+  }
+
+  const filename = newImageUri.substring(newImageUri.lastIndexOf('/') + 1);
+  const uploadUri =
+    Platform.OS === 'ios' ? newImageUri.replace('file://', '') : newImageUri;
+
+  await storage().ref(filename).putFile(uploadUri);
+
+  const storedImageUrl = await storage().ref(filename).getDownloadURL();
+
+  await firestore()
+    .collection('Profiles')
+    .doc(user.id)
+    .update({imageLink: storedImageUrl});
+
+  return storedImageUrl;
 }
 
 export async function createUser(user: User) {

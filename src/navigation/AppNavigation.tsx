@@ -31,6 +31,7 @@ import {Home} from 'components/screens/Home';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {navigationRef} from 'utils/helpers';
+import {ProfilePhotoCamera} from 'components/screens/profile/ProfilePhotoCamera';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -70,6 +71,14 @@ export const AppNavigation = () => {
         <Stack.Screen
           name={Screens.PROFILE}
           component={Profile}
+          options={{
+            presentation: 'modal',
+            animation: 'slide_from_bottom',
+          }}
+        />
+        <Stack.Screen
+          name={Screens.PROFILE_PHOTO_CAMERA}
+          component={ProfilePhotoCamera}
           options={{
             presentation: 'modal',
             animation: 'slide_from_bottom',

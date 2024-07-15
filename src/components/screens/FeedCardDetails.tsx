@@ -214,6 +214,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
             onClose={() => setBottomSheetType(null)}>
             <If condition={bottomSheetType === BottomSheetType.FEED_CARD_MENU}>
               <FeedCardMenu
+                imageUri={post?.imageLink || ''}
                 onReport={() => setBottomSheetType(BottomSheetType.REPORT_MENU)}
                 onShare={onShare}
               />

@@ -10,6 +10,7 @@ type Props = {
   width: number;
   type?: 'photo' | 'video' | 'onspot';
   onLoad?: () => void;
+  className?: string;
 };
 
 export const ImageAutoHeight: React.FC<Props> = ({
@@ -17,6 +18,7 @@ export const ImageAutoHeight: React.FC<Props> = ({
   width,
   type = 'photo',
   onLoad = () => {},
+  className = '',
 }) => {
   const [aspectRatio, setAspectRatio] = useState(0);
   const isVideo = uri.endsWith('.mp4') || type === 'video';
@@ -35,6 +37,7 @@ export const ImageAutoHeight: React.FC<Props> = ({
           source={{uri}}
           paused
           controls
+          className={className}
           style={{width: screenWidth, height: (screenWidth / 3) * 4}}
         />
       ) : (

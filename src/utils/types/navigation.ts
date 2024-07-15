@@ -15,6 +15,7 @@ export enum Screens {
   SEARCH = 'Search',
 
   PROFILE = 'Profile',
+  PROFILE_PHOTO_CAMERA = 'ProfilePhotoCamera',
   PROFILE_SLIDE_VIEW = 'ProfileSlideView',
   NOTIFICATIONS = 'Notifications',
   PEEPERS = 'Peepers',
@@ -49,6 +50,7 @@ export type RootStackParamList = {
   [Screens.SEARCH]: undefined;
 
   [Screens.PROFILE]: {userId: string};
+  [Screens.PROFILE_PHOTO_CAMERA]: undefined;
   [Screens.PROFILE_SLIDE_VIEW]: {user: User; initialIndex: number};
   [Screens.NOTIFICATIONS]: undefined;
   [Screens.PEEPERS]: {userId: string};

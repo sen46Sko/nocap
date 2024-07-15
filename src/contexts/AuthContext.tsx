@@ -15,6 +15,7 @@ import {
   createUser,
   removeUser,
   editUser,
+  updateProfileImage,
 } from 'api/users';
 
 import {navigate} from 'utils/helpers';
@@ -41,6 +42,7 @@ interface AuthContextType {
   localUser: Partial<User> | null;
   postUser: () => Promise<void>;
   signOut: () => Promise<void>;
+  updateProfilePhoto: (uri: string) => Promise<void>;
   user: User | null;
 }
 
@@ -58,6 +60,7 @@ const AuthContext = createContext<AuthContextType>({
   postUser: async () => {},
   signOut: async () => {},
   user: null,
+  updateProfilePhoto: async () => {},
 });
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
@@ -119,6 +122,17 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     setUser(newUser);
     await createUser(newUser);
   }, [localUser]);
+
+  const updateProfilePhoto = async (uri: string) => {
+    if (!user) {
+      return;
+    }
+    const newImageLink = await updateProfileImage(user, uri);
+
+    setUser(current =>
+      current ? {...current, imageLink: newImageLink} : current,
+    );
+  };
 
   const updateUser = useCallback(
     async (updatedInfo: Partial<User>) => {
@@ -206,42 +220,11 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
       if (user) {
         await removeUser(user);
       }
-      // if (user?.imageLink) {
-      //   await deleteImage(user.imageLink);
-      // }
       await signOut();
     } catch (error) {
       console.error('Sign out error:', error);
     }
   }, [signOut, user]);
-
-  //   const uploadImage = useCallback(
-  //     async (imageUrl: string) => {
-  //       if (user?.imageLink) {
-  //         await deleteImage(user.imageLink);
-  //       }
-
-  //       try {
-  //         return createImage(imageUrl);
-  //       } catch (e) {
-  //         console.error(e);
-  //       }
-  //     },
-  //     [user?.imageLink],
-  //   );
-
-  //   const refetchUser = useCallback(async () => {
-  //     if (!user) {
-  //       return;
-  //     }
-
-  //     const fetchedUser = await getUserIfExists(user.id);
-
-  //     if (fetchedUser) {
-  //       setUser(fetchedUser);
-  //       setLocalUser(fetchedUser);
-  //     }
-  //   }, [user]);
 
   return (
     <AuthContext.Provider
@@ -249,9 +232,9 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         signInWithGoogle,
         sendCodeToSMS,
         setLocalUser,
+        updateProfilePhoto,
         // uploadImage,
         verifyCode,
-        // refetchUser,
         updateUser,
         setPeeping,
         deleteUser,
