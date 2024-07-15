@@ -16,7 +16,7 @@ import {If} from 'components/atoms/If';
 import {usePosts} from 'contexts/PostsContext';
 import {useAuth} from 'contexts/AuthContext';
 
-import {getSuggestedUsers} from 'api/users';
+import {getAllUsers, getSuggestedUsers} from 'api/users';
 
 import {RootStackParamList, Screens} from 'utils/types/navigation';
 import {Post} from 'utils/types/Post';
@@ -24,15 +24,33 @@ import {User} from 'utils/types/User';
 
 import {Expand, SearchLightGray} from 'assets/images';
 import FastImage from 'react-native-fast-image';
+import classNames from 'classnames';
+import {ContactItem} from 'components/molecules/ContactItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, Screens.SEARCH>;
+
+type SearchTabs = 'forYou' | 'trending' | 'account' | 'places' | 'others';
 
 export const Search: React.FC<Props> = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [suggested, setSuggested] = useState<User[]>([]);
+  const [activeSearchTab, setActiveSearchTab] = useState<SearchTabs>('forYou');
+  const [users, setUsers] = useState<User[]>([]);
 
   const posts = usePosts();
   const auth = useAuth();
+
+  const peepUser = (id: string) => {
+    if (auth.user?.peeps.some(peepId => peepId === id)) {
+      auth.setPeeping('unpeep', id);
+    } else {
+      auth.setPeeping('peep', id);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers().then(setUsers);
+  }, []);
 
   useEffect(() => {
     getSuggestedUsers(auth.user?.id!).then(setSuggested);
@@ -43,6 +61,18 @@ export const Search: React.FC<Props> = ({navigation}) => {
 
     return [...posts.posts].sort(sortingFunc);
   }, [posts.posts]);
+
+  const foundAccounts = useMemo(() => {
+    if (activeSearchTab !== 'account') {
+      return [];
+    }
+
+    return users.filter(
+      user =>
+        user.username.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        user.username !== auth.user?.username,
+    );
+  }, [activeSearchTab, auth.user?.username, searchQuery, users]);
 
   const foundPosts = useMemo(() => {
     return posts.posts.filter(post =>
@@ -76,36 +106,91 @@ export const Search: React.FC<Props> = ({navigation}) => {
           <If condition={!!searchQuery}>
             <View className="gap-[16px]">
               <View className="flex-row justify-between">
-                <Text className="font-robotoMedium text-[16px] color-white">
-                  For you
-                </Text>
-                <Text className="font-robotoMedium text-[16px] color-grayMedium">
-                  Trending
-                </Text>
-                <Text className="font-robotoMedium text-[16px] color-grayMedium">
-                  Account
-                </Text>
-                <Text className="font-robotoMedium text-[16px] color-grayMedium">
-                  Places
-                </Text>
-                <Text className="font-robotoMedium text-[16px] color-grayMedium">
-                  Others
-                </Text>
+                <Pressable onPress={() => setActiveSearchTab('forYou')}>
+                  <Text
+                    className={classNames('font-robotoMedium text-[16px]', {
+                      'color-white': activeSearchTab === 'forYou',
+                      'color-grayMedium': activeSearchTab !== 'forYou',
+                    })}>
+                    For you
+                  </Text>
+                </Pressable>
+
+                <Pressable onPress={() => setActiveSearchTab('trending')}>
+                  <Text
+                    className={classNames('font-robotoMedium text-[16px]', {
+                      'color-white': activeSearchTab === 'trending',
+                      'color-grayMedium': activeSearchTab !== 'trending',
+                    })}>
+                    Trending
+                  </Text>
+                </Pressable>
+
+                <Pressable onPress={() => setActiveSearchTab('account')}>
+                  <Text
+                    className={classNames('font-robotoMedium text-[16px]', {
+                      'color-white': activeSearchTab === 'account',
+                      'color-grayMedium': activeSearchTab !== 'account',
+                    })}>
+                    Account
+                  </Text>
+                </Pressable>
+
+                <Pressable onPress={() => setActiveSearchTab('places')}>
+                  <Text
+                    className={classNames('font-robotoMedium text-[16px]', {
+                      'color-white': activeSearchTab === 'places',
+                      'color-grayMedium': activeSearchTab !== 'places',
+                    })}>
+                    Places
+                  </Text>
+                </Pressable>
+
+                <Pressable onPress={() => setActiveSearchTab('others')}>
+                  <Text
+                    className={classNames('font-robotoMedium text-[16px]', {
+                      'color-white': activeSearchTab === 'others',
+                      'color-grayMedium': activeSearchTab !== 'others',
+                    })}>
+                    Others
+                  </Text>
+                </Pressable>
               </View>
 
               <View className="items-center">
-                <View style={styles.photosContainer}>
-                  {foundPosts.map(post => (
-                    <Pressable onPress={() => openPost(post.id)} key={post.id}>
-                      <FastImage
-                        source={{
-                          uri: post.imageLink,
-                        }}
-                        style={styles.image}
+                <If condition={activeSearchTab !== 'account'}>
+                  <View style={styles.photosContainer}>
+                    {foundPosts.map(post => (
+                      <Pressable
+                        onPress={() => openPost(post.id)}
+                        key={post.id}>
+                        <FastImage
+                          source={{
+                            uri: post.imageLink,
+                          }}
+                          style={styles.image}
+                        />
+                      </Pressable>
+                    ))}
+                  </View>
+                </If>
+                <If condition={activeSearchTab === 'account'}>
+                  <View className="w-full gap-[16px]">
+                    {foundAccounts.map(user => (
+                      <ContactItem
+                        key={user.id}
+                        name={user.username}
+                        buttonLabel={
+                          auth.user?.peeps.some(id => id === user.id)
+                            ? 'Peeping'
+                            : 'Peep'
+                        }
+                        photoUri={user.imageLink}
+                        onPress={() => peepUser(user.id)}
                       />
-                    </Pressable>
-                  ))}
-                </View>
+                    ))}
+                  </View>
+                </If>
               </View>
 
               <Text className="font-robotoRegular text-[16px] color-orange self-center mt-[24px]">
