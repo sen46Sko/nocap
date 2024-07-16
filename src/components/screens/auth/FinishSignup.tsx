@@ -27,16 +27,16 @@ export const FinishSignup: React.FC<Props> = ({navigation}) => {
             Welcome to
           </Text>
 
-          <View className="flex-row gap-[2px] items-center">
-            <Text className="color-white font-robotoMedium text-[36px]">
-              nocap
-            </Text>
+          <View className="flex-row gap-[8px] items-center">
             <Logo />
+            <Text className="color-white font-robotoMedium text-[36px]">
+              natopis
+            </Text>
           </View>
         </View>
 
         <Text className="font-robotoRegular text-[20px] color-white">
-          Let's peep your friends who are already using nocap
+          Let's peep your friends who are already using natopis
         </Text>
 
         <BigButton

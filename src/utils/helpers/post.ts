@@ -34,7 +34,7 @@ export async function getLocation(): Promise<{
 }
 
 export async function saveImage(uri: string) {
-  CameraRoll.saveAsset(uri, {type: 'photo', album: 'nocap'});
+  CameraRoll.saveAsset(uri, {type: 'photo', album: 'natopis'});
 }
 
 export async function saveImageByUrl(url: string) {
@@ -49,4 +49,17 @@ export async function saveImageByUrl(url: string) {
     .then(res => {
       CameraRoll.saveAsset(res.path(), {type: 'photo'});
     });
+}
+
+export function formatTimestamp(timestamp: number) {
+  const date = new Date(timestamp);
+
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
 }

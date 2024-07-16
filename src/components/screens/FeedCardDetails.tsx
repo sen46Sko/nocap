@@ -120,7 +120,7 @@ export const FeedCardDetails: React.FC<Props> = ({navigation, route}) => {
           <View className="gap-[16px]">
             <View className="px-[10px] py-[16px]">
               <Text className=" font-robotoMedium color-grayMedium text-[24px]">
-                nocap
+                natopis
               </Text>
             </View>
 

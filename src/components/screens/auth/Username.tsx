@@ -57,7 +57,7 @@ export const Username: React.FC<Props> = ({navigation}) => {
         <View className="flex-1 px-[16px] mt-[83px] mb-[40px] justify-between">
           <View className="gap-[24px] w-full items-center">
             <Text className="font-robotoMedium text-[36px] color-white">
-              nocap
+              natopis
             </Text>
 
             <View className="w-full gap-[16px]">

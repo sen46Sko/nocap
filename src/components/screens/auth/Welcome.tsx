@@ -19,12 +19,11 @@ export const Welcome: React.FC<Props> = ({navigation}) => {
       />
 
       <View className="w-full h-full shrink bg-black px-[10px] py-[6px] justify-between">
-        <View className="flex-row items-center gap-2">
-          <Text className=" font-robotoMedium text-white text-[36px]">
-            nocap
-          </Text>
-
+        <View className="flex-row items-center gap-[8px]">
           <Logo />
+          <Text className=" font-robotoMedium text-white text-[36px]">
+            natopis
+          </Text>
         </View>
 
         <Text className=" font-robotoRegular text-grayLight text-[16px]">

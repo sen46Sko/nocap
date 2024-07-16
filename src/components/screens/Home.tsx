@@ -100,7 +100,7 @@ export const Home: React.FC<Props> = ({navigation}) => {
       <SafeAreaView>
         <View className="px-[10px] py-[16px] flex-row justify-between items-center">
           <Text className=" font-robotoMedium color-white text-[24px]">
-            nocap
+            natopis
           </Text>
 
           <View className="flex-row items-center gap-[24px]">

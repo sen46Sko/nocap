@@ -25,6 +25,7 @@ import {ImageAutoHeight} from 'components/atoms/ImageAutoHeight';
 import {screenWidth} from 'utils/helpers';
 import FastImage from 'react-native-fast-image';
 import {TapGestureHandler} from 'react-native-gesture-handler';
+import {formatTimestamp} from 'utils/helpers/post';
 
 type Props = {
   post: Post;
@@ -159,12 +160,14 @@ export const FeedCard: React.FC<Props> = ({post, openProfile, openMenu}) => {
             {post.title}
           </Text>
           <View className="gap-[10px] mt-[32px]">
-            <View className="flex-row items-center">
-              <Calendar />
-              <Text className="font-robotoRegular color-grayMedium text-[12px]">
-                12 February 2024, 12:04 pm
-              </Text>
-            </View>
+            <If condition={!!post.date}>
+              <View className="flex-row items-center">
+                <Calendar />
+                <Text className="font-robotoRegular color-grayMedium text-[12px]">
+                  {formatTimestamp(post.date)}
+                </Text>
+              </View>
+            </If>
 
             <If condition={!!post?.deviceInfo}>
               <View className="flex-row items-center">

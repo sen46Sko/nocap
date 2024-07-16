@@ -83,11 +83,11 @@ export const PhoneAuth: React.FC<Props> = ({route, navigation}) => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <SafeAreaView style={styles.container}>
         <View className="flex-1 items-center px-[16px] mt-[83px] gap-[16px]">
-          <View className="flex-row items-center gap-[2px]">
-            <Text className="font-robotoMedium text-[36px] color-white">
-              nocap
-            </Text>
+          <View className="flex-row items-center gap-[8px]">
             <Logo />
+            <Text className="font-robotoMedium text-[36px] color-white">
+              natopis
+            </Text>
           </View>
           <View className="w-full gap-[16px]">
             <Text className="font-robotoMedium text-[16px] color-white">

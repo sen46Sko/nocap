@@ -39,7 +39,7 @@ export const ImagePosting: React.FC<Props> = ({navigation, route}) => {
   const handlePost = async () => {
     try {
       setIsLoading(true);
-      const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'> = {
+      const post: Omit<Post, 'id' | 'views' | 'loves' | 'userId' | 'date'> = {
         imageLink: image,
         title,
         location: null,

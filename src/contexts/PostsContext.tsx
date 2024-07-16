@@ -18,7 +18,7 @@ interface PostsContextType {
   setLoving: (status: 'love' | 'unlove', postId: string) => void;
   addView: (postId: string) => void;
   addPost: (
-    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
+    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId' | 'date'>,
   ) => Promise<void>;
 }
 
@@ -85,7 +85,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
   };
 
   const addPost = async (
-    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId'>,
+    post: Omit<Post, 'id' | 'views' | 'loves' | 'userId' | 'date'>,
   ) => {
     if (!auth.user) {
       return;
@@ -95,6 +95,7 @@ export const PostsProvider = ({children}: {children: ReactNode}) => {
       ...post,
       loves: [],
       views: [],
+      date: Date.now(),
       userId: auth.user.id,
     });
 

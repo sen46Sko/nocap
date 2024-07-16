@@ -8,4 +8,5 @@ export type Post = {
   deviceInfo: string | null;
   loves: string[];
   views: string[];
+  date: number;
 };
